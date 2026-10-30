@@ -1,0 +1,3130 @@
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v58, v51, v49
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v53, v92
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v58, v50, v59 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v55, v93 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v137, v55, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v138, v60, v57
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v137, v58, v56 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v138, v61, v59 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v48, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v50, v55
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v49, v54 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v51, v56 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v60, v61
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v64, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v62, v63 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v66, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v68, v69
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v72, v73
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v70, v71 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v74, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v101, v105
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v103, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v102, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v104, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v119, v118
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v112, v113
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v117, v114 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v115, v116 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v135, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v96, v97
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v99, v98 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v128, v130 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v140, v111
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v105
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v107, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v109 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v126
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v120, v110
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v122, v121 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v124, v123 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v123, v101
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v98, v125
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v103, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v99, v126 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v84, v72, v73
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v68, v69
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v84, v74, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v70, v71 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v76, v77
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v53, v80, v81
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v78, v79 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v53, v82, v83 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v51, v49
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v53, v92
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v50, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v55, v93 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v125, v55, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v126, v60, v57
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v125, v58, v56 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v126, v61, v59 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v127, v48, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v128, v50, v55
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v127, v49, v54 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v128, v51, v56 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v60, v61
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v64, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v62, v63 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v66, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v68, v69
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v72, v73
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v70, v71 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v74, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v101, v105
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v103, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v102, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v104, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v119, v118
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v112, v113
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v117, v114 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v115, v116 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v135, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v96, v97
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v99, v98 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v128, v130 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v140, v111
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v105
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v107, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v109 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v126
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v120, v110
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v122, v121 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v124, v123 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v123, v101
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v98, v125
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v103, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v99, v126 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v51, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v51, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v86, v85, v87
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v90, v91
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v86, v88, v89 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v92, v93 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v81, v82
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v83, v80 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v134, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v134, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v86, v85, v87
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v90, v91
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v86, v88, v89 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v92, v93 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v81, v82
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v83, v80 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v134, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v134, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v116, v136, v137
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v115, v140, v141
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v116, v138, v139 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v115, v142, v143 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v93, v65, v66
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v94, v81, v82
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v93, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v94, v83, v84 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v136, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v137, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v136, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v137, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v138, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v138, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v51, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v51, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v178, v179
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v182, v183
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v10
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v6, v7
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v3, v13 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v9, v8 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v10, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v14, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v12, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v11, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v10, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v12, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v18, v11
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v20, v9
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v19, v12 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v7, v8 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v11, v15
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v13, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v12, v16 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v14, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v10, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v11, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v13, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v10, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v11, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v13, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v11, v15
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v13, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v12, v16 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v14, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v11, v15
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v13, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v12, v16 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v14, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v11, v15
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v13, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v12, v16 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v14, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v11, v15
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v13, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v12, v16 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v14, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v3, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v11, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v10, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v12, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v14, v10
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v11 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v13, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v9, v10
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v11, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v13, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v0, v1 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v56, v81
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v52, v49
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v82, v83 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v50, v51 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v56, v73
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v52, v49
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v74, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v50, v51 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v178, v179
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v182, v183
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v13, v4
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v10, v6
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v14, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v11, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v16, v4
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v18, v6
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v17, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v19, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v16, v4
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v18, v6
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v17, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v19, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v16, v4
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v18, v6
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v17, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v19, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v16, v4
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v18, v6
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v17, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v19, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v16, v4
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v18, v6
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v17, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v19, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v16, v4
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v18, v6
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v17, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v9, v19, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v8, v13
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v10, v17
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v9, v16 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v11, v18 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v13, v14
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v11, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v6, v10, v15 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v12, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v73, v66, v65
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v72, v61, v60
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v73, v64, v62 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v72, v59, v63 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v79, v80
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v106, v76, v77
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v78, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v106, v74, v81 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v51, v49
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v53, v92
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v50, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v55, v93 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v124, v55, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v125, v68, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v124, v66, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v125, v69, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v126, v48, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v127, v50, v55
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v126, v49, v54 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v127, v51, v56 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v60, v61
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v64, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v62, v63 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v66, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v68, v69
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v72, v73
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v70, v71 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v74, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v101, v105
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v103, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v102, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v104, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v119, v118
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v112, v113
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v117, v114 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v115, v116 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v135, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v96, v97
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v99, v98 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v128, v130 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v140, v111
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v105
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v107, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v109 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v126
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v120, v110
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v122, v121 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v124, v123 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v123, v101
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v98, v125
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v103, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v99, v126 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v59, v51, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v139, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v140, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v141, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v142, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v10
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v6, v7
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v3, v13 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v9, v8 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v11, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v8
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v1, v14, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v16, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v10, v6
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v14, v16
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v12, v7 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v15, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v3, v15
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v13, v9
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v7, v12, v16 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v8, v14, v10 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v14, v13
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v11, v9
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v7, v8 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v10 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v14, v13
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v11, v9
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v7, v8 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v10 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v14
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v10
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v8, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v13, v11 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v14
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v10
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v8, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v13, v11 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v14
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v10
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v8, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v13, v11 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v15, v14
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v12, v10
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v8, v9 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v13, v11 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v1, v12
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v9, v4
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v2, v11, v13 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v3, v10, v5 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v79, v81
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v84, v85
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v82, v83 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v86, v87 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v69, v95
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v93, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v79, v81
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v84, v85
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v82, v83 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v86, v87 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v69, v95
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v93, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v79, v81
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v84, v85
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v82, v83 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v86, v87 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v69, v95
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v93, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v79, v81
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v84, v85
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v80, v82, v83 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v56, v86, v87 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v69, v95
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v93, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v52, v50
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v54, v93
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v91, v51, v92 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v56, v94 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v56, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v61, v58
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v130, v59, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v131, v62, v60 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v49, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v51, v56
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v132, v50, v55 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v133, v52, v57 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v61, v62
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v65, v66
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v52, v63, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v67, v68 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v69, v70
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v71, v72 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v120, v119
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v113, v114
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v118, v115 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v105, v116, v117 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v136, v128
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v97, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v100, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v129, v131 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v112
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v142, v106
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v107 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v100, v109, v110 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v126, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v121, v111
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v123, v122 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v77, v85, v84
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v68, v81
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v77, v83, v82 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v55, v79, v80 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v73, v74
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v87, v88
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v75, v76 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v50, v89, v48 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v51, v49
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v53, v92
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v50, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v55, v93 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v146, v55, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v147, v68, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v146, v66, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v147, v69, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v148, v48, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v149, v50, v55
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v148, v49, v54 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v149, v51, v56 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v60, v61
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v64, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v62, v63 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v66, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v68, v69
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v72, v73
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v70, v71 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v74, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v101, v105
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v103, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v102, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v104, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v119, v118
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v112, v113
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v117, v114 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v115, v116 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v135, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v96, v97
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v99, v98 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v128, v130 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v140, v111
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v105
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v107, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v109 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v126
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v120, v110
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v122, v121 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v124, v123 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v123, v101
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v98, v125
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v103, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v99, v126 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v73, v48, v54
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v72, v69, v71
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v73, v63, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v72, v75, v77 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v76, v79, v80
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v77, v83, v84
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v76, v81, v82 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v77, v85, v51 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v51, v49
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v53, v92
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v90, v50, v91 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v54, v55, v93 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v163, v55, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v164, v68, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v163, v66, v64 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v164, v69, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v165, v48, v53
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v166, v50, v55
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v165, v49, v54 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v166, v51, v56 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v60, v61
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v64, v65
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v51, v62, v63 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v66, v67 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v68, v69
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v72, v73
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v49, v70, v71 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v48, v74, v75 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v101, v105
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v103, v98
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v102, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v104, v99 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v119, v118
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v112, v113
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v103, v117, v114 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v104, v115, v116 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v135, v127
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v96, v97
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v101, v99, v98 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v102, v128, v130 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v140, v111
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v141, v105
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v98, v107, v106 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v99, v108, v109 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v125, v126
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v120, v110
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v122, v121 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v124, v123 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v180, v181
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v184, v185
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v182, v183 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v186, v187 op_sel:[0,0,1]
+        ^
+<inline asm>:2:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v123, v101
+        ^
+<inline asm>:3:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v98, v125
+        ^
+<inline asm>:4:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v96, v103, v124 op_sel:[0,0,1]
+        ^
+<inline asm>:5:2: error: instruction not supported on this GPU
+        v_cvt_pk_fp8_f32 v97, v99, v126 op_sel:[0,0,1]
+        ^
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+error: cannot compile inline asm
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+

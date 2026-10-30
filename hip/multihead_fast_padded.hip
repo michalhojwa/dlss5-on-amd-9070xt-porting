@@ -83,10 +83,11 @@ DEV float minf(float a,float b){return a<b?a:b;}
 #endif
 #if HIP_FMED3_CLAMP
 DEV float clampf(float a,float lo,float hi){return __builtin_amdgcn_fmed3f(a,lo,hi);}
+#define HIP_FP8_CLAMP(x) __builtin_amdgcn_fmed3f((x),-448.f,448.f)
 #else
 DEV float clampf(float a,float lo,float hi){return minf(maxf(a,lo),hi);}
+#define HIP_FP8_CLAMP(x) __builtin_fminf(__builtin_fmaxf((x),-448.f),448.f)
 #endif
-#define HIP_FP8_CLAMP(x) __builtin_amdgcn_fmed3f((x),-448.f,448.f)
 DEV uint shift_rne(uint x,uint n){if(n>31)return 0;uint q=x>>n,mask=(1u<<n)-1u,r=x&mask,mid=1u<<(n-1);return q+uint(r>mid||(r==mid&&(q&1u)));}
 DEV uint half_bits(float x){uint b=bits(x),a=b&0x7fffffffu,s=(b>>16)&0x8000u;int e=int(a>>23)-127;
  if(a>=0x7f800000u)return s|0x7c00u|((a&0x7fffffu)?0x200u:0u);
@@ -116,7 +117,7 @@ DEV float H(float x){if((bits(x)&0x7fffffffu)>=0x7f800000u)return x;return from_
 #define HIP_BRANCHLESS_F 1 /* 2026-09-17: with deep_fast and the fused attention file -0.12ms, bit-exact. F() as clamp+cvt+cndmask instead of a divergent branch pair per call (same values for every non-NaN input; NaN gives -448 instead of +-448) */
 #endif
 #if HIP_NATIVE_FP8_F && HIP_BRANCHLESS_F
-DEV float F(float x){float c=HIP_FP8_CLAMP(x+0.f);return __builtin_amdgcn_cvt_f32_fp8(__builtin_amdgcn_cvt_pk_fp8_f32(c,0.f,0,false),0);}
+DEV float F(float x){uint a=bits(x)&0x7fffffffu;float c=HIP_FP8_CLAMP(x);float r=__builtin_amdgcn_cvt_f32_fp8(__builtin_amdgcn_cvt_pk_fp8_f32(c,0.f,0,false),0);return a==0?0.f:r;}
 #elif HIP_NATIVE_FP8_F
 DEV float F(float x){
  uint b=bits(x),a=b&0x7fffffffu;
@@ -407,38 +408,25 @@ DEV void mh_pool_project_fused_body(const float*raw,const float*w,float*output,u
 // out[t][c] = in[raster(t)][ch(c)]), so the separate vit_gather launch disappears; values unchanged, only addresses.
 DEV uint pg_tinv(uint r){return (r&~15u)|((r&7u)<<1)|((r>>3)&1u);}
 DEV uint pg_cinv(uint k){return (k&~31u)|((k>>1)&1u)|((k&1u)<<1)|((k>>4)&1u)<<2|((k>>2)&1u)<<3|((k>>3)&1u)<<4;}
-template<uint C,bool Gout=false,bool HalfIn=false,bool ByteOut=false,bool F8W16=false>
+template<uint C,bool Gout=false,bool HalfIn=false>
 DEV void mh_pool_project_group_body(const float*raw,const float*wf,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){
  const uint M=width*height,N=2*C,S=C+8;uint tile=__builtin_amdgcn_workgroup_id_x();if(tile>=(M+15)/16)return;
  uint first=tile*16,t=__builtin_amdgcn_workitem_id_x(),wave=t/32,l=t%32,rc=l&15,g=l>>4,colg=wave*64;
- __attribute__((shared)) unsigned char pooled8[F8W16?16*S:1];
- __attribute__((shared)) _Float16 pooled[F8W16?1:16*S];
- for(uint k=0;k<16;k++){uint p=first+k,c=t;float v=0.f;if(p<M&&!(valid_width&&(p%width>=valid_width||p/width>=valid_height))){uint base=((p/width)*2*source_width+(p%width)*2)*C;auto rd=[&](uint i)->float{if constexpr(HalfIn)return float(reinterpret_cast<const _Float16*>(raw)[i]);else return raw[i];};float top=H(rd(base+c)+rd(base+C+c)),bottom=H(rd(base+source_width*C+c)+rd(base+(source_width+1)*C+c));v=F(H(H(top+bottom)*.25f));}if constexpr(F8W16)pooled8[k*S+c]=static_cast<unsigned char>(__builtin_amdgcn_cvt_pk_fp8_f32(v,0.f,0,false));else pooled[k*S+c]=(_Float16)v;}
+ __attribute__((shared)) _Float16 pooled[16*S];
+ for(uint k=0;k<16;k++){uint p=first+k,c=t;float v=0.f;if(p<M&&!(valid_width&&(p%width>=valid_width||p/width>=valid_height))){uint base=((p/width)*2*source_width+(p%width)*2)*C;auto rd=[&](uint i)->float{if constexpr(HalfIn)return float(reinterpret_cast<const _Float16*>(raw)[i]);else return raw[i];};float top=H(rd(base+c)+rd(base+C+c)),bottom=H(rd(base+source_width*C+c)+rd(base+(source_width+1)*C+c));v=F(H(H(top+bottom)*.25f));}pooled[k*S+c]=(_Float16)v;}
  WG_FENCE(3);__builtin_amdgcn_s_barrier();WG_FENCE(2);
  const _Float16*w16=reinterpret_cast<const _Float16*>(wf);
  f8 acc[4]{};
  for(uint chunk=0;chunk<C/32;chunk++){f8 sum[4]{};
-  if constexpr(F8W16){
-   using pool_i4=int __attribute__((ext_vector_type(4)));
-   i2 a0,a1;__builtin_memcpy(&a0,pooled8+rc*S+chunk*32+g*8,8);__builtin_memcpy(&a1,pooled8+rc*S+chunk*32+16+g*8,8);
-   for(uint j=0;j<4;j++){pool_i4 b;__builtin_memcpy(&b,reinterpret_cast<const unsigned char*>(wf)+(((colg/16+j)*(C/32)+chunk)*512)+(g*16+rc)*16,16);
-    sum[j]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(a0,i2{b[0],b[1]},sum[j]);
-    sum[j]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(a1,i2{b[2],b[3]},sum[j]);
-   }
-  }else{
   for(uint half=0;half<2;half++){uint sidx=chunk*2+half;h8 a;__builtin_memcpy(&a,pooled+rc*S+sidx*16+g*8,16);
    for(uint j=0;j<4;j++){h8 b;uint nt=colg/16+j;__builtin_memcpy(&b,w16+(nt*(C/16)+sidx)*256+(g*16+rc)*8,16);sum[j]=__builtin_amdgcn_wmma_f32_16x16x16_f16_w32_gfx12(a,b,sum[j]);}}
-  }
   for(uint j=0;j<4;j++)for(uint e=0;e<8;e++)acc[j][e]=H(acc[j][e]+sum[j][e]);
  }
- _Pragma("unroll") for(uint e=0;e<8;e++){uint q=first+g*8+e;if(q<M){bool inv=valid_width&&(q%width>=valid_width||q/width>=valid_height);_Pragma("unroll") for(uint j=0;j<4;j++){float a=acc[j][e],ac=__builtin_amdgcn_fmed3f(a+0.f,-448.f,448.f);int b8=__builtin_amdgcn_cvt_pk_fp8_f32(ac,0.f,0,false);uint idx=Gout?pg_tinv(q)*N+pg_cinv(colg+j*16+rc):q*N+colg+j*16+rc;if constexpr(ByteOut)reinterpret_cast<unsigned char*>(output)[idx]=inv?0u:static_cast<unsigned char>(b8);else output[idx]=inv?0.f:__builtin_amdgcn_cvt_f32_fp8(b8,0);}}}
+ for(uint j=0;j<4;j++)for(uint e=0;e<8;e++){uint q=first+g*8+e;if(q<M)output[Gout?pg_tinv(q)*N+pg_cinv(colg+j*16+rc):q*N+colg+j*16+rc]=(valid_width&&(q%width>=valid_width||q/width>=valid_height))?0.f:F(acc[j][e]);}
 }
 KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64>(raw,w,output,width,height,source_width,valid_width,valid_height);}
 KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128>(raw,w,output,width,height,source_width,valid_width,valid_height);}
 KERNEL __attribute__((amdgpu_flat_work_group_size(256,256))) void mh_pool_project_group_c256(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<256>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64_out8(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64,false,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128_out8(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128,false,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-KERNEL __attribute__((amdgpu_flat_work_group_size(256,256))) void mh_pool_project_group_c256_out8(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<256,false,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
 /* MH_POOL_HALF_IN (2026-10-01, swin-body-gap): the encoder tail stored as f16 (Hrtz, f16-exact); read back as f16 -> same float. New exports only. */
 #ifndef MH_POOL_HALF_IN
 #define MH_POOL_HALF_IN 0
@@ -446,8 +434,6 @@ KERNEL __attribute__((amdgpu_flat_work_group_size(256,256))) void mh_pool_projec
 #if MH_POOL_HALF_IN
 KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64_hin(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
 KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128_hin(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64_hin_out8(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64,false,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128_hin_out8(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128,false,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
 #endif
 FASTWAVE void mh_pool_project_fused_c64(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_fused_body<64>(raw,w,output,width,height,source_width,valid_width,valid_height);}
 FASTWAVE void mh_pool_project_fused_c128(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_fused_body<128>(raw,w,output,width,height,source_width,valid_width,valid_height);}
@@ -580,74 +566,6 @@ FASTWAVE void mh_attention_project_frag_c512(const unsigned char*av8,const float
   out[dest]=v;}
 #endif
 }
-
-template<uint Unroll,bool ByteOut=false,bool FB8=false>
-DEV void mh_attention_project_frag_c512_w16_body(const unsigned char*av8,const float*feature,const float*w,float*out,uint tokens,uint post,uint cropw,uint croph,uint workw,uint sx,uint sy){
- const uint C=512;uint l=__builtin_amdgcn_workitem_id_x(),rc=l&15,g=l>>4,block=__builtin_amdgcn_workgroup_id_x(),first=block/8*16,col=block%8*64;if(first>=tokens)return;
- const unsigned char*wb=reinterpret_cast<const unsigned char*>(w)+size_t(3)*C*C*4;const uint skip=4*C*C+(C/32)*4096+C/32;
- typedef int w16_i4 __attribute__((ext_vector_type(4)));
- if constexpr(FB8){
-  const unsigned char*feat8=reinterpret_cast<const unsigned char*>(feature);
-  const uint p=first+rc;const bool live=p<tokens;const uint pp=live?p:first;
-  f8 acc[4];
-  _Pragma("unroll") for(uint n=0;n<4;n++){uint c0=col+n*16+g*8;i2 fb;__builtin_memcpy(&fb,feat8+((pp/16)*16+c0/32)*512+(pp%16)*32+c0%32,8);
-   float wv[8];__builtin_memcpy(wv,__builtin_assume_aligned(w+skip+c0,16),32);
-   _Pragma("unroll") for(uint e=0;e<8;e++){float fv=__builtin_amdgcn_cvt_f32_fp8(int((uint(fb[e/4])>>(8*(e%4)))&255u),0);float h=Hrtz(fv*wv[e]);__asm__ volatile("":"+v"(h));acc[n][e]=live?h:0.f;}}
-  const unsigned char*arow=av8+(live?p:first)*C+g*8;
-  _Pragma("unroll 4") for(uint k=0;k<C;k+=32){uint gs=k/32;
-   i2 a0,a1;__builtin_memcpy(&a0,arow+k,8);__builtin_memcpy(&a1,arow+k+16,8);
-   a0=live?a0:i2{};a1=live?a1:i2{};
-   _Pragma("unroll") for(uint n=0;n<4;n++){uint n0=col+n*16+rc;w16_i4 bw;__builtin_memcpy(&bw,wb+((n0/16)*16+gs)*512+(g*16+n0%16)*16,16);
-    i2 b0={bw[0],bw[1]},b1={bw[2],bw[3]};
-    acc[n]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(b0,a0,acc[n]);
-    acc[n]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(b1,a1,acc[n]);}}
-  if(!live)return;
-  uint dest_p=p;
-  if(cropw){uint x=p%workw,y=p/workw;if(x<sx||y<sy||x>=sx+cropw||y>=sy+croph)return;dest_p=(y-sy)*cropw+x-sx;}
-  _Pragma("unroll") for(uint n=0;n<4;n++){uint c0=col+n*16+g*8,dest=dest_p*C+c0;
-   if constexpr(ByteOut){
-    uint b8v[2]{};
-    _Pragma("unroll") for(uint e=0;e<8;e++){float a=acc[n][e],h=Hrtz(a),hi=post==4?a:h,hc=__builtin_amdgcn_fmed3f(hi+0.f,-448.f,448.f);uint b8=uint(__builtin_amdgcn_cvt_pk_fp8_f32(hc,0.f,0,false))&255u;b8v[e/4]|=b8<<(8*(e%4));}
-    __builtin_memcpy(__builtin_assume_aligned(reinterpret_cast<unsigned char*>(out)+dest,8),b8v,8);
-   }else{
-    float v[8];
-    _Pragma("unroll") for(uint e=0;e<8;e++){float a=acc[n][e],h=Hrtz(a),hi=post==4?a:h,hc=__builtin_amdgcn_fmed3f(hi+0.f,-448.f,448.f);int b8=__builtin_amdgcn_cvt_pk_fp8_f32(hc,0.f,0,false);float f=__builtin_amdgcn_cvt_f32_fp8(b8,0);v[e]=post==3?h:f;}
-    __builtin_memcpy(__builtin_assume_aligned(out+dest,16),v,32);}}
-  return;
- }
- f8 acc[4];
- {float ws[4];for(uint n=0;n<4;n++)ws[n]=w[skip+col+n*16+rc];
-  float fv[4][8];for(uint n=0;n<4;n++)for(uint e=0;e<8;e++){uint p=first+g*8+e;uint pp=p<tokens?p:first;fv[n][e]=feature[pp*C+col+n*16+rc];}
-  for(uint n=0;n<4;n++)for(uint e=0;e<8;e++){uint p=first+g*8+e;float h=Hrtz(fv[n][e]*ws[n]);__asm__ volatile("":"+v"(h));acc[n][e]=p<tokens?h:0.f;}}
- const bool live=first+rc<tokens;
- const unsigned char*arow=av8+(live?first+rc:first)*C+g*8;
- if constexpr(Unroll==4){
-  _Pragma("unroll 4") for(uint k=0;k<C;k+=32){uint gs=k/32;
-   i2 a0,a1;__builtin_memcpy(&a0,arow+k,8);__builtin_memcpy(&a1,arow+k+16,8);
-   a0=live?a0:i2{};a1=live?a1:i2{};
-   _Pragma("unroll") for(uint n=0;n<4;n++){uint n0=col+n*16+rc;w16_i4 bw;__builtin_memcpy(&bw,wb+((n0/16)*16+gs)*512+(g*16+n0%16)*16,16);
-    i2 b0={bw[0],bw[1]},b1={bw[2],bw[3]};
-    acc[n]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(a0,b0,acc[n]);
-    acc[n]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(a1,b1,acc[n]);}}
- }else{
-  _Pragma("unroll 2") for(uint k=0;k<C;k+=32){uint gs=k/32;
-   i2 a0,a1;__builtin_memcpy(&a0,arow+k,8);__builtin_memcpy(&a1,arow+k+16,8);
-   a0=live?a0:i2{};a1=live?a1:i2{};
-   _Pragma("unroll") for(uint n=0;n<4;n++){uint n0=col+n*16+rc;w16_i4 bw;__builtin_memcpy(&bw,wb+((n0/16)*16+gs)*512+(g*16+n0%16)*16,16);
-    i2 b0={bw[0],bw[1]},b1={bw[2],bw[3]};
-    acc[n]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(a0,b0,acc[n]);
-    acc[n]=__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12(a1,b1,acc[n]);}}
- }
- const uint valid_tokens=(cropw&&!sx&&!sy&&cropw==workw)?croph*workw:tokens;
- _Pragma("unroll") for(uint e=0;e<8;e++){uint p=first+g*8+e;if(p<valid_tokens){
-  _Pragma("unroll") for(uint n=0;n<4;n++){uint c=col+n*16+rc;float a=acc[n][e],h=Hrtz(a),hi=post==4?a:h,hc=__builtin_amdgcn_fmed3f(hi+0.f,-448.f,448.f);int b8=__builtin_amdgcn_cvt_pk_fp8_f32(hc,0.f,0,false);if constexpr(ByteOut)reinterpret_cast<unsigned char*>(out)[p*C+c]=static_cast<unsigned char>(b8);else{float f=__builtin_amdgcn_cvt_f32_fp8(b8,0),v=post==3?h:f;out[p*C+c]=v;}}}}
-}
-FASTWAVE void mh_attention_project_frag_c512_w16(const unsigned char*av8,const float*feature,const float*w,float*out,uint tokens,uint post,uint cropw,uint croph,uint workw,uint sx,uint sy){mh_attention_project_frag_c512_w16_body<2>(av8,feature,w,out,tokens,post,cropw,croph,workw,sx,sy);}
-FASTWAVE void mh_attention_project_frag_c512_w16_u4(const unsigned char*av8,const float*feature,const float*w,float*out,uint tokens,uint post,uint cropw,uint croph,uint workw,uint sx,uint sy){mh_attention_project_frag_c512_w16_body<4>(av8,feature,w,out,tokens,post,cropw,croph,workw,sx,sy);}
-FASTWAVE void mh_attention_project_frag_c512_w16_bout(const unsigned char*av8,const float*feature,const float*w,float*out,uint tokens,uint post,uint cropw,uint croph,uint workw,uint sx,uint sy){mh_attention_project_frag_c512_w16_body<2,true>(av8,feature,w,out,tokens,post,cropw,croph,workw,sx,sy);}
-FASTWAVE void mh_attention_project_frag_c512_w16_u4_bout(const unsigned char*av8,const float*feature,const float*w,float*out,uint tokens,uint post,uint cropw,uint croph,uint workw,uint sx,uint sy){mh_attention_project_frag_c512_w16_body<4,true>(av8,feature,w,out,tokens,post,cropw,croph,workw,sx,sy);}
-FASTWAVE void mh_attention_project_frag_c512_w16_u4_fb8(const unsigned char*av8,const float*feature,const float*w,float*out,uint tokens,uint post,uint cropw,uint croph,uint workw,uint sx,uint sy){mh_attention_project_frag_c512_w16_body<4,false,true>(av8,feature,w,out,tokens,post,cropw,croph,workw,sx,sy);}
-FASTWAVE void mh_attention_project_frag_c512_w16_u4_fb8_bout(const unsigned char*av8,const float*feature,const float*w,float*out,uint tokens,uint post,uint cropw,uint croph,uint workw,uint sx,uint sy){mh_attention_project_frag_c512_w16_body<4,true,true>(av8,feature,w,out,tokens,post,cropw,croph,workw,sx,sy);}
 
 // C512_PROJ_WN4 (2026-10-01, results/gap-map-evening-20261001): mh_attention_project_frag_c512 reorganised like mochizuki's
 // Proj (WN=4): a 128-thread workgroup = the same 16 tokens x 64 columns, each wave one 16-column slice (one accumulator,
@@ -1228,27 +1146,3 @@ KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_ffn_fused_c
 KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_ffn_fused_c64_project_mapped_g128_qkv_bytein_fb_pdl(const float*in,const float*w,const float*aw,unsigned char*out,unsigned char*norm,uint tokens,uint width,uint height,uint workw,uint sx,uint sy,const uint*pflags,uint pepoch,uint pww,uint psx,uint psy,uint*fflags,uint fepoch){pdl_ffn_wait(pflags,pepoch,pww,psx,psy,tokens,width,height,workw,sx,sy);mh_ffn_qkv_body<64,false,true,true,true,true,true>(in,w,out,tokens,width,height,workw,sx,sy,aw,norm);pdl_publish(fflags,__builtin_amdgcn_workgroup_id_x());}
 KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_ffn_fused_c64_project_mapped_g128_qkv_fb_pdl(const float*in,const float*w,const float*aw,unsigned char*out,unsigned char*norm,uint tokens,uint width,uint height,uint workw,uint sx,uint sy,const uint*pflags,uint pepoch,uint pww,uint psx,uint psy,uint*fflags,uint fepoch){pdl_ffn_wait(pflags,pepoch,pww,psx,psy,tokens,width,height,workw,sx,sy);mh_ffn_qkv_body<64,false,true,true,true,false,true>(in,w,out,tokens,width,height,workw,sx,sy,aw,norm);pdl_publish(fflags,__builtin_amdgcn_workgroup_id_x());}
 #endif
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64,false,false,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64_out8_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64,false,false,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64_hin_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64,false,true,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(64,64))) void mh_pool_project_group_c64_hin_out8_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<64,false,true,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128,false,false,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128_out8_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128,false,false,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128_hin_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128,false,true,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(128,128))) void mh_pool_project_group_c128_hin_out8_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<128,false,true,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(256,256))) void mh_pool_project_group_c256_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<256,false,false,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(256,256))) void mh_pool_project_group_c256_out8_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<256,false,false,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(512,512))) void mh_pool_project_group_c512_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<512,false,false,false,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}
-
-KERNEL __attribute__((amdgpu_flat_work_group_size(512,512))) void mh_pool_project_group_c512_out8_f8w16(const float*raw,const float*w,float*output,uint width,uint height,uint source_width,uint valid_width,uint valid_height){mh_pool_project_group_body<512,false,false,true,true>(raw,w,output,width,height,source_width,valid_width,valid_height);}

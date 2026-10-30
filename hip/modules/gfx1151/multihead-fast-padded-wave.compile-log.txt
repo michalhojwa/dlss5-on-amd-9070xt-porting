@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\multihead-fast-padded-wave.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\multihead-fast-padded-wave.generated.hip [gfx1151] OK hsaco=3642656 B asm skipped

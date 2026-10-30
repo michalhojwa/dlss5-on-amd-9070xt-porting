@@ -1,0 +1,5 @@
+COMGR 3.0
+ISA amdgcn-amd-amdhsa--gfx1103
+assembly emitted
+COMGR kind5: 
+ELF hsaco saved bytes=207688 path=C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1103\c32_wmma.hsaco

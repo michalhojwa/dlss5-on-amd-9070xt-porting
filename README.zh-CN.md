@@ -4,10 +4,8 @@ DLSS 5（DLSSNR）跑在 AMD RX 9070 XT / RDNA 4 上。
 
 [English](README.md)
 
-> 🔗 **NVIDIA RTX 30 系显卡（`sm_86` 安培架构）姊妹项目：[DLSS5-RTX-3080-laptop](https://github.com/lmxxf/DLSS5-RTX-3080-laptop)** —— 将最新 `310.9.16.0` 的 31 块 DLSS 5 轻量新模型（Small `0.5x`）移植至 RTX 3060～3090 Ti 及笔记本端显卡（同时包含满血 `O4` PTX 原位二进制改写与独立 Ampere CUDA 推理引擎两条路线；RTX 3080 Laptop 实测 720p `14.1～15.8 ms`、900p `23.5～24.5 ms`、1080p `31.3～32.0 ms`，提供常规 OptiScaler、REFramework 与 Magpie 三套开箱即用发布包）。
-
 把 NVIDIA DLSS 5 的神经渲染器（`nvngx_dlssnr.dll` 里那张 71 块的 Swin/ViT 网络，"DLSSNR"）从零重做到 AMD RDNA 4 上。网络逐块逆向后，
-现在以每架构 40 个 HIP 模块的形式运行（gfx1201 = RX 9070 系，gfx1200 = RX 9060 系），跑在 AMD 驱动自带的 HIP 7 运行时上。权重是 NVIDIA 的，
+现在以每架构 38 个 HIP 模块的形式运行（gfx1201 = RX 9070 系，gfx1200 = RX 9060 系），跑在 AMD 驱动自带的 HIP 7 运行时上。权重是 NVIDIA 的，
 从用户自己那份 DLL 里提取；本仓库不分发任何 NVIDIA 的东西。
 
 现在每个包的流水线都是：**游戏按它的（低）渲染分辨率出一帧 → 我们的网络处理这一帧 → 宿主的超分（FSR）放大到显示分辨率。** 三个包是三种接到这个位置的方式：
@@ -18,9 +16,7 @@ DLSS 5（DLSSNR）跑在 AMD RX 9070 XT / RDNA 4 上。
 | **Magpie**（便携） | 任何游戏，不需要游戏支持超分 | Magpie 抓游戏窗口；网络接在效果组的 FSR3_SR 一项里，之后 FSR4 放大到全屏（可选 XeSS 帧生成） |
 | **OptiScaler-REFramework**（只给 RE9） | 《生化危机 9》，常规路线切不开它的命令提交 | TheAutomatic 改的 OptiScaler 宿主 + 我们的 `LmxxfNrRuntime.dll`（成对使用，别和常规包混装） |
 
-**当前版本：0.45（2026-10-24）。** 下载：[夸克](https://pan.quark.cn/s/0ccb3eff675b) · [Gofile 镜像](https://gofile.io/d/hmrcTjuS)（0.44 旧版：[夸克](https://pan.quark.cn/s/ea87c0ffd257) · [Gofile 镜像](https://gofile.io/d/YCNT57JP)）。保持 Small 0.5x 默认、MODE/AE 和 F9 语义，补齐紧凑字节路径，改进 V 片段布局与 C512 成对打包；Q/K 新布局仅在三个已验处理形状启用（**Small 0.5x 单帧耗时：1080 档 `5.487 ms`、900 档 `4.245 ms`、720 档 `2.990 ms`；Original 1x：900 档 `6.408 ms`、1088 档 `8.794 ms`**）。[完整说明与验证范围](CHANGELOG.zh-CN.md#045--2026-10-24)。
-
-**📖 使用与调参必看：[使用与参数配置完整说明（选包、custom-config.txt 写哪、F6～F9 热键、全部参数与抄作业配方）](使用与参数配置说明.md)**（底层全量字典见 [scripts/CONFIGURATION.zh-CN.md](scripts/CONFIGURATION.zh-CN.md)）。
+**当前版本：0.41（2026-10-05）。** 默认1x；选3x才默认两遍真实网络加预测第三遍（有损），显式`DLSS5_MULTI_PASS_PREDICT=0`运行真三遍，肤色保护默认0。包含首帧/HIP设备绑定修复、RE9强度文件控制及逐位数据流优化，快速数值扩展到ViT/deep。下载：[夸克](https://pan.quark.cn/s/dbda3e470f8f) · [Gofile 镜像](https://gofile.io/d/YAENU0ex)。详见[更新日志](CHANGELOG.zh-CN.md)。
 
 **历史版本：0.40（2026-10-03）。** **默认输出变了**：全 71 块 + fast 数值（`DLSS5_SKIP_BLOCKS=` 空值、`DLSS5_FAST_NUMERIC=1`），对 NVIDIA 44.26 → 47.55 dB、偏色消失，每帧慢约 0.12 / 0.19 ms（900 / 1080）；写 `DLSS5_SKIP_BLOCKS=42,43,46` + `DLSS5_FAST_NUMERIC=0` 就逐位回到 0.39。新东西：叠层 `DLSS5_MULTI_PASS=1/2/3`（风格更浓，耗时约 N 倍；游戏里 F9 轮换，《剑星》2K 57 / 37 / 27 fps）、三个配置文件（`default-config.txt` → `custom-config.txt` → `native-game-flags.txt`，环境变量最高；包里不再带你的文件）、逐位提速（C32/C64 改 LLVM 23 编，1080 约 −0.2 ms）。下载：[夸克](https://pan.quark.cn/s/d38e0f653c5a) · [Gofile 镜像](https://gofile.io/d/moSf7cqf)。0.39：[夸克](https://pan.quark.cn/s/dea9c0ef2f95) · [Gofile 镜像](https://gofile.io/d/iqtFTSpS)。
 
@@ -133,21 +129,21 @@ DLSS5_MULTI_PASS=2
 
 ## 编译
 
-### 当前 HIP 源码怎么编（0.43）——每个发布文件从哪来
+### 当前 HIP 源码怎么编（0.40发布后、0.41）——每个发布文件从哪来
 
 | 包里的文件 | 源码 | 编法 |
 |---|---|---|
 | `dlss5-amd.addon64`（Magpie / OptiScaler 包） | `src/native_submission_order_probe.cpp` + `src/*.h`、`Development/HIP/*.h`（桥） | Linux/WSL：`bash scripts/build-addon-oneclick.sh dlss5-amd.addon64 --hip`（自动把 MinHook 和 ReShade 6.8 头文件拉到 `third_party/`；需要 `g++-mingw-w64-x86-64`）。当前脚本固定image base并去PE时间戳；同编译器/依赖下核hash，另验行为，不承诺跨工具链hash相同 |
-| `DLSS5-AMD\native-game-tiled-assets\HIP\gfx120{0,1}\*.hsaco`（40/架构，共80） | `hip/build-modules.ps1`及其源文件 | 按下方混合编译流程；六个LLVM23模块/架构，其余34个驱动COMGR；必须用`-RowOpts -PrebuiltDir`复现生产配方 |
+| `DLSS5-AMD\native-game-tiled-assets\HIP\gfx120{0,1}\*.hsaco`（38/架构，共76） | `hip/build-modules.ps1`及其源文件 | 按下方混合编译流程；五个LLVM23模块/架构，其余33个COMGR21；必须用`-RowOpts -PrebuiltDir`复现生产配方 |
 | `shaders/*.hlsl` 那 12 个（编解码、屏幕文字、RGB 搬运、时序座标、帧检查） | `shaders/`（历史 DX12 网络链在 `shaders/dx12-network/`） | 直接以源码随包；运行时由系统 `d3dcompiler` 编（宿主按 `#define` 选 44 个变体） |
 | RE9 包：`dxgi.dll`（改过的 OptiScaler 宿主）+ `LmxxfNrRuntime.dll` | TheAutomatic 的 fork `release/1.9.0` @ `8f71f73` + 我们在 `Development/RE9/presr/` 的补丁 | `python3 Development/RE9/presr/prepare-host.py`（需要锁定版本的宿主源码：`git clone https://github.com/TheAutomatic/dlss-5-amd-project /tmp/re9-upstream-bridge-review && git -C /tmp/re9-upstream-bridge-review checkout 8f71f73`；重写宿主/runtime 源码并把 `src/`、`shaders/`、`hip/` 拷进 `third_party/lmxxf/`），再 `bash Development/RE9/presr/build-runtime.sh`（MinGW，编 runtime 和冒烟测试）和 Windows 上跑 `build-host.ps1`（Visual Studio 2022 Build Tools：MSVC v143 + Windows SDK 10.0.26100；用 vswhere 自动找，或 `-MSBuild <路径>`）。不用 Linux 也行：每个 RE9 包都带着准备好的源码 `sources\re9-presr-source.tar.gz`，`powershell -File Development\RE9\presr\build-host.ps1 -Root <工作目录> -Archive <那个 tar.gz>` 就能编出宿主（`<工作目录>\bin\OptiScaler.dll`，发布时改名 `dxgi.dll`；2026-09-26 用 0.32 包里的源码实测：91 秒，大小与发布的 `dxgi.dll` 相同，hash 因 MSVC 时间戳不同）。上游 clone 放别处就设 `RE9_UPSTREAM=<目录>`——见 `Development/RE9/presr/README.md`；同一套源码打成 `sources/re9-presr-source.tar.gz` 随包（`bundle-source.py`） |
 | 独立的 `LmxxfNrRuntime.dll`（接口 `include/LmxxfNrApi.h`，TheAutomatic 贡献） | `src/LmxxfNrRuntime.cpp` | Linux/WSL：`bash scripts/build-runtime.sh`；Windows：`scripts\build-runtime.cmd`（要 MSYS2 UCRT64 的 g++：`pacman -S mingw-w64-ucrt-x86_64-gcc`；用别的 g++ 就设 `LMXXF_GXX`） |
 | `DLSS5-AMD\default-config.txt`及`custom-config.template.txt` | [配置参考](scripts/CONFIGURATION.zh-CN.md)链接的三宿主模板及`scripts/custom-config.txt` | `Development/tools/stage-config-layers.ps1`复制；不打包玩家custom/native文件 |
 | 权重（`*.f16` / `*.f32`）、`noise.f32` | 不在仓库里（见"权重"） | 随包；新包从上一个完整包接着做 |
 
-打包入口为 `Development/tools/package-043.ps1`：以已校验0.42完整ZIP为底包，复用已验10982cf4宿主与双架构80模块，执行包内shader、RE9 smoke和ZIP逐文件回读。配置通过`stage-config-layers.ps1`进入default-config，不升级已安装游戏。
+打包入口目前是 `Development/tools/package-041.ps1`，用于0.41本地构建和已校验的0.40基础ZIP、框架及模型资产，不是从源码自动生成全部第三方资产；0.41包已完成发行校验；不能只改版本号就当发行验证完成。模板通过`stage-config-layers.ps1`进入default-config；该脚本不升级已安装游戏。
 
-发布前需核对双架构ELF目标和全部导出、80模块清单，以及当前同源正常19（normal/AE/roll）、相关多遍与RE9路径；数值改动开关另行标注。历史`validate-modules.ps1`及prod6脚本不覆盖所有新路径，不能当当前完整验收。
+发布前需核对双架构ELF目标和全部导出、76模块清单，以及当前同源正常19（normal/AE/roll）、相关多遍与RE9路径；数值改动开关另行标注。历史`validate-modules.ps1`及prod6脚本不覆盖所有新路径，不能当当前完整验收。
 
 内核的活是怎么组织的（给想接着做的人）：每个优化都是 `Development/HIP/experiments/<名字>/` 下的一个实验（`prepare.py` 把生产源码改成 `_pairN` 变体或模块集，`build.ps1`、`run.ps1`，有时还有 `analyze.py`），结果写在 `Development/results/<名字>-<日期>/README.md`；采用的改动变成源码里带默认值的 `HIP_*` 开关。`Development/WorkingPlan.md` 是现在在干什么，`Development/DevHistory.md` 是干过什么、为什么。
 
@@ -259,10 +255,6 @@ powershell -ExecutionPolicy Bypass -File scripts\deploy_fast.ps1 -Source <lab> -
 | 0.39 · 三个包（Magpie · OptiScaler · OptiScaler-REFramework，HIP）[夸克](https://pan.quark.cn/s/dea9c0ef2f95) · [Gofile 镜像](https://gofile.io/d/iqtFTSpS) | 10-01 | 默认与 0.38 逐位相同：C512 FFN 一 wave 寄存器内完成、残差初始化/权重读取外提、解码加宽、ViT QKV/attention 合并等；离线 900 约 7.27 → 6.8ms、1080 约 10.05 → 9.5ms，《剑星》2K +1.5～2 帧。新开关 `DLSS5_STYLE=1`；add-on/runtime 可复现构建。 |
 | 0.40 · 三个包（Magpie · OptiScaler · OptiScaler-REFramework，HIP）[夸克](https://pan.quark.cn/s/d38e0f653c5a) · [Gofile 镜像](https://gofile.io/d/moSf7cqf) | 10-03 | **默认输出变了**：全 71 块 + `DLSS5_FAST_NUMERIC=1`（对 NVIDIA 44.26 → 47.55 dB，+0.12/+0.19 ms）。叠层 `DLSS5_MULTI_PASS` + F9；三个配置文件（`default-config` → `custom-config` → `native-game-flags`，环境变量最高）；C32/C64 改 LLVM 23 等逐位提速。 |
 | 0.41 · [夸克](https://pan.quark.cn/s/dbda3e470f8f) · [Gofile 镜像](https://gofile.io/d/YAENU0ex) | 10-05 | 默认1x；选3x才默认两真实遍加预测。首帧/HIP设备修复、RE9强度、C256/ViT/C512及直接RGBA优化，76模块；[完整说明](CHANGELOG.zh-CN.md)。 |
-| 0.42 · [夸克](https://pan.quark.cn/s/316704620069) · [Gofile 镜像](https://gofile.io/d/HNE20Ocp) | 10-13 | 默认MODE0/1x/SKIN0；已采纳数据流、可选时序接口及狭域分配节省（省216MiB权重+33.75MiB无history缓冲），80模块；单帧耗时 1080 档约 9.65 ms。[完整说明](CHANGELOG.zh-CN.md)。 |
-| 0.43 · [夸克](https://pan.quark.cn/s/3b19c0403e3f) · [Gofile 镜像](https://gofile.io/d/hz5cDOPF) | 10-17 | W16权重访问、跨核1B E4M3字节直连（消除全部8次`vit_pack_input`）、上下采样W16 FP8与MODE2/3资源环优化；已验固定配置逐位一致，80模块；**单帧耗时 1080 档 9.12 ms（最佳单槽 8.96 ms）、900 档 6.54 ms**。[完整说明](CHANGELOG.zh-CN.md)。 |
-| 0.44 · [夸克](https://pan.quark.cn/s/ea87c0ffd257) · [Gofile 镜像](https://gofile.io/d/YCNT57JP) | 10-18 | **默认改为 `310.9.16.0` 的 31 块 Small 模型（`0.5x`）**：**单帧耗时 1080 档 5.554 ms（−39.35%）、900 档 4.377 ms（−33.26%）**，常驻权重 147.6 MiB；接通 1080/900/720/free 几何、8 块 ViT AE 复用与 MODE1 时序（`0x3A23`）；F9 按 `0.5 → 1 → 2 → 3 → 0.5` 循环（含 `4764e4f1` 热修：同尺寸零 IO 切换、双模型权重常驻、RE9/鬼武者只读虚拟盘 F9 内存即时切换）。[完整说明](CHANGELOG.zh-CN.md)。 |
-| 0.45 · [夸克](https://pan.quark.cn/s/0ccb3eff675b) · [Gofile 镜像](https://gofile.io/d/hmrcTjuS) | 10-24 | 紧凑字节路径（Small 900/720/free1088 各省 120MiB 活动权重与 8 次输入打包）、ViT V 片段 16B 连续布局、C512 成对 FP8 打包；Q/K 限定 Original900、Small900/1080（**Small 0.5x 单帧耗时：1080 档 5.487 ms、900 档 4.245 ms、720 档 2.990 ms**）。保持 0.5x 默认和 MODE/F9，负候选不入包。[说明](CHANGELOG.zh-CN.md)。 |
 
 
 ## 权重

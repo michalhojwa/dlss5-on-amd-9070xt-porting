@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\vit-wide-deep.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\vit-wide-deep.generated.hip [gfx1151] OK hsaco=1676128 B asm skipped

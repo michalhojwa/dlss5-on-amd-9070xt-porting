@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\multihead-wmma.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\multihead-wmma.generated.hip [gfx1151] OK hsaco=229712 B asm skipped

@@ -1,0 +1,51 @@
+FOLDER C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1103
+hsaco 41
+ISA tags {'gfx1103': 41}
+assembly dumps 41
+generated.hip 41
+SHA256SUMS lines 41 hash mismatches 0 []
+in SPECT but no hsaco []
+hsaco not in SPECT []
+modules.json entries 41
+LOG boundary-fast.compile-log.txt 181 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=88920 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\boundary-fast.hsaco\n'
+LOG boundary_reference.compile-log.txt 186 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=17320 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\boundary_reference.hsaco\n'
+LOG c32-wave1-fast-norm900.compile-log.txt 192 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=2872496 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32-wave1-fast-norm900.hsaco\n'
+LOG c32-wave1-fast.compile-log.txt 184 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=2878768 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32-wave1-fast.hsaco\n'
+LOG c32-wave1-rtz.compile-log.txt 183 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=2893872 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32-wave1-rtz.hsaco\n'
+LOG c32-wave1.compile-log.txt 179 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=2770224 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32-wave1.hsaco\n'
+LOG c32_alu.compile-log.txt 176 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=168264 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_alu.hsaco\n'
+LOG c32_fast.compile-log.txt 177 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=123944 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_fast.hsaco\n'
+LOG c32_fast_attention.compile-log.txt 186 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=65664 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_fast_attention.hsaco\n'
+LOG c32_fused_attention.compile-log.txt 187 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=62128 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_fused_attention.hsaco\n'
+LOG c32_fused_ffn_attention-packed.compile-log.txt 200 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1107904 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_fused_ffn_attention-packed.hsaco\n'
+LOG c32_fused_ffn_attention.compile-log.txt 193 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1289152 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_fused_ffn_attention.hsaco\n'
+LOG c32_prefix_reference.compile-log.txt 188 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=34760 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_prefix_reference.hsaco\n'
+LOG c32_tiled.compile-log.txt 177 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=83504 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_tiled.hsaco\n'
+LOG c32_wmma.compile-log.txt 177 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=207688 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c32_wmma.hsaco\n'
+LOG c512-m32-deep.compile-log.txt 183 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1547736 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c512-m32-deep.hsaco\n'
+LOG c512-m32-mh.compile-log.txt 181 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=3407192 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c512-m32-mh.hsaco\n'
+LOG c64-wave2-fast.compile-log.txt 184 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=8710792 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c64-wave2-fast.hsaco\n'
+LOG c64-wave2.compile-log.txt 179 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=8599176 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\c64-wave2.hsaco\n'
+LOG deep_fast-packed-fast.compile-log.txt 191 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1456176 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\deep_fast-packed-fast.hsaco\n'
+LOG deep_fast-packed.compile-log.txt 186 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1401904 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\deep_fast-packed.hsaco\n'
+LOG deep_fast.compile-log.txt 179 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1681704 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\deep_fast.hsaco\n'
+LOG deep_reference.compile-log.txt 182 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=66856 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\deep_reference.hsaco\n'
+LOG deep_wmma.compile-log.txt 177 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=81080 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\deep_wmma.hsaco\n'
+LOG multi-pass-predict.compile-log.txt 186 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=14072 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multi-pass-predict.hsaco\n'
+LOG multi-pass-skin.compile-log.txt 183 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=12632 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multi-pass-skin.hsaco\n'
+LOG multihead-fast-packed.compile-log.txt 190 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=214472 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead-fast-packed.hsaco\n'
+LOG multihead-fast-padded-wave-packed.compile-log.txt 203 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=3717488 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead-fast-padded-wave-packed.hsa'
+LOG multihead-fast-padded-wave.compile-log.txt 196 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=3643424 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead-fast-padded-wave.hsaco\n'
+LOG multihead-fast.compile-log.txt 183 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=224968 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead-fast.hsaco\n'
+LOG multihead-reference.compile-log.txt 187 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=64136 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead-reference.hsaco\n'
+LOG multihead-tiled.compile-log.txt 184 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=100400 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead-tiled.hsaco\n'
+LOG multihead-wmma.compile-log.txt 183 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=229712 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead-wmma.hsaco\n'
+LOG multihead_fused_attention.compile-log.txt 195 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=2004896 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\multihead_fused_attention.hsaco\n'
+LOG prefix_fast.compile-log.txt 179 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=71480 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\prefix_fast.hsaco\n'
+LOG swin-persistent-fast.compile-log.txt 190 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=4496432 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\swin-persistent-fast.hsaco\n'
+LOG swin-persistent.compile-log.txt 185 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=4440112 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\swin-persistent.hsaco\n'
+LOG vit-stream-fast.compile-log.txt 185 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=2004872 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\vit-stream-fast.hsaco\n'
+LOG vit-stream.compile-log.txt 180 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1919368 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\vit-stream.hsaco\n'
+LOG vit-wide-deep.compile-log.txt 183 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=1677664 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\vit-wide-deep.hsaco\n'
+LOG wave-pointwise.compile-log.txt 182 'COMGR 3.0\nISA amdgcn-amd-amdhsa--gfx1103\nassembly emitted\nCOMGR kind5: \nELF hsaco saved bytes=44784 path=C:\\kien\\dlss5-on-amd-9070xt-porting\\hip\\modules\\gfx1103\\wave-pointwise.hsaco\n'
+non-empty compile logs 41 compiler-OK logs 41 error-ish logs 0

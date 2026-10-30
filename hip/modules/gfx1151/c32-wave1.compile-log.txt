@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\c32-wave1.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\c32-wave1.generated.hip [gfx1151] OK hsaco=2767024 B asm skipped

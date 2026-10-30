@@ -1,0 +1,330 @@
+[
+    {
+        "target":  "gfx1103",
+        "module":  "c32_prefix_reference",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_reference.hip+prefix_reference.hip",
+        "opts":  "",
+        "sha256":  "8BD74620E0625DCD576004B4DA1326CE7D9C4440F3458AF51AC86E433388CDB8"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead-reference",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "multihead_reference.hip",
+        "opts":  "",
+        "sha256":  "ED297A0C3B1284491C7108D52C55EC4F029306E51DB687B6337FF894340D22A5"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "deep_reference",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "deep_reference.hip",
+        "opts":  "",
+        "sha256":  "48D11970FAFB6A9379976DD6ADF315B81433C5D2FD9F076DBC62CB2DB02CC6BB"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "boundary_reference",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "boundary_reference.hip",
+        "opts":  "",
+        "sha256":  "8539E7EE731543C63B99D5B5F8658F27F821767A33BB695DDF6EC50DA72CE426"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_wmma",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_wmma.hip",
+        "opts":  "",
+        "sha256":  "9807C5B8617D115AE12B3E60DE68281AB20002D20D29CD65953E260ABB540382"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_alu",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_alu.hip",
+        "opts":  "",
+        "sha256":  "B3FC7B9151EA0E76A12C961430B6C2A02125BE9F977A43809F677D6DA2F9EB44"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead-wmma",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "multihead_wmma.hip",
+        "opts":  "",
+        "sha256":  "77F543B9FB3C6424B74634FE8FF4F00AF60116D8D367646E2C27293B9FB9F9AE"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "deep_wmma",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "deep_wmma.hip",
+        "opts":  "",
+        "sha256":  "91CEB6B819A62339E7D0D567D204A8CA3DC99EF5094ABBD943683B530E1996D9"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "wave-pointwise",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_reference.hip+wave_pointwise.hip",
+        "opts":  "",
+        "sha256":  "CF178F92E4B31C94A74C41BCAA6D67155A3DA2E1146617DD398AAC04E8FEA4D7"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_tiled",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_tiled.hip",
+        "opts":  "",
+        "sha256":  "BF15F58693B02C3BAAE0E400422F91F1C137072CF4DC809AABECB3CB3C4797C9"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead-tiled",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "multihead_tiled.hip",
+        "opts":  "",
+        "sha256":  "CD9712A613AB94605B403B7F112CB874E12E2E633EE84A0391B0BEA0E1689122"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_fast.hip",
+        "opts":  "",
+        "sha256":  "FD88E5EC591FA0B2516AE1CED96E49CB2BABF9E4C8CF12D7402A8499F60ECDA2"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_fast_attention",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_fast_attention.hip",
+        "opts":  "",
+        "sha256":  "93D6B89CDB5A7D46EEACE40D218026B8A2E9A7C8E79C7F979F841E0C82554625"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "boundary-fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_fast_attention.hip+boundary_fast.hip",
+        "opts":  "",
+        "sha256":  "5082E07E26605C4B7AB1FE7CC29B3F61A33F6DA1723CCFC2D786648781BD7924"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_fused_attention",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "c32_fused_attention_packed.hip",
+        "opts":  "",
+        "sha256":  "5BDFBBD9CD8FB7267BB5BEA23676376C2DE3461914B4DA807BD865DC36CC6F4C"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_fused_ffn_attention",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; HIP_FP8_SAT_MODE 3",
+        "sources":  "c32_fused_ffn_attention.hip",
+        "opts":  "",
+        "sha256":  "9A667AA6846C994449EF5EAF8989719B2EB7C4E21E515C87D8AF086147E175E2"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32_fused_ffn_attention-packed",
+        "defines":  "HIP_ISA_HALF 1; HIP_PREPACKED_WEIGHTS 1; CW_PACK_MODE_MASK 0; HIP_C32_DIAG_WEIGHTS 1; HIP_FP8_SAT_MODE 3",
+        "sources":  "c32_fused_ffn_attention.hip",
+        "opts":  "",
+        "sha256":  "717F8AA8AC98671C8FD7F1A35A0015A66D00A7A9937ACB2A1826DF43ED8C2C66"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "prefix_fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "prefix_fast.hip",
+        "opts":  "",
+        "sha256":  "381A49E8D6252AAE10F587E3913592338C9D5AEF8CFE48F261AD982CDC0B8BD0"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead-fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "multihead_fast.hip",
+        "opts":  "",
+        "sha256":  "A34AAD03CD52A9C7168A80B869453C70C5E855BA0D11B5C02FCEC9DABCF0A248"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead-fast-padded-wave",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; HIP_FMED3_CLAMP 1",
+        "sources":  "multihead_fast_padded.hip",
+        "opts":  "",
+        "sha256":  "701101A8538CD3977BE18843DC83588E280626071B4B3B847D9DD018BCBD1026"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead_fused_attention",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; HIP_MH_RTZ_ISA 1",
+        "sources":  "multihead_fused_attention.hip",
+        "opts":  "",
+        "sha256":  "12E40FB6C38C6BFAFFC349CC8E33742501490FB71F07FFD67B83FAAFEFB36A12"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "deep_fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "deep_fast.hip",
+        "opts":  "",
+        "sha256":  "2FED9156BFFD58CFD1136B41D12D637E64A8CC6B9AECCBEDF878C2AF5CF82A55"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "deep_fast-packed",
+        "defines":  "HIP_ISA_HALF 1; HIP_PREPACKED_WEIGHTS 1; CW_PACK_MODE_MASK 0; HIP_DEC_WIDE 1; HIP_VIT_ATTN_NATIVE_HALF 1; HIP_VIT_ATTN_PROB_PAIR 1; HIP_VIT_ATTN_TRANSPOSED_AV 1; HIP_VIT_ATTN_TRANSPOSED_SCORE 1; HIP_BRANCHLESS_F 1; C512_F_MASK 1; C512_T8_TAIL_VEC 1; HIP_BYTE_F_ADD0 1; HIP_VIT_ATTN_RCP 1",
+        "sources":  "deep_fast.hip",
+        "opts":  "",
+        "sha256":  "F2A2209557C5621151DA389A0B6EB83E4B422C65D472D8C65E7ED18B7B0D3897"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead-fast-packed",
+        "defines":  "HIP_ISA_HALF 1; HIP_PREPACKED_WEIGHTS 1; CW_PACK_MODE_MASK 0",
+        "sources":  "multihead_fast.hip",
+        "opts":  "",
+        "sha256":  "EFD18B484DE62C6AA00D45372376A7385D3BA8B518332FFDD328ADE77E71FC64"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multihead-fast-padded-wave-packed",
+        "defines":  "HIP_ISA_HALF 1; HIP_PREPACKED_WEIGHTS 1; CW_PACK_MODE_MASK 0; MH_POOL_HALF_IN 1; C512_HEAD_GROUP 1; HIP_C512_HOIST_RES 1; HIP_FFN_HOIST_RES 2; HIP_FFN_LINE_STORES 1; HIP_FMED3_CLAMP 1; HIP_POOL32_B8 1",
+        "sources":  "multihead_fast_padded.hip+c512_head_group.inc",
+        "opts":  "",
+        "sha256":  "6761D45B54E3A3FDF54BA5F05C02F5702FA776CD4F36403851FD1B191B57D687"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32-wave1",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; CW_UP_FUSED 1; CW_ACT_FMED3 1; HIP_PREPACKED_WEIGHTS 1; CW_ROLL_HIDDEN 1; CW_ROLL_WINDOW 1; CW_VEC_INPUT 1; CW_PREFIX_SPLIT 1; CW_PACK8 1; HIP_FP8_SAT_MODE 3; CW_DIRECT_OUT 1; CW_RTZ_PAIR 1; CW_PREFIX_DIRECT_OUT 1; CW_PREFIX_FULL_TILE 1; CW_FINISH_FULL_TILE 1; CW_SKIP_BYTE 1; CW_DIAG_ONLY 1; CW_INPUT_HALF 7; CW_PREFIX_HALF_SOURCE 1; CW_PREPOST_BYTE 1; CW_PREFIX_TAIL_VEC 1; CW_FINISH_TAIL_VEC 1; CW_HOIST_UP 3",
+        "sources":  "c32_fused_ffn_attention.hip+wave_owned_c32.inc",
+        "opts":  "",
+        "sha256":  "FEC82FA1DCBBEF0E4ABEC6B1357A75B9C81B151696FCC44D87D58CC859A69A81"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32-wave1-rtz",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; CW_UP_FUSED 1; CW_ACT_FMED3 1; HIP_PREPACKED_WEIGHTS 1; CW_ROLL_HIDDEN 1; CW_ROLL_WINDOW 1; CW_VEC_INPUT 1; CW_PREFIX_SPLIT 1; CW_PACK8 1; HIP_FP8_SAT_MODE 3; CW_DIRECT_OUT 1; CW_RTZ_PAIR 1; CW_PREFIX_DIRECT_OUT 1; CW_PREFIX_FULL_TILE 1; CW_FINISH_FULL_TILE 1; CW_SKIP_BYTE 1; CW_DIAG_ONLY 1; CW_INPUT_HALF 7; CW_PREFIX_HALF_SOURCE 1; CW_PREPOST_BYTE 1; CW_PREFIX_TAIL_VEC 1; CW_FINISH_TAIL_VEC 1; CW_HOIST_UP 3; HIP_C32_RTZ_ISA 2",
+        "sources":  "c32_fused_ffn_attention.hip+wave_owned_c32.inc",
+        "opts":  "",
+        "sha256":  "22BCB54217E571CD526E1AC0941DC4B16C89DA4866B84F6D62D7EC4F06490168"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c64-wave2",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; W2_UP_FUSED 1; W2_FFN_QT_SMALL_MASK 3; W2_FFN_QT_BATCH 4; W2_BOUNDED_RCP 1; HIP_PREPACKED_WEIGHTS 1; HIP_FFN_HOIST_RES 2; HIP_PDL_KERNELS 0; W2_FRAGMENT_WEIGHTS 1; W2_LAUNDER_QKV 1; W2_SCHED_FENCE 1; W2_ROLL_QUERY 1; W2_HIDDEN_TILES 2; W2_PACK8 6; HIP_FMED3_CLAMP 1; W2_BYTE_INPUT_LOADS 1; W2_RTZ_PAIR 1; W2_DIRECT_COORDS 1; W2_Q8_MASK 1; W2_FFN_W16 1; W2_HOIST_LOADS 15; W2_UP_LOW_BYTES 1; W2_DOWN_HALF 1; W2_UP_VEC 1; W2_QKV_FUSE 3",
+        "sources":  "multihead_fast_padded.hip+wave_owned_mh.inc+wave_owned_attention_setup.inc+@wave-owned-attention-body+wave_owned_attention_exports.inc",
+        "opts":  "",
+        "sha256":  "F866E3AF511ED50DD257E24783714F722A24C5665A51FB992613CF0C8991B1B5"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32-wave1-fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; CW_UP_FUSED 1; CW_ACT_FMED3 1; HIP_PREPACKED_WEIGHTS 1; CW_ROLL_HIDDEN 1; CW_ROLL_WINDOW 1; CW_VEC_INPUT 1; CW_PREFIX_SPLIT 1; CW_PACK8 1; HIP_FP8_SAT_MODE 3; CW_DIRECT_OUT 1; CW_RTZ_PAIR 1; CW_PREFIX_DIRECT_OUT 1; CW_PREFIX_FULL_TILE 1; CW_FINISH_FULL_TILE 1; CW_SKIP_BYTE 1; CW_DIAG_ONLY 1; CW_INPUT_HALF 7; CW_PREFIX_HALF_SOURCE 1; CW_PREPOST_BYTE 1; CW_PREFIX_TAIL_VEC 1; CW_FINISH_TAIL_VEC 1; CW_HOIST_UP 3; CW_FAST_NUM 3",
+        "sources":  "c32_fused_ffn_attention.hip+wave_owned_c32.inc",
+        "opts":  "",
+        "sha256":  "8296B42913E8B6E6AD498E8C69B48D159F676D8B81E81FA3A28FA3CE28C10628"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c32-wave1-fast-norm900",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; CW_UP_FUSED 1; CW_ACT_FMED3 1; HIP_PREPACKED_WEIGHTS 1; CW_ROLL_HIDDEN 1; CW_ROLL_WINDOW 1; CW_VEC_INPUT 1; CW_PREFIX_SPLIT 1; CW_PACK8 1; HIP_FP8_SAT_MODE 3; CW_DIRECT_OUT 1; CW_RTZ_PAIR 1; CW_PREFIX_DIRECT_OUT 1; CW_PREFIX_FULL_TILE 1; CW_FINISH_FULL_TILE 1; CW_SKIP_BYTE 1; CW_DIAG_ONLY 1; CW_INPUT_HALF 7; CW_PREFIX_HALF_SOURCE 1; CW_PREPOST_BYTE 1; CW_PREFIX_TAIL_VEC 1; CW_FINISH_TAIL_VEC 1; CW_HOIST_UP 3; CW_FAST_NUM 3; CW_NORM_HOIST 1",
+        "sources":  "c32_fused_ffn_attention.hip+wave_owned_c32.inc",
+        "opts":  "",
+        "sha256":  "723A3C9EBC474546CEC19BB9F3975105ACA12175549ED35CA3F0D29B027BDA06"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c64-wave2-fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; W2_UP_FUSED 1; W2_FFN_QT_SMALL_MASK 3; W2_FFN_QT_BATCH 4; W2_BOUNDED_RCP 1; HIP_PREPACKED_WEIGHTS 1; HIP_FFN_HOIST_RES 2; HIP_PDL_KERNELS 0; W2_FRAGMENT_WEIGHTS 1; W2_LAUNDER_QKV 1; W2_SCHED_FENCE 1; W2_ROLL_QUERY 1; W2_HIDDEN_TILES 2; W2_PACK8 6; HIP_FMED3_CLAMP 1; W2_BYTE_INPUT_LOADS 1; W2_RTZ_PAIR 1; W2_DIRECT_COORDS 1; W2_Q8_MASK 1; W2_FFN_W16 1; W2_HOIST_LOADS 15; W2_UP_LOW_BYTES 1; W2_DOWN_HALF 1; W2_UP_VEC 1; W2_QKV_FUSE 3; W2_FAST_NUM 3",
+        "sources":  "multihead_fast_padded.hip+wave_owned_mh.inc+wave_owned_attention_setup.inc+@wave-owned-attention-body+wave_owned_attention_exports.inc",
+        "opts":  "",
+        "sha256":  "BFB3DE1B760B912F699F6A8303EFD56C138B3C5F161EA601E9E061FF531F2ECC"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "deep_fast-packed-fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; HIP_DEC_WIDE 1; HIP_VIT_ATTN_NATIVE_HALF 1; HIP_VIT_ATTN_PROB_PAIR 1; HIP_VIT_ATTN_TRANSPOSED_AV 1; HIP_VIT_ATTN_TRANSPOSED_SCORE 1; HIP_BRANCHLESS_F 1; C512_F_MASK 1; C512_T8_TAIL_VEC 1; HIP_BYTE_F_ADD0 1; HIP_VIT_ATTN_RCP 1; VIT_FAST_NUM 15",
+        "sources":  "deep_fast.hip",
+        "opts":  "",
+        "sha256":  "C4D28F2A8025B01C723105D487CA68F1D4823D8BDD08376AE6B70F9EE6B6EAC8"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "vit-stream-fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; VIT_CONTRACT_BYTE_EDGE 1; HIP_PREPACKED_WEIGHTS 1; HIP_BRANCHLESS_F 1; HIP_VIT_STREAM_KERNELS 1; HIP_VIT_QKV_W5 1; VIT_CONTRACT_OCC_LDS 4096; VIT_QKV_F8W 1; VIT_FAST_NUM 4",
+        "sources":  "deep_fast.hip+vit_stream.inc",
+        "opts":  "",
+        "sha256":  "3F63FA5EF21B184DF1311E463A65419E37B3989AC73A8C355F6375B893703008"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c512-m32-mh",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; C512_COMPACT_QKV_ATTN 1; C512_FUSED_QKV_ATTN 1; HIP_PREPACKED_WEIGHTS 1; HIP_FFN_HOIST_RES 2; HIP_PDL_KERNELS 0; HIP_FMED3_CLAMP 1; C512_COMPACT_NOF 1; C512_COMPACT_RCP 1; C512_COMPACT_FUSEQKV 1; C512_COMPACT_QKV_DEEP 4; C512_COMPACT_QKV_SCHED 1",
+        "sources":  "multihead_fast_padded.hip+c512_m32_mh.inc+c512_qkv_attention_fused.inc+c512_qkv_attention_compact.inc",
+        "opts":  "",
+        "sha256":  "7C506CFC05171D47A74BE7313097FAA5395292329B6DBA23AE360F6EC275DB73"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "c512-m32-deep",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; C512_DIRECT_PACK 3; HIP_PREPACKED_WEIGHTS 1; HIP_BRANCHLESS_F 1; C512_MIX_OCC_LDS 4096; C512_F_MASK 1; HIP_BYTE_F_ADD0 1; C512_FFN_ONE 2; C512_FFN_F8W 1",
+        "sources":  "deep_fast.hip+c512_m32_deep.inc",
+        "opts":  "",
+        "sha256":  "292B7CB25F6EE68F08A46AA888B75C475317374E476A56F56D0603C45B181ACD"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "vit-stream",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; VIT_CONTRACT_BYTE_EDGE 1; HIP_PREPACKED_WEIGHTS 1; HIP_BRANCHLESS_F 1; HIP_VIT_STREAM_KERNELS 1; HIP_VIT_QKV_W5 1; VIT_CONTRACT_OCC_LDS 4096; VIT_QKV_F8W 1",
+        "sources":  "deep_fast.hip+vit_stream.inc",
+        "opts":  "",
+        "sha256":  "33F1806DB83FE3557C1577280C5CC2DC4D00C1F4366FC03C9CBC1EF80C6F828E"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "vit-wide-deep",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; HIP_PREPACKED_WEIGHTS 1; HIP_BRANCHLESS_F 1",
+        "sources":  "deep_fast.hip+vit_wide_deep.inc",
+        "opts":  "",
+        "sha256":  "F23478A59CE08BF7969C3F2F5DFC1ADD6A4AC8370F73364174C032AE34BD6066"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multi-pass-skin",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "multi_pass_skin.hip",
+        "opts":  "",
+        "sha256":  "6C317D0B4CF7F352680FE1B57937D8F3BD8F47A13472852CB4CAB5C0510AB3CD"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "multi-pass-predict",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0",
+        "sources":  "multi_pass_predict.hip",
+        "opts":  "",
+        "sha256":  "F401348711835ACC9927C16141D684C5295C067252E6EDCD1FED6DE00B0B18CE"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "swin-persistent",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; W2_UP_FUSED 1; W2_FFN_QT_SMALL_MASK 3; W2_FFN_QT_BATCH 2; W2_BOUNDED_RCP 1; HIP_PREPACKED_WEIGHTS 1; HIP_FFN_HOIST_RES 2; HIP_PDL_KERNELS 0; W2_FRAGMENT_WEIGHTS 1; W2_LAUNDER_QKV 1; W2_SCHED_FENCE 1; W2_ROLL_QUERY 1; W2_HIDDEN_TILES 2; W2_PACK8 6; HIP_FMED3_CLAMP 1; W2_BYTE_INPUT_LOADS 1; W2_RTZ_PAIR 1; W2_DIRECT_COORDS 1; W2_Q8_MASK 1; W2_FFN_W16 1; W2_EXPLICIT_WINDOW 1; W2_NO_EXPORTS 1; HIP_SWIN_PERSISTENT_KERNELS 1",
+        "sources":  "multihead_fast_padded.hip+wave_owned_mh.inc+@swin-persistent-types+swin_persistent.inc",
+        "opts":  "",
+        "sha256":  "2B7F6036338D819D969CD47B6F9A17EDC10A9D689DBE79C8500C630B2F00A059"
+    },
+    {
+        "target":  "gfx1103",
+        "module":  "swin-persistent-fast",
+        "defines":  "HIP_ISA_HALF 1; CW_PACK_MODE_MASK 0; W2_UP_FUSED 1; W2_FFN_QT_SMALL_MASK 3; W2_FFN_QT_BATCH 2; W2_BOUNDED_RCP 1; HIP_PREPACKED_WEIGHTS 1; HIP_FFN_HOIST_RES 2; HIP_PDL_KERNELS 0; W2_FRAGMENT_WEIGHTS 1; W2_LAUNDER_QKV 1; W2_SCHED_FENCE 1; W2_ROLL_QUERY 1; W2_HIDDEN_TILES 2; W2_PACK8 6; HIP_FMED3_CLAMP 1; W2_BYTE_INPUT_LOADS 1; W2_RTZ_PAIR 1; W2_DIRECT_COORDS 1; W2_Q8_MASK 1; W2_FFN_W16 1; W2_EXPLICIT_WINDOW 1; W2_NO_EXPORTS 1; HIP_SWIN_PERSISTENT_KERNELS 1; W2_FAST_NUM 3",
+        "sources":  "multihead_fast_padded.hip+wave_owned_mh.inc+@swin-persistent-types+swin_persistent.inc",
+        "opts":  "",
+        "sha256":  "CE0E334D994DEB3284B341D2E9EF49F13E8E75DC3BEF675A632149E3A1600335"
+    }
+]

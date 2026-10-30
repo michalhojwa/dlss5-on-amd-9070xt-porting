@@ -1,35 +1,5 @@
 OptiScaler-REFramework-DLSS5-AMD @VERSION@ — special RE9 pre-SR full package
 
-0.45 keeps the 0.44 Small 0.5x default, F9 hotfix and MODE/AE policy. F9 still cycles 0.5→1→2→3→0.5; missing Small weights fall back to Original 1x. Fully exit the game before upgrading; preserve personal custom-config.txt/native-game-flags.txt.
-
-Adds compact byte-path coverage, V-fragment layout and C512 paired FP8. Q/K layout defaults on only for Original900 (1600×960) and Small900/1080 (1600×1024, 1920×1152); other shapes retain V-only. DLSS5_HIP_VIT_QKFRAG=0 disables it; setting 1 does not widen the scope. Rejected performance candidates are not enabled in this package.
-
-Includes 40 HIP modules per architecture (80 total). gfx1201 was GPU-tested; gfx1200 was compiled and target/checksum-checked only. Source attachments match the shipped host, kernels and configuration; rebuilding the supplied binaries is unnecessary. Timing figures below are historical, not new 0.45 game-FPS promises.
-
---- 0.44 and earlier historical notes ---
-
-0.44 F9 hotfix: safe output ownership across model changes, resident dual-model weights and pre-wait cold preparation; F9 changes memory immediately even if configuration is read-only. Fully exit the game before upgrading.
-
-
-0.44 defaults to the 31-block Small model from 310.9.16 (0.5x), with 1080/900/720/free geometry, Small adaptive ViT reuse and MODE1 history. F9 cycles 0.5 -> 1 -> 2 -> 3; missing Small assets log a fallback to 1x.
-
-RX9070XT full-frame replay: 1080 tier 5.554 ms/frame (-39.35%); 900 tier 4.377 ms/frame (same-batch 1x 6.559, -33.26%). This is a different trained model and changes default output. Original 71-block 1x remains available. Small vs RTX5090 internal Post: 47.40/47.70 dB at 900/720; not NVIDIA bit-exact.
-
-Small and Original weights coexist; all 80 modules are reused. F8 toggles AE/EXACT. MODE1 suspends for 2x/3x and resumes for 0.5x/1x. Personal overrides are preserved; remove an older MULTI_PASS=1 override or change it to 0.5 for the new default.
-
---- Historical notes ---
-
-0.43 improves weight access, intermediate data movement and up/downsampling over0.42. Tested900/1080 fixed Frame configurations remain bit-identical to control; no block skipping or reduced numerical precision is introduced for these optimizations.
-
-- Updated C512/C32/ViT weight reads and byte-stream edges reduce repeated conversion and memory traffic.
-- Modes2/3 reuse bounded descriptor/constant rings, reducing per-frame allocation and synchronization. Temporal processing remains off by default.
-- Defaults remain MODE0 /1x /SKIN0. PRED1 applies only at3x; explicit PRED0 retains three real passes. Optional temporal modes and configuration priority are preserved.
-- Tested on RX9070XT. gfx1200 is compile/ELF-target/checksum verified only, not hardware performance validated. Unresolved specular flicker is not claimed fixed.
-- Keep personal custom-config.txt/native-game-flags.txt when upgrading. See sources/configuration/CONFIGURATION.md.
-
-Historical usage notes follow. The first line and DLSS5-AMD-VERSION.txt identify the current version.
-
---- Historical0.41 notes ---
 0.41
 Default remains 1x. Selecting 3x defaults to two real passes plus a predicted third (lossy); DLSS5_MULTI_PASS_PREDICT=0 restores real three passes. Prediction leaves 1x/2x unchanged; skin defaults off. Adds first-frame preallocation, HIP device binding, RE9 strength configuration and bit-exact kernel improvements. Extended FAST_NUMERIC itself changes 1x/2x arithmetic. Existing custom/native overrides remain. See sources/configuration/CONFIGURATION.md.
 

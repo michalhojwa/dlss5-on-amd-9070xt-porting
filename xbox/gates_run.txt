@@ -1,0 +1,25 @@
+=== gates  (DEFAULT folder = hip/modules/gfx1151) ===
+attempted 41 | PASS 41 | FAIL 0 | droppable-and-failing 0 | must-port-or-reconfigure 0
+PASS: boundary-fast, boundary_reference, c32-wave1, c32-wave1-fast, c32-wave1-fast-norm900, c32-wave1-rtz, c32_alu, c32_fast, c32_fast_attention, c32_fused_attention, c32_fused_ffn_attention, c32_fused_ffn_attention-packed, c32_prefix_reference, c32_tiled, c32_wmma, c512-m32-deep, c512-m32-mh, c64-wave2, c64-wave2-fast, deep_fast, deep_fast-packed, deep_fast-packed-fast, deep_reference, deep_wmma, multi-pass-predict, multi-pass-skin, multihead-fast, multihead-fast-packed, multihead-fast-padded-wave, multihead-fast-padded-wave-packed, multihead-reference, multihead-tiled, multihead-wmma, multihead_fused_attention, prefix_fast, swin-persistent, swin-persistent-fast, vit-stream, vit-stream-fast, vit-wide-deep, wave-pointwise
+NOT droppable (0): 
+
+=== gates  (legacy, explicit 3rd arg) ===
+attempted 41 | PASS 41 | FAIL 0 | droppable-and-failing 0 | must-port-or-reconfigure 0
+PASS: boundary-fast, boundary_reference, c32-wave1, c32-wave1-fast, c32-wave1-fast-norm900, c32-wave1-rtz, c32_alu, c32_fast, c32_fast_attention, c32_fused_attention, c32_fused_ffn_attention, c32_fused_ffn_attention-packed, c32_prefix_reference, c32_tiled, c32_wmma, c512-m32-deep, c512-m32-mh, c64-wave2, c64-wave2-fast, deep_fast, deep_fast-packed, deep_fast-packed-fast, deep_reference, deep_wmma, multi-pass-predict, multi-pass-skin, multihead-fast, multihead-fast-packed, multihead-fast-padded-wave, multihead-fast-padded-wave-packed, multihead-reference, multihead-tiled, multihead-wmma, multihead_fused_attention, prefix_fast, swin-persistent, swin-persistent-fast, vit-stream, vit-stream-fast, vit-wide-deep, wave-pointwise
+NOT droppable (0): 
+
+=== manifest  (gfx1151) ===
+SHA256SUMS lines : 41
+hsaco on disk    : 41
+listed but absent: 0 []
+on disk not listed: 0 []
+floor 24         : OK
+manifest bytes   : 3638 (runtime cap is 1<<20 at LmxxfNrRuntime.cpp:298; ValidateModuleSet:337 and the has() fallback :465 both resolve names FLAT under modulesDir, so deploy flat)
+
+=== manifest  (gfx1103) ===
+SHA256SUMS lines : 41
+hsaco on disk    : 41
+listed but absent: 0 []
+on disk not listed: 0 []
+floor 24         : OK
+manifest bytes   : 3638 (runtime cap is 1<<20 at LmxxfNrRuntime.cpp:298; ValidateModuleSet:337 and the has() fallback :465 both resolve names FLAT under modulesDir, so deploy flat)

@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\deep_fast-packed-fast.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\deep_fast-packed-fast.generated.hip [gfx1151] OK hsaco=1454896 B asm skipped

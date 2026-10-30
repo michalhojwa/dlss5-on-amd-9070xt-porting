@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\multi-pass-predict.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\multi-pass-predict.generated.hip [gfx1151] OK hsaco=14072 B asm skipped

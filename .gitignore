@@ -1,3 +1,16 @@
+# Qwen temporary data
+.qwen/tmp/
+
+# Generated HIP binaries / assembly
+hip/modules/gfx1103/*.hsaco.s
+
+# Build artifacts
+build/
+build-*/
+out/
+bin/
+obj/
+
 large-resources/
 __pycache__/
 *.pyc
@@ -13,6 +26,9 @@ Development/deployments/**/*.addon64
 Development/deployments/**/*.hsaco
 Development/deployments/**/*.dll
 Development/HIP/experiments/**/*.exe
-/-build/
-Development/5090临时要玩一下游戏/**/nvngx_dlssnr.dll
-Development/5090临时要玩一下游戏/*.zip
+
+.qwen/tmp/
+hip/modules/gfx1103/*.hsaco.s
+
+.qwen/tmp/weights-arena-from-container-20261030.bin
+hip/modules/gfx1103/*.hsaco.s

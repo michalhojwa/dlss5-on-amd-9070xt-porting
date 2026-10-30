@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\c32_fused_attention.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\c32_fused_attention.generated.hip [gfx1151] OK hsaco=62000 B asm skipped

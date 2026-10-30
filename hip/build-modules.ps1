@@ -7,7 +7,11 @@ param(
     [string]$ExtraOpts = '',
     [switch]$RowOpts,
     [string]$PrebuiltDir = '',
-    [ValidateSet('gfx1200','gfx1201')][string[]]$Targets = @('gfx1200','gfx1201')
+    # 2026-10-29: gfx115x added for the Ally X APU (Ryzen AI Z2 Extreme = RDNA 3.5 = gfx1150/1151/1152
+    # per AMD docs, gfx1151 named for the Ryzen AI Max series); gfx1103 is the RDNA3 APU id, one generation
+    # too old. This ValidateSet is the only thing that used to reject them - COMGR itself knows 52 ISAs.
+    [ValidateSet('gfx1200','gfx1201','gfx1103','gfx1150','gfx1151','gfx1152','gfx1153','gfx115E')][string[]]$Targets = @('gfx1200','gfx1201'),
+    [switch]$SkipOnError
 )
 # Builds 31 modules per target (24 legacy, two opt-in wave-owned modules, two opt-in C512 32-token modules, one opt-in ViT
 # projection 64-column module). 2026-09-26: the mh_fast row now spells out HIP_FFN_LINE_STORES 1 -- prod7/prod8 were built
@@ -41,6 +45,12 @@ $modules = @(
     @{ name = 'deep_reference';                     defines = @();                        sources = @('deep_reference.hip') },
     @{ name = 'boundary_reference';                 defines = @();                        sources = @('boundary_reference.hip') },
     @{ name = 'c32_wmma';                           defines = @();                        sources = @('c32_wmma.hip') },
+    # 2026-10-26 ALU-first twin for gfx1103 (no mai-insts / no fp8 converts / no gfx12 WMMA there):
+    # same 6 kernel names and grid contract as c32_wmma, LDS-staged v_fma_f32. Row-scoped by -Targets
+    # so the gfx1200/gfx1201 recipe set and its SHA256SUMS stay byte-identical.
+    # 2026-10-29 the gfx115x family is capability-identical to gfx1103 on this COMGR (same fp8 rejection,
+    # same v_wmma_f32_16x16x16_f16, same inline-asm rejection), so the ALU twin applies there too.
+    @{ name = 'c32_alu';                            defines = @();                        sources = @('c32_alu.hip'); targets = @('gfx1103','gfx1150','gfx1151','gfx1152','gfx1153','gfx115E') },
     @{ name = 'multihead-wmma';                     defines = @();                        sources = @('multihead_wmma.hip') },
     @{ name = 'deep_wmma';                          defines = @();                        sources = @('deep_wmma.hip') },
     @{ name = 'wave-pointwise';                     defines = @();                        sources = @('c32_reference.hip', 'wave_pointwise.hip') },
@@ -75,10 +85,10 @@ $modules = @(
     # (split_projection_frag_f16res/_f16only + mh_attention_project_frag_c512_f16res) measured BIT-EXACT but slower
     # both forms (900 merged +0.016 / +0.059 ms) — the projection family is not residual-traffic-bound; not shipped.
     @{ name = 'deep_fast-packed-fast';                   defines = @('HIP_DEC_WIDE 1','HIP_VIT_ATTN_NATIVE_HALF 1','HIP_VIT_ATTN_PROB_PAIR 1','HIP_VIT_ATTN_TRANSPOSED_AV 1','HIP_VIT_ATTN_TRANSPOSED_SCORE 1','HIP_BRANCHLESS_F 1','C512_F_MASK 1','C512_T8_TAIL_VEC 1','HIP_BYTE_F_ADD0 1','HIP_VIT_ATTN_RCP 1','VIT_FAST_NUM 15');    sources = @('deep_fast.hip') },
-    @{ name = 'vit-stream-fast'; defines = @('VIT_CONTRACT_BYTE_EDGE 1','HIP_PREPACKED_WEIGHTS 1','HIP_BRANCHLESS_F 1','HIP_VIT_STREAM_KERNELS 1','HIP_VIT_QKV_W5 1','VIT_CONTRACT_OCC_LDS 4096','VIT_QKV_F8W 1','HIP_BYTE_F_ADD0 1','VIT_FAST_NUM 4'); sources = @('deep_fast.hip','vit_stream.inc') },
-    @{ name = 'c512-m32-mh'; defines = @('C512_PAIR_PACK 1','C512_COMPACT_QKV_ATTN 1','C512_FUSED_QKV_ATTN 1','HIP_PREPACKED_WEIGHTS 1','HIP_FFN_HOIST_RES 2','HIP_PDL_KERNELS 0','HIP_FMED3_CLAMP 1','C512_COMPACT_NOF 1','C512_COMPACT_RCP 1','C512_COMPACT_FUSEQKV 1','C512_COMPACT_QKV_DEEP 4','C512_COMPACT_QKV_SCHED 1'); sources = @('multihead_fast_padded.hip','c512_m32_mh.inc','c512_qkv_attention_fused.inc','c512_qkv_attention_compact.inc') },
+    @{ name = 'vit-stream-fast'; defines = @('VIT_CONTRACT_BYTE_EDGE 1','HIP_PREPACKED_WEIGHTS 1','HIP_BRANCHLESS_F 1','HIP_VIT_STREAM_KERNELS 1','HIP_VIT_QKV_W5 1','VIT_CONTRACT_OCC_LDS 4096','VIT_QKV_F8W 1','VIT_FAST_NUM 4'); sources = @('deep_fast.hip','vit_stream.inc') },
+    @{ name = 'c512-m32-mh'; defines = @('C512_COMPACT_QKV_ATTN 1','C512_FUSED_QKV_ATTN 1','HIP_PREPACKED_WEIGHTS 1','HIP_FFN_HOIST_RES 2','HIP_PDL_KERNELS 0','HIP_FMED3_CLAMP 1','C512_COMPACT_NOF 1','C512_COMPACT_RCP 1','C512_COMPACT_FUSEQKV 1','C512_COMPACT_QKV_DEEP 4','C512_COMPACT_QKV_SCHED 1'); sources = @('multihead_fast_padded.hip','c512_m32_mh.inc','c512_qkv_attention_fused.inc','c512_qkv_attention_compact.inc') },
     @{ name = 'c512-m32-deep'; defines = @('C512_DIRECT_PACK 3','HIP_PREPACKED_WEIGHTS 1','HIP_BRANCHLESS_F 1','C512_MIX_OCC_LDS 4096','C512_F_MASK 1','HIP_BYTE_F_ADD0 1','C512_FFN_ONE 2','C512_FFN_F8W 1'); sources = @('deep_fast.hip','c512_m32_deep.inc'); opts = '-mllvm=-amdgpu-sched-strategy=max-ilp' },
-    @{ name = 'vit-stream'; defines = @('VIT_CONTRACT_BYTE_EDGE 1','HIP_PREPACKED_WEIGHTS 1','HIP_BRANCHLESS_F 1','HIP_VIT_STREAM_KERNELS 1','HIP_VIT_QKV_W5 1','VIT_CONTRACT_OCC_LDS 4096','VIT_QKV_F8W 1','HIP_BYTE_F_ADD0 1'); sources = @('deep_fast.hip','vit_stream.inc') },
+    @{ name = 'vit-stream'; defines = @('VIT_CONTRACT_BYTE_EDGE 1','HIP_PREPACKED_WEIGHTS 1','HIP_BRANCHLESS_F 1','HIP_VIT_STREAM_KERNELS 1','HIP_VIT_QKV_W5 1','VIT_CONTRACT_OCC_LDS 4096','VIT_QKV_F8W 1'); sources = @('deep_fast.hip','vit_stream.inc') },
     @{ name = 'vit-wide-deep'; defines = @('HIP_PREPACKED_WEIGHTS 1','HIP_BRANCHLESS_F 1'); sources = @('deep_fast.hip','vit_wide_deep.inc') },
     @{ name = 'multi-pass-skin'; defines = @(); sources = @('multi_pass_skin.hip') },
     @{ name = 'multi-pass-predict'; defines = @(); sources = @('multi_pass_predict.hip') },
@@ -92,12 +102,23 @@ New-Item -ItemType Directory -Force $OutputDir|Out-Null
 $manifest = @()
 foreach ($m in $modules) {
     if ($Only -and $m.name -ne $Only) { continue }
+    if ($m.targets -and $target -notin @($m.targets)) { continue }
     $text = "#define HIP_ISA_HALF 1`n"
     if ($m.name -like '*-packed') { $text += "#define HIP_PREPACKED_WEIGHTS 1`n" }
     # an -ExtraDefines macro overrides the recipe's own value of the same macro
     $extraNames = @($ExtraDefines | ForEach-Object { ($_ -split '\s+')[0] })
     $recipe = @($m.defines | Where-Object { ($_ -split '\s+')[0] -notin $extraNames })
     foreach ($d in @($ExtraDefines)+$recipe) { $text += "#define $d`n" }
+    # 2026-10-28 gfx1103 has no fp8-conversion-insts, so the two convert builtins the gfx12 fast
+    # sources call are emulated by hip/gpu_matrix_op.h. 2026-10-29: gfx115x rejects the same builtins
+    # on this COMGR, so the shim now covers gfx1103 and gfx115*; it stays off gfx1200/gfx1201 so their
+    # generated.hip text and SHA256SUMS stay byte-identical. Missing file throws: a silent
+    # skip would turn into fake PASSes measured from disk.
+    if ($target -eq 'gfx1103' -or $target -like 'gfx115*') {
+        $shim = Join-Path $SourceDir 'gpu_matrix_op.h'
+        if (!(Test-Path $shim)) { throw 'gpu_matrix_op.h missing beside the HIP sources (gfx1103/gfx115x need it)' }
+        $text += ([IO.File]::ReadAllText($shim) -replace '#pragma once', '') + "`n"
+    }
     foreach ($part in $m.sources) {
         if ($part -eq '@swin-persistent-types') {
             $types=Join-Path $SourceDir 'swin_persistent_types.h'
@@ -113,6 +134,14 @@ foreach ($m in $modules) {
     }
     $generated = Join-Path $OutputDir ($m.name + '.generated.hip')
     $hsaco = Join-Path $OutputDir ($m.name + '.hsaco')
+    # The sources gate fp8 WMMA on `#if !__has_builtin(..._gfx12)` and __has_builtin cannot see a
+    # macro shim, so for gfx1103/gfx115x the guard is rewritten to also accept HIP_WMMA_SHIM (set by
+    # gpu_matrix_op.h). Scoped off gfx1200/gfx1201 so their generated.hip text and SHA256SUMS stay
+    # byte-identical; the rewrite is visible in modules/<target>/*.generated.hip on disk.
+    if ($target -eq 'gfx1103' -or $target -like 'gfx115*') {
+        $text = $text -replace '#if !__has_builtin\(__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12\)',
+                              '#if !defined(HIP_WMMA_SHIM) && !__has_builtin(__builtin_amdgcn_wmma_f32_16x16x16_fp8_fp8_w32_gfx12)'
+    }
     [IO.File]::WriteAllText($generated, $text, $utf8)
     $opts = (@($(if ($RowOpts) { $m.opts }), $ExtraOpts) | Where-Object { $_ }) -join ' '
     if ($RowOpts -and $m.compiler) {
@@ -121,9 +150,11 @@ foreach ($m in $modules) {
         Copy-Item $pre $hsaco -Force; $opts = "$($m.compiler) prebuilt $opts"
     } else {
     $env:RTC_EXTRA_OPTS = $opts
-    & $Compiler $hsaco $generated comgr $target | Out-Null
+    $compileLogPath = Join-Path $OutputDir ($m.name + '.compile-log.txt')
+    $compileCmd = '"' + $Compiler + '" "' + $hsaco + '" "' + $generated + '" comgr ' + $target + ' > "' + $compileLogPath + '" 2>&1'
+    & cmd /c $compileCmd | Out-Null
     Remove-Item Env:RTC_EXTRA_OPTS -ErrorAction SilentlyContinue
-    if ($LASTEXITCODE -ne 0) { throw "COMGR failed: $($m.name)" }
+    if ($LASTEXITCODE -ne 0) { if ($SkipOnError) { Write-Output ("{0} {1,-40} FAILED" -f $target,$m.name); continue } throw "COMGR failed: $($m.name)" }
     }
     $manifest += [pscustomobject]@{ target = $target; module = $m.name; defines = (@('HIP_ISA_HALF 1') + $(if ($m.name -like '*-packed') { @('HIP_PREPACKED_WEIGHTS 1') } else { @() }) + @($ExtraDefines) + $recipe) -join '; '; sources = $m.sources -join '+'; opts = $opts; sha256 = (Get-FileHash $hsaco).Hash }
     Write-Output ("{0} {1,-40} {2}" -f $target,$m.name, $manifest[-1].sha256)

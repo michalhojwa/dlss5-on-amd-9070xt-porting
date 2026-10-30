@@ -320,22 +320,15 @@
 已装开发版用户读数：剑星1x约57.6fps、快速3x约37fps；鬼武者900P快速3x约49fps，与此前一样且无异常。不是同批ABBA收益证据。gfx1200只做构建/ELF核对，真机验证仍在gfx1201。
 
 
-
-## 0.42（2026-10-13）
-
-下载（三个包）：[夸克](https://pan.quark.cn/s/316704620069) · [Gofile 镜像](https://gofile.io/d/HNE20Ocp)。
-
-三个完整包：Magpie、通用OptiScaler、OptiScaler＋REFramework，包含0.41之后以下已采纳改动。默认仍为 **MODE0／1x／SKIN0**；PRED1仅在选择3x时生效。不带入玩家custom/native覆盖。原0.41 ZIP保留；0.41-a是历史实验，不是正式版本。
-
-### 数据流与限定范围的范数复用
-
-final RGB免最终copy，block4→C64边保留FP8字节；新增SP路径仅用于已验1440 FAST3范围。各独立优化不相加承诺FPS。证据：`Development/results/final-output-direct-20261005`、`pool64-byte-20261005`、`sp1440-fast-20261005`。
+## 未发布源码更新 — 2026-10-06
 
 - C32 范数复用同一 lane 内相同的逆平方根。可选模块 `c32-wave1-fast-norm900.hsaco` 仅在 FAST_NUMERIC=1、处理尺寸 1600×960、单遍、graph 关闭、实验 history 关闭时使用；其他尺寸/模式保持原模块。26 个原有出口整体校验，模块缺失或出口不全就整体回落，无新用户开关。
 - RX 9070 XT 原 O2、NET_TIMING=0 的 HDR 完整帧回放三轮正式测试，900 档均值改善约 0.045～0.049ms；两轮 p99 改善，第三轮在原计时器 1µs 分辨率内未分辨出退步。1152 行短筛 p99 退步，维持原路由。数字覆盖 codec/桥接/网络/decode，不作为完整游戏帧率。
-- 常规 19 项兼容、受控 seed/history 与模块回落逐位一致。AE 检查数学正确性，性能测量关闭 AE。详见 Development/results/c32-norm-hoist-*。
+- 常规 19 项兼容、受控 seed/history 与模块回落逐位一致。AE 检查数学正确性，性能测量关闭 AE。本次仅源码接入，未装机或打包；详见 Development/results/c32-norm-hoist-*。
 
-### 可选时序接口与模式
+## 未发布源码更新 — 2026-10-07～08
+
+以下内容已进入源码和本地测试构建，已发布的0.41包保持不变；临时0.41-a历史实验不列为新的正式版本。
 
 - **可选集成接口**：合入 [TheAutomatic 的 PR #12](https://github.com/lmxxf/dlss5-on-amd-9070xt-porting/pull/12)，提供可选编解码控制和最后一遍的辅助输出，供历史消费者使用；原编解码默认行为保留。通用辅助接口支持多遍，下面的时序消费者只支持单遍。
 - **统一时序选项** `DLSS5_TEMPORAL_MODE`，默认 **0**：
@@ -345,95 +338,23 @@ final RGB免最终copy，block4→C64边保留FP8字节；新增SP路径仅用�
   | `0` | 关闭，不创建新增时序shader或历史资源 |
   | `1` | TheAutomatic Fast History：用模型门控混合上一帧输出，并把历史反馈到下一帧网络输入 |
   | `2` | 低频时域稳定：只混合输出修正量的低频部分，高频保留当前帧，不回灌网络 |
-  | `3` | 单遍低、高频残差增强，详见下节 |
 
   在 `custom-config.txt` 修改后**重启游戏**。显式新选项（包括0）优先于旧 `DLSS5_FAST_HISTORY`；新键仍遵循原有文件/环境变量优先级，非法值明确拒绝。旧 `DLSS5_TEMPORAL_HISTORY_EXPERIMENT` 诊断不能与模式1/2叠加；已有 `DLSS5_FAST_TEMPORAL` 不会开启这两个新模式。
 - **模式1配套与runtime支持**：常规HIP插件和RE9式独立runtime均已接入Fast History。需要原模型的64字节 `post70-history-head.f16` 及匹配的C32辅助出口，覆盖normal、RTZ、FAST和norm900变体；旧包只改开关不够，缺资产会明确报错。runtime的ABI没有已验证的运动/深度引导，因此使用静态屏幕空间历史；插件仅在资源有效、明确声明无抖动MV及深度方向时使用运动/深度，否则同样退到静态历史，并按原始颜色变化拒绝旧内容。不猜未知合同。
 - **AMD模式2**：依据 [SAOG0721/Magpie](https://github.com/SAOG0721/Magpie/tree/2fceab5e241bc9f8ded001ab3266762f1f8bc51e) 描述的机制独立实现。在codec编码颜色域中，把最终修正量拆成低频与高频，低频使用约80ms历史记忆，高频保留当前帧。不多跑网络，不加强单遍力度，也不等同于模拟两遍/三遍增强；不会自动加入Oklab控制或额外增益。
 - **范围与恢复**：模式1/2要求HIP、MP1、graph关闭、无overlap/外部历史；插件使用完整网络视口。时序会话关闭实际ViT复用，但不重写用户偏好。启动及F9/热载检查阻止时序开启时切到MP2/3。重置、曝光变化、长帧间隔和引导模式变化使历史失效；runtime在真实队列提交后才退休常量与资源。本次集成没有在Magpie插件上开启这两个消费者。
 - **兼容修复**：恢复RGB输入缓冲首次使用的UAV→SRV状态转换，修复MinGW宽字符路径打开。模式0保持原路；新辅助模块在720/900受控runtime关闭模式检查中逐位一致，时序shader、重置、长间隔和有限输出检查已在WARP/RX 9070 XT通过。这些检查不等于游戏画质改善验收。
-- **限定范围的提交优化**：`DLSS5_HIP_SUBMIT_PULSE=auto` 仅在已验证gfx1201/Runtime7驱动及兼容的单遍、history关闭配方中录制一个自有HIP事件；其他范围保持原路，`0`可关闭。不改输出算术或默认画质，不承诺游戏FPS。norm900资格见上节。
+- **限定范围的提交优化**：未发布源码中的 `DLSS5_HIP_SUBMIT_PULSE=auto` 仅在已验证gfx1201/Runtime7驱动及兼容的单遍、history关闭配方中录制一个自有HIP事件；其他范围保持原路，`0`可关闭。不改输出算术或默认画质，不承诺游戏FPS。此前norm900优化见上一节。
 
-时序模式都是改变输出的近似方案，可能拖影；不声称NGX逐位等价、普遍消除闪烁、画质提高或性能优势。配置详见[中文说明](scripts/CONFIGURATION.zh-CN.md)。证据：`Development/results/pr12-integration-20261007`、`low-frequency-temporal-20261007`、`lowfreq-runtime-20261007`、`mode1-assets-20261008`。
+两个时序模式都是改变输出的近似方案，可能拖影；不声称NGX逐位等价、普遍消除闪烁、画质提高或性能优势。本地剑星/鬼武者试装使用MP1，不改变发行默认。配置详见[中文说明](scripts/CONFIGURATION.zh-CN.md)。证据：`Development/results/pr12-integration-20261007`、`low-frequency-temporal-20261007`、`lowfreq-runtime-20261007`、`mode1-assets-20261008`。
 
-### 模式3：单遍增强
+## 未发布 — 单遍增强模式（2026-10-08）
 
 - 新增 `DLSS5_TEMPORAL_MODE=3`：只跑一遍网络，再增强低、高频残差；低频保留时域稳定，高频使用当前帧。冷帧/重置帧也立即增强，因此不只是抑闪滤波。
 - `DLSS5_TEMPORAL_ENHANCE_STRENGTH` 只作用于模式3：默认 `1`，有限数值范围 `0..2`，修改需重启。额外修正为 `s × (0.5 × 稳定低频 + 当前高频)`；强度1下，小幅且未饱和的修正低频约1.5倍、高频约2倍。强度0严格保留原单遍网络输出，连历史输出修正也旁路。
 - 只对新增增量做软压缩：编码域幅度超过0.04后，按0.12尺度压缩超出部分；再用统一RGB余量比例保留修正方向。这是独立的codec编码域变体，不是参考Oklab算法，也不等于第二遍网络；无需新增学习权重或NN出口。
-- 总体默认仍为**模式0**，模式0/1/2及玩家现有配置保持。WARP/RX 9070 XT数学样本与模式2回归通过，两个宿主已编译；历史游戏试用与受控菜单对照确认修正量增强，但不能证明新增细节或画质更好。更强残差可能放大假纹理或拖影，不承诺画质或FPS提高。
+- 总体默认仍为**模式0**，模式0/1/2及玩家现有配置保持。WARP/RX 9070 XT数学样本与模式2回归通过，两个宿主已编译；模式3尚未部署到游戏，未做游戏观感或性能验收。更强残差可能放大假纹理或拖影，不承诺画质或FPS提高。
 
-### 时序模式F9准入
+### 时域模式 F9 准入修复（2026-10-08）
 
-模式1/2/3开启时，F9先消费按键沿，再拒绝多遍循环，**不再提前向两层配置写入MP2/3**；模式0保留原遍数循环。手工不支持设置仍明确拒绝，错误文案包含三种时序模式。这修正了早期模式3试用中“先写配置后检查”导致MP2初始化失败的问题。独立CPU配置检查及后来游戏日志中的F9阻止检查通过，不改shader或增强数学。证据：`Development/results/temporal-hotkey-guard-20261008`、`mode3-stellar-live-audit-20261011`、`mode3-objective-20261011`。这些历史检查不作为画质或FPS提升证据。
-
-### ViT expand权重紧凑存储
-
-八个已知 block31–38 FP8 fragment expand 矩阵只上传实际使用的 4 MiB packed 前缀，替代原 16 MiB F32 容量。原 kernel、权重字节、精度和 ABI 不变；未知布局与已有 legacy 缓存继续旧路。`HIP_COMPACT_VIT_EXPAND=0` 保留原加载路径。
-
-受控 RX 9070 XT 1152 档完整 Frame 输出逐字节相同，持有权重容量 524,101,416→423,438,120 字节，节省 96 MiB；这是分配容量而非驻留峰值。一次 Frame ABBA wall 9.633050→9.634692 ms，没有稳定速度收益，不宣称游戏 FPS 提升。详见 `Development/HIP/experiments/packed-weight-compact/RESULTS.md`。
-
-### 显式无history会话
-
-显式永不使用history的Frame会话不创建未用Bridge共享历史buffer，1920×1152实测少33.75MiB容量；未知调用者与已有历史会话保旧，违规temporal提交拒绝。完整Framegold通过，短ABBA无稳定加速/可辨明显回归。这是容量而非驻留峰值。
-
-### ViT contract/projection活尾紧凑存储
-
-保原packed矩阵与F32 scale字节，只把活尾移到矩阵后；版本化导出与指针布局tag成对选buffer/kernel。缺新导出、已有legacy缓存、未知模块selector及gfx1200保旧路。内部默认只启已验gfx1201/1152 profile，既有vit_stream recipe自然包含两新导出，不增加永久侧车或用户配置。
-
-受控完整Frame和最终正式旧/新各43模块路径逐字节相同。权重容量423438120→297609000B：contract96MiB、projection24MiB；此前expand96MiB已在基线，不重复计。本轮各ABBA均值变化小于控制漂移，p99/max/漂移原数见实验报告，不宣可靠FPS提升。C512候选因池容量负结果已撤回。最终宿主/addon O2通过。
-
-已验范围内，expand96MiB＋contract96MiB＋projection24MiB合计减少216MiB持有权重容量；后两项相对已expand基线新增120MiB。33.75MiB共享buffer分配宽度属于另一资源类别，不是驻留峰值测量。各轮p99/max/漂移及兼容边界见 `Development/HIP/experiments/resource-followups/README.md`。
-
-### 包、验证与排除项
-
-官方配方构建80模块（每架构40：六行LLVM23.1.2、34行驱动COMGR），两compact-tail出口进入既有模块，不增加永久侧车。重编宿主，刷新REFramework源码包与配置说明；包含原64字节history head及C32 normal／RTZ／FAST／norm900辅助出口。最终gfx1201正式模块完整Framegold、包内RE9运行时冒烟、每包44个shader变体、ZIP全文件哈希回读及独立默认／模块／资产核查均通过。gfx1200做构建／ELF检查，不宣真机验证。回执：[Development/releases/0.42](Development/releases/0.42/README.md)。
-
-V末屏障、prefix NT、NoHi、C512少New及host QPC插桩均未进入产品。原生D3D12整网研究不是发行后端；研究原证保留在[开发历史](Development/DevHistory.md)及[负实验总账](Development/failed-experiments.md)。
-
-0.42现可从上述用户提供的公开镜像下载。网盘内容未独立核验；记录下载链接不表示执行了Git push、打tag或创建GitHub Release。
-
-## 0.43 · 2026-10-17
-
-下载：[夸克](https://pan.quark.cn/s/3b19c0403e3f) · [Gofile 镜像](https://gofile.io/d/hz5cDOPF)（三个完整包，载荷源码 `10982cf4`，双架构 80 模块；包名、完整 SHA 与校验回执见 [0.43 发行记录](Development/releases/0.43/README.md)）。
-
-- **单帧耗时（`frame.exe` 稳态均值，RX 9070 XT）**：**1080 档（1920×1152）`9.121 ms`**（最佳单槽 `8.960 ms` mean / `8.945 ms` median，相对 0.42 基线 `~9.65 ms` 净降约 **`-0.53 ~ -0.60 ms`**）；**900 档（1600×960）`6.535 ms`**。因《剑星》2K AA 1x 已贴满 60 FPS 上限，后续版本统一记录单帧耗时（`ms/frame`）。
-- **权重与数据流**：纳入10-14已采纳的C512/C32/ViT W16权重布局、ISA清理、ViT/C512/Down字节直连；消除原8次ViT输入打包。原本在E4M3格点上的中间值直接以字节传递，保留累加与舍入边界。运行缓冲池在已测1080配置少1.1MiB，不作为显存驻留峰值结论。
-- **上下采样**：接通Block47→Up48字节边，Up39/48直接读取W16 FP8权重；Down8/14/22/30用字节LDS及W16 FP8矩阵路径。新旧权重布局以不同缓存标识保存，避免回落时混读。
-- **可选模式2/3**：有界64槽描述符/常量环替代逐帧创建及两处Flush；总体默认仍MODE0/1x/SKIN0，PRED1只在3x使用。
-- **验收**：900/1080固定Frame配置逐帧Gold一致；10-17最终组合3轮ABBA六轮均值全改善，pooled mean分别−34.487/−20.846µs、pooled p99分别−32.351/−25.690µs。1080第二轮p99+10.599µs原样保留，不称每轮尾都改善。详[完整回执](Development/results/five-final-20261017/README.md)。
-- **发行校验**：复用通过实际ELF目标核验的gfx1200/gfx1201各40模块，gfx1200仅编译核验；逐包44项shader编译、包内RE9 smoke和ZIP逐文件哈希回读。未采纳的gather折叠、C32 pool合波、融合Up FP8、hipGraph不进入产品。高光闪烁仍有未闭环场景。
-
-本机安装记录另见[10-17双游戏回执](Development/results/game-install-20261017/README.md)。旧0.42 ZIP保留，网盘链接由用户提供。
-
-## 0.44 · 2026-10-18
-
-下载：[夸克](https://pan.quark.cn/s/ea87c0ffd257) · [Gofile 镜像](https://gofile.io/d/YCNT57JP)（三个完整包，最终 F9 热修载荷源码 `4764e4f1`，双架构 80 模块 + 93 Small 权重资产；包名、完整 SHA 与校验回执见 [0.44 发行记录](Development/releases/0.44/README.md)）。
-
-0.44 默认改为 310.9.16 的31块 Small（0.5x）；1080/900/720/free几何、Small自适应ViT复用与MODE1时序已接通。F9按0.5→1→2→3循环，缺少Small权重会记录日志并回退1x。
-
-RX9070XT整帧回放：1080档5.554 ms/frame（−39.35%）；900档4.377 ms/frame（同批1x 6.559，−33.26%）。这是不同训练模型，默认输出会改变；旧71块1x仍保留。Small对5090内部Post的900/720对账为47.40/47.70dB，非NV逐位一致。
-
-Small权重与旧权重共存；80个双架构模块复用。F8切AE/EXACT；2x/3x暂挂MODE1，回到0.5x/1x恢复。升级保留个人custom/native覆盖；要启用新默认请删除旧MULTI_PASS=1覆盖或改为0.5。
-
-[验收记录](Development/results/small-complete-20261018/README.md) · [三包回执](Development/releases/0.44/README.md)
-
-### 0.44 F9 热修 · 2026-10-18
-
-修复F9切模型后的输出纹理悬垂引用和延迟producer下的权重上传死锁；同尺寸保留D3D12资源并保持FPS叠加层抑制状态，两套模型权重分表常驻并在producer wait前完成冷预热。只读配置（WindowsApps）下F9先立即更新内存态，落盘失败不撤销切换；《鬼武者》优先选择XboxGames可写配置目录。最终 `4764e4f1` 回归、双游戏部署（《剑星》《鬼武者》实机 F9 切换已验证）和三包校验全部完成，见[回执](Development/results/f9-hotfix-20261018/README.md)。
-
-同尺寸MODE1还会交换缓存的两模型history head、更新blend并reset，保持既有时序语义；GPU逐系数与图像回环已验证。
-
-## 0.45 · 2026-10-24
-
-下载：[夸克](https://pan.quark.cn/s/0ccb3eff675b) · [Gofile 镜像](https://gofile.io/d/hmrcTjuS)（三个完整包，双架构 80 模块 + 93 Small 权重资产；包名、完整 SHA 与校验回执见 [0.45 发行记录](Development/releases/0.45/README.md)）。
-
-- **默认与画面**：沿用 0.44 的 Small 0.5x、F9 热修、MODE/时序策略及 `0.5 → 1 → 2 → 3 → 0.5` 循环。本次优化在已测范围内保持基线输出，不更换训练模型，也不宣称与 NVIDIA 逐位相同；个人配置覆盖继续生效。
-- **紧凑字节路径**：补齐此前未命中的 Original 900/1088 与 Small 处理几何（1600×1024、1344×768、1920×1088）。Small 新增三形状各省八次 ViT 输入打包启动、120 MiB 活跃打包权重。普通 Small 1080 档仍实际处理 1920×1152；1920×1072 的自由输入才覆盖 Small 处理 1920×1088。
-- **ViT V 布局与 C512 打包**：V 片段由生产/消费两端配对，按 head 连续存放；已放行的 Small 与自适应复用路径保留原 reuse gate。C512 成对转换 FP8，保留乘法舍入、带符号零处理和串行归一化顺序。
-- **Q/K 布局限定范围**：仅 Original 1600×960/400 tokens、Small 1600×1024/448 tokens、Small 1920×1152/640 tokens 默认启用，仍受父 V-fragment 资格约束。其余形状保持 V-only。`DLSS5_HIP_VIT_QKFRAG=0` 可关闭，`=1` 也不能扩大这三个形状；`DLSS5_HIP_VIT_VFRAG=0` 关闭父配对布局路径。
-- **验证与边界**：记录范围内的 GPU 逐值输出、复用/canary、模型热切和回退检查通过；Frame 性能按三轮 ABBA 验证，保留单轮尾延迟反例，包括 Small900 Q/K 第二轮 mean +1.656 µs。全范围 Q/K 的纯 NN 1088 结果不算发行默认收益，因为该形状最终回退。没有新增游戏 FPS 承诺。gfx1201 做过 GPU 验证，gfx1200 仅编译、架构标记与校验和核验。
-- **不包含**：C32 MIX 激活、C512 N-pair 权重、QT32 双 query、FFN→Projection TCHAIN、尾段调度实验、permlanex16 归一化，以及最后的 Up 成对打包/half-only 候选。不夹带实验同步协议或硬件不支持的 LDS 转置指令。
-- **发行内容**：三种宿主包保持原配置默认值和双模型资产，每架构 40 个 HIP 模块。源码附件对应发行宿主、内核和配置；实验产物仅作证据，不是另一个安装版本。最终包 SHA 与安装回执由发行目录单独记录。
-
-证据：[Small 紧凑路径](Development/results/gap-phase4-20261023/knife2/README.md)、[C512 打包](Development/results/gap-phase5-20261023/knife1/README.md)、[V-fragment 资格](Development/results/gap-phase5-20261023/knife2/README.md)、[限定 Q/K 布局](Development/results/gap-phase6-20261023/knife1/README.md)、[最后一轮未采纳候选](Development/results/gap-phase6-20261023/knife2/README.md)。
+- 模式1/2/3开启时，F9先消费按键沿，再拒绝多遍循环，不再提前向custom/native配置写入MP2/3；模式0保留原遍数循环。手工写入不支持的多遍仍明确拒绝，错误文案包含三种时域模式。剑星模式3试用中发现旧顺序先写配置后检查，MP2造成初始化失败、NN根本未处理。独立CPU配置文件检查通过、候选addon编译通过；本测试未部署候选，不改shader或增强数学。记录：`Development/results/temporal-hotkey-guard-20261008`。

@@ -1,0 +1,170 @@
+Continue the Xbox Ally X DLSS5-NR port at C:\kien2\dlss5-on-amd-9070xt-porting.
+
+READ FIRST, IN THIS ORDER (do not read the whole history):
+  1. xbox\STATE.md   - gates, measured numbers, the gfx1103 build mechanism, ARCH DELTA, THE WEIGHT SOURCE, traps,
+     environment. ~100 lines, overwritten at every end of day; count it yourself rather than trusting that figure.
+  2. python xbox\check.py gates   - re-derive counts FROM DISK. Expect 41 attempted / 41 PASS / 0 FAIL. The DEFAULT folder is
+     now hip\modules\gfx1151 and a 3rd arg picks another set, so the legacy one is `python xbox\check.py gates gfx1103`.
+     USE AN ABSOLUTE PATH: the shell cwd may already be inside xbox, and then this doubles to xbox\xbox\check.py.
+  3. xbox\HANDOFF.md  - ONLY the newest END OF DAY section (2026-10-30 part 11 - THE Vi-T INPUT'S PROVENANCE IS CLOSED: pool + weights -> /tmp/native-split-head-oracle -> block30-head.fp8 -> CUDA repack; the permutation map is ALREADY in Development, the capture is NOT, and .ssh\config IS ABSENT so the amd9070/rtx5090 hosts are unreachable), for the reasoning behind STATE.md.
+
+STATE as of 2026-10-30, measured on the build box (nothing on device, nothing committed): gates RE-DERIVED at 11:05 (41/41) and manifest at 11:05: gfx1151 (default) 41 attempted / 41 PASS / 0 FAIL, manifest 41 lines = 41 .hsaco, 0 drift, 3638 B, floor 24 OK. NEWEST SOURCE IS hip\c32_alu.hip 15:50:17 and build-modules.ps1 15:48:55, BOTH PREDATE the newest gfx1151 .hsaco 16:26:53 => NO REBUILD NEEDED:
+  ARCH CORRECTION, READ THIS BEFORE EVERY "gfx1103" BELOW: the Ally X APU is AMD Ryzen AI Z2 Extreme = RDNA 3.5, and
+  RDNA 3.5 is gfx115x on the toolchain - AMD's own ROCm page maps "AMD Ryzen APUs with RDNA3.5 architecture" to gfx1150/
+  gfx1151/gfx1152, with gfx1151 named specifically for the Ryzen AI Max series. gfx1103 is a gfx110x/RDNA3 id, so read
+  it as "the arch I have been building for", not "the device's arch". WHICH gfx115x the silicon reports is UNESTABLISHED
+  (nothing pins gfx1150 over gfx1151/1152; a search for "Z2 Extreme" + "Krackan Point"/"gfx1152" found nothing) and the
+  USER CHOSE the gfx1151 TAG (AMD's Ryzen AI Max label) as the build target WITHOUT a device measurement. MEASURED 2026-10-29, compile-only: gfx1150 and
+  gfx1151/1152/1153/115E are CAPABILITY-IDENTICAL to gfx1103 - fp8 converts rejected on all six, v_wmma_f32_16x16x16_f16
+  accepted on all six, identical inline-asm rejection (1036 "instruction not supported on this GPU" / 19 "cannot compile
+  inline asm" / 1 "errors generated" in asm127_1150.log AND asm127_1103.log), and c32_wmma's ISA differs by EXACTLY 7
+  tokens all at +-1 (36306 vs 36307 instruction lines). CONSEQUENCE: gpu_matrix_op.h's shim AND the CW_PACK_MODE_MASK 0
+  flip REMAIN REQUIRED on gfx1150, and the w32 f16 slot-layout risk is NOT resolved by the arch swap. Switching arch is
+  therefore a TAG/deployment change: widen build-modules.ps1:10's ValidateSet, make the two gfx1103-scoped rewrites
+  (:113-114 shim inline, :135-136 guard rewrite) fire for gfx115x too, rebuild ~26 MIN, deploy FLAT. DONE 2026-10-29: build-modules.ps1 now accepts gfx1150/1151/1152/1153/115E, both rewrites fire for gfx115*, hip\modules\gfx1151 holds a
+  full 41-module build that audits clean (ISA Counter({'gfx1151': 41}), 0 hash mismatches, 0 error-ish logs), check.py's
+  DEFAULT folder is gfx1151 and BOTH sets print 41/41. Which set to DEPLOY was CLOSED BY THE USER on 2026-10-30 ("Set to ship: gfx1151"): gfx1151 SHIPS, gfx1103 stays on disk as the legacy reference; FLAT either way. Do not run
+  two full builds at once - the 26 MIN figure included CPU contention from a concurrent gfx1103 rebuild.
+  gfx1103 is COMPILE-COMPLETE: 41 recipes attempted, 41 PASS, manifest 41 lines = 41 .hsaco, 0 drift, 3638 bytes.
+  Re-derived 2026-10-30 11:05 WITHOUT a rebuild: newest sources are hip\c32_alu.hip 15:50:17 and hip\build-modules.ps1 15:48:55, BOTH PREDATING the newest gfx1151 .hsaco at 16:26:53. (The 13:43 / 16:28 figures were the gfx1103 set and are NOT the gate's folder.)
+  That number REQUIRES the knob flip: -ExtraDefines 'CW_PACK_MODE_MASK 0'. Without it the four c32-wave1
+  {,-rtz,-fast,-fast-norm900} recipes fail at the ASSEMBLER on RAW INLINE ASM in hip\wave_owned_c32.inc:147
+  (s_setreg_imm32_b32 hwreg(HW_REG_MODE,23,1) + 4x v_cvt_pk_fp8_f32 op_sel:[0,0,1]) - "instruction not
+  supported on this GPU", which check.py reports UNCLASSIFIED because an assembler error carries no quoted
+  identifier. Read hip\modules\gfx1103\<module>.compile-log.txt when that happens.
+  HOW gfx1103 WORKS NOW: hip\gpu_matrix_op.h is INLINED into every gfx1103 generated.hip at hip\build-
+  modules.ps1:113-114. It emulates the two fp8 converts (gmx_cvt_pk_fp8_f32 stores e4m3 BYTES, gmx_cvt_f32_fp8
+  decodes; both shadowed by function-like macros, so all 267 call sites route through them) and defines HIP_WMMA_
+  SHIM, which wraps the ONLY WMMA builtin gfx1103 has - the UNSUFFIXED __builtin_amdgcn_wmma_f32_16x16x16_f16_w32
+  - via gmx_widen (_Float16 x8 -> __fp16 x16) and gmx_fp8_row (int2 -> 8 f16); the *_gfx12 spellings #define onto
+  those helpers. build-modules.ps1:135-136 rewrites the source guard to `#if !defined(HIP_WMMA_SHIM) && !__has_bui
+  ltin(...)` because __has_builtin cannot see a macro. Both rewrites are gfx1103-scoped, so gfx1200/gfx1201 stay
+  byte-identical; NEVER pass the MASK flip when rebuilding gfx1200/gfx1201.
+  CLOSED: A2 settled, A3's >=24 floor MET (found<24 at src\LmxxfNrRuntime.cpp:345 -> 41; all 5 module-gated
+  families at :471-:479 exist, so o.wave_owned / c512_m32 / swin_run / vit_stream / vit_proj_n64 stay ON), A5
+  satisfied at COMPILE level only, H1 ANSWERED, H2 CORRECTED (the "3256" cap was FICTION MY OWN check.py INVENTED;
+  real cap is size.QuadPart > 1 << 20 at :298), H1 has() falls back to FileExists(JoinPath(modulesDir, f)) so NO
+  gfx1103 arch branch is needed IF modules deploy FLAT - and ValidateModuleSet resolves SHA256SUMS names FLAT too
+  (:337), so a gfx1103 SUBFOLDER breaks it. Do not add gfx1103 to that list.
+  H3 CLOSED 2026-10-29: gfx1103's 41 FLAT names are a strict SUPERSET of the 31-name gfx1200 reference set -
+  nothing missing. The 10 extras are c32-wave1{,-rtz,-fast,-fast-norm900}, c32_alu, c64-wave2-fast, deep_fast-
+  packed-fast, multi-pass-predict, multi-pass-skin, swin-persistent-fast, vit-stream-fast. Do NOT compare hip\
+  SHA256SUMS name-for-name: it is 62 names, mtime 2026-10-09, the PRE-REFACTOR SUBFOLDER manifest (gfx1200/...).
+  Do NOT PAD SHA256SUMS - LoadModule throws later. H4 [x]: o.wmma forced true (src\LmxxfProductionOptions.h:18)
+  and the modules it opens DO hold real tiles - c32_wmma 20, multihead-wmma 20, deep_wmma 24 v_wmma instructions.
+  STILL THE TOP RISK: the RDNA3 w32 f16 FRAGMENT SLOT LAYOUT, now narrowed. The TYPE is SETTLED - the compiler
+  demands a __fp16 vector of SIZE 16 (re-ran the compile-only probe battery; xbox\p_wmma_f16x8.hip feeds __fp16 x8
+  on purpose to elicit that error), so gmx_widen's __fp16 x16 is TYPE-CORRECT. What is NOT settled is SEMANTIC
+  slot placement: probe ISA shows D/C as v[1:8] (one 16x16 tile) while A/B are each 512 halves, which fits EITHER
+  K=32 OR a redundant/duplicated layout. gmx_widen fills slots 0..7 leaving 8 UNSPECIFIED - a HYPOTHESIS in
+  comments, NOT a measurement. If wrong, c32_wmma / multihead-wmma / deep_wmma compute the WRONG TILE while
+  compiling clean. The probe kernel that would settle it was DECLINED BY THE USER on 2026-10-28 AND AGAIN on
+  2026-10-29 - ASK BEFORE CREATING OR RUNNING ANY DEVICE PROBE. A0's DEVICE HALF stays BLOCKED, do not reopen it; its
+  GENERATION HALF is now CORRECTED rather than blocked: gfx1103 is a gfx110x/RDNA3 id while the APU is RDNA3.5 = gfx115x,
+  and WHICH gfx115x remains UNESTABLISHED. The arch TAG IS readable off any built artifact - re.findall(rb'gfx[0-9]{3}[0-9E]',
+  open(p,'rb').read())[0] on each .hsaco - and running it over hip\modules\gfx1103 gives Counter({gfx1103: 41}) while
+  hip\modules\gfx1151 gives Counter({'gfx1151': 41}): each folder carries ONE ASSUMED id uniformly, and NEITHER folder
+  is deployed anywhere. Whether this box is the Ally X is still UNPROVEN.
+
+DO NEXT, in order:
+  0. DECISIONS TO ASK, NOT INVENT: WHICH SET SHIPS - ANSWERED 2026-10-30 by the user ("Set to ship: gfx1151"), so
+     hip\modules\gfx1151 IS the shipping set and hip\modules\gfx1103 (the set every prior session measured) stays the
+     legacy reference. Deploy FLAT either way: ValidateModuleSet
+     resolves SHA256SUMS names FLAT (src\LmxxfNrRuntime.cpp:337, floor found<24 at :345) so an arch SUBFOLDER breaks it.
+     Nothing is deployed yet and NO set has ever been loaded on a device. Any device probe still needs ASKING FIRST.
+  1. Confirm no regression: python xbox\check.py gates then python xbox\check.py manifest - both re-read DISK. The DEFAULT
+     folder is now hip\modules\gfx1151 and a 3rd arg picks another set, so the legacy one is `python xbox\check.py gates
+     gfx1103`; on 2026-10-29 both printed 41 attempted / 41 PASS / 0 FAIL with a clean manifest (xbox\gates_run.txt holds
+     all four runs). Remember gates is a DISK-STATE count plus manifest integrity - it never loads a module. Rebuild ONLY
+     IF sources changed: gfx1103 ~12-15 MINUTES, gfx1151 26 MINUTES measured UNDER CONTENTION from a concurrent gfx1103
+     rebuild, so NEVER run two full builds at once. Background it and poll; do not read counts until the compiler HAS EXITED
+     (an empty compile-log can just be a module mid-flight). ISA work needs NO rebuild for gfx1103 - its 41 .hsaco.s dumps
+     are on disk; gfx1151 has ZERO dumps (RTC_NO_ASM=1), so re-compile with RTC_NO_ASM unset if gfx1151 ISA is needed.
+  2. Keep the numerics question open HONESTLY rather than closing it around: the gate table says COMPILE-PASS with
+     UNVERIFIED output, the reference twins stay the safe runtime path, and the fragment-layout decision goes to
+     the USER each time. NOTE the mechanism is NOT an env var: none of the 71 DLSS5_HIP_* flags in src\native_hip_
+     env_options.h touches wmma/wave/tiled/pooled/packed_weights/fp8_*, and selection happens BY NAME at Development/
+     HIP\hip_reference_network.h:424-425 (an `accelerated` set of 20 kernel names; opt.wmma true appends _wmma).
+     Reaching the twins needs a SOURCE EDIT to LmxxfProductionOptions.h:18. The USER chose DOCUMENT-ONLY, so the
+     defaults are untouched - if that changes, say so explicitly. RE-CONFIRMED 2026-10-30 WHEN ASKED: KEEP DOCUMENT-
+     ONLY - no capture fetch, no ssh to amd9070/rtx5090, no CUDA regeneration, no runtime switch. The documented Vi-T
+     baseline therefore stays UNREPRODUCIBLE ON THIS BOX BY CHOICE, and vit-input.fp8 must NOT be hunted for again until
+     the user changes their mind.
+  3. A6 SOURCE FOUND 2026-10-29 - the old premise (BLOCKED ON THE WEIGHT SOURCE) was WRONG TWICE: hip\gen_network_
+     weights.py is a phantom of my own notes, AND the source has always been ON THIS BOX at G:\Steam\steamapps\common
+     \Wuthering Waves\Client\Binaries\Win64\dlssnr_on_amd_weights.bin (147,689,451 B, READ ONLY - never write it).
+     It is SELF-DESCRIBING: b'DLSSNRW1' + u32le 153 + u32le header_len 5673, then per record [u8 name_len][name][u64
+     payload_offset][u64 payload_size], payload starting at FILE offset 5673. Same 153 names, same order, identical
+     sizes as Development\weights-index.json. DTYPE IS SETTLED MIXED - E4M3 matrix bodies + f16 bias/skip/slots +
+     one f4 scale per blob; weights-index.json's dtype_code=1/inferred_storage='float16' is a /2 HEURISTIC, WRONG
+     as a dtype claim - do NOT decode whole payloads as halves. PROOF: block4\layer0\layer (22720 B) decoded at the
+     offsets in Development\native_c32_reference.py:unpack_bytes gives fs .52/.97/.91/.95/.998/.92, bias -.94/-.57/-6.57,
+     ats .89/1.0/.999 and the f4 scale at byte 19552 = 0.50340. THE MAPPING EXISTS at Development\prepare_native_
+     front_chain.py:22-50: archive block<N>.layer0.layer -> release\native-c{32|64|128|256}\block<N>.weights (class by
+     block index: c32 1..4, c64 6..8, c128 9..14, c256 15..22) -> unpack() -> ffn.f32 / attention.f32, DS carved at
+     20656 / 0xf130 / 0x30230 / 0xa8440. block0-ffn and block0-attention are NOT from the archive - they copy
+     release\preblock-*-amd\weights.f32. WHAT IS STILL MISSING is the FRONT-chain release/** byte-layout .npz scatter
+     maps (w1_hidden/w1_input/q_input/... slot maps) - ZERO .npz anywhere in the tree. The old tail of that sentence,
+     "plus untraced c512 / split-head / post70 record provenance past block22", was WRONG A THIRD TIME: the BACK chain
+     IS ON DISK (Development/weights-arena-index.json indexes all 153 names into the container; Development/ holds the
+     derived Vi-T artifacts) BUT NOT VERIFIED. (The "8/8 contract=OK / permutation_match=True / --numpy-false default / container_bytes" sentence I wrote on 2026-10-30 was INVENTED: that script takes four POSITIONALS `arena index input output`, no such flags exist in the repo, the index has no container_bytes key, and container.find(fp8_bytes) == -1 for all 8 .fp8. NumPy WAS a hard blocker here and IS NOW INSTALLED (2.5.4, user-approved
+     2026-10-30 "Yes, install it"). To actually run it you need the aligned 147,719,680-B arena - NOW REBUILT ON BOX and written to .qwen/tmp/weights-arena-from-container-20261030.bin (the container is header 16 B + a 5,673-B name/offset TABLE + the payload blob; 512-aligning the 153 payloads reproduces every index field with 0 mismatches, +448 B trailing pad = arena_size exactly) - a 65,536-B PHYSICAL E4M3 uint8 `input` activation (the project calls it release/native-rgb512/vit-input.fp8; ABSENT on this box, and block30-enter-512x1024.bin is a DENSE 2-MiB activation, not that sparse blob; PROVENANCE NOW CLOSED from the project's own history at Development/history/porting-worklog.md:2936 and Development/check_native_split_head.py:18-28 - it is the ORIGINAL-KERNEL REPACK of release/native-rgb512/block30-pool.fp8 (32,768 B) + release/native-c512/block30-4.weights run through /tmp/native-split-head-oracle -> release/native-rgb512/block30-head.fp8 (65,536 B) -> repack; THE PERMUTATION MAP IS ALREADY HERE (Development/vit-repack-output-to-input.i32 = 262,144 B = 65,536 x i32, min 0 max 65535, first eight 0,1,2,3,256,257,258,259; vit-repack-permutation.json = shape [64,1024], entries 65536, source_arena_bytes 2097152, bijective true; the 2160-row global twin is 8,847,360 B) but NONE of the three INPUTS are, there is NO release/ dir anywhere under C:\kien2, and C:\Users\micha\.ssh\config DOES NOT EXIST so the hosts the history names (ssh amd9070 = desktop-2026 RX 9070 XT, ssh rtx5090 = NucBox_EVO-T1 RTX 5090 answer machine) are unreachable as configured - FETCHING IT IS AN ACTION ON ANOTHER MACHINE: ASK FIRST), and numpy - which IS now installed, so THE CHAIN HAS RUN END TO END HERE FOR THE FIRST TIME (exit 0, blocks 31..38 all finite, a6-fill-out.f32 = 262,144 B, a6-fill-physical.fp8 = 2,097,152 B) using Development\block14-downsample-matrix.bin, the ONLY 65,536-B file in Development\, as a LABELLED FILLER. Those eight std values (14.1189 -> 0.0468698) are integration evidence ONLY and do NOT reproduce the documented 1.95 -> 1.10 baseline, which stays UNREPRODUCIBLE until a real capture exists. Installing ANY package is an environment change: ASK FIRST, and the numpy approval covers that one install only.) Do
+     NOT invent mappings. Before ANY 'what is missing' claim, read Development\history\ (15 files, ~2 MB, NOW MINED - it is no longer un-read): porting-worklog.md 936,310 B already records the ViT 31->38 chain at std 1.95 -> 1.10 and Attention = 32 main tokens + 32 zero-pad keys with correlation 0.9627453 / MAE 0.280474 at :1246-1252. The plain reader is real:
+     NativeReadF32 at src\native_lab_paths.h:83, f32-file-then-f16 fallback at :86-:89.
+  4. A4 is the live ALU thread, and the finding got WORSE: num_vgpr 256 (the cap) on expand/qkv/scores/project vs
+     contract 129 (av 111 proves the shape is reachable), 143 ds_load_2addr_b32 in expand where contract vectorised
+     to ds_load_b128 x252, and NOW ALSO priv_seg 48/132/144/160 + flat_scratch=1 + scratch ops 15/16/44/20 on those
+     same four kernels (contract and av have none) => the cap is SPILLING TO GLOBAL SCRATCH. Numbers were RE-MEASURED
+     2026-10-29 with isa_report.py and reproduce. Re-census only if you touch c32_alu.hip.
+  5. P1-P3 to 720p / 1-in-2 frames / >=30 fps and D1-D2 under 12 GB RAM: blocked on device access.
+
+BUILD (one call, ~12-15 min, background it; .ps1 by PATH is exec-policy blocked):
+  $root='C:\kien2\dlss5-on-amd-9070xt-porting\hip'
+  $src=Get-Content (Join-Path $root 'build-modules.ps1') -Raw
+  & ([ScriptBlock]::Create($src)) -Targets gfx1103 -SkipOnError -ExtraDefines 'CW_PACK_MODE_MASK 0' -OutputDir (Join-Path $root 'modules\gfx1103') -SourceDir $root -Compiler (Join-Path $root 'rtc_compile.exe')
+  -ExtraDefines entries are emitted as `#define <entry>`, so use a SPACE ('CW_PACK_MODE_MASK 0'), not '='.
+  -Only <name> works but REWRITES SHA256SUMS/modules.json to only that module - safe ONLY with a throwaway -OutputDir.
+     -Root IS NOT a parameter.
+  -gfx115x is DONE 2026-10-29, not blocked: build-modules.ps1:13's ValidateSet now accepts gfx1150/1151/1152/1153/115E,
+     the shim inline (:117-119, throws if hip\gpu_matrix_op.h is missing) and the guard rewrite (:141-143) both fire for
+     gfx115*, and the c32_alu row (:53) lists the family. The old "gfx1150 is REJECTED" note pointed at :10/:113-114/:135-136
+     and is STALE - those line numbers moved. hip\modules\gfx1151 holds the 41-module build, and check.py:20 now DEFAULTS
+     to it (check.py:100 is the 3rd-arg folder override). gfx1150 rejection was MY ValidateSet gate, never COMGR's, which
+     knows 52 ISAs. Working gfx1151 build, ONE call, background it:
+       set RTC_TARGET=gfx1151&& set RTC_ONLY=&& powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Expression (Get-Content -LiteralPath 'C:\kien2\dlss5-on-amd-9070xt-porting\xbox\build_target.ps1' -Raw)" > C:\kien2\dlss5-on-amd-9070xt-porting\xbox\build_gfx1151.log 2>&1
+     (xbox\build_target.ps1 sets RTC_NO_ASM=1 so NO .hsaco.s dumps are written, then binds -Targets/-Only/-OutputDir/-SourceDir/
+     -Compiler and -ExtraDefines 'CW_PACK_MODE_MASK 0', using xbox\rtc_compile_cmd.cmd because rtc_compile.exe cannot do gfx115x.)
+     A .ps1 invoked BY PATH is exec-policy blocked, hence Invoke-Expression + ScriptBlock binding - and the script has NO
+     -Help switch, its array param is -Targets, not -Target. STILL OPEN: the device's exact gfx115x id is unestablished.
+
+RULES: use python xbox\check.py and python xbox\isa_report.py, never hand greps (isa_report --grep needs a NARROW
+pattern - 'cvt' matched 49506 lines). Never pipe into more/less. Read counts from disk, not from memory. A PASS IS
+A COMPILE, NOT A RESULT - flag verification honestly. Count ISA instructions by their FIRST TOKEN: a bare substring
+match for v_wmma counts kernel NAMES and made the ALU twin c32_alu look WMMA-using (it has ZERO real v_wmma
+instructions; its 34 hits are symbol metadata). grep_search has NO (?i) inline flag - use [Ww]mma alternation. A
+MULTI-LINE python -c WITH REAL NEWLINES UNDER cmd.exe DOES RUN - the "empty output with exit 0" failure is a specific
+mode, NOT the general rule. literal `\n` inside a one-line -c IS the real hazard: exit 1, SyntaxError "unexpected
+character after line continuation character". ESCAPED INNER DOUBLE QUOTES break cmd parsing BEFORE python starts (localized
+"cannot find specified path", exit 1, no python output) - use single quotes only and hoist format strings into variables
+(`fmt='<QQ'`). Scratch scripts under .qwen\tmp were DENIED BY POLICY on 2026-10-29, so prefer one-liners; a python file
+written THERE IS however runnable by absolute path (only a `.ps1` BY PATH hits exec policy), and grep saved tool output
+rather than re-running probes.
+ARCH TOOLS, both COMPILE-ONLY and policy-clean: python xbox\probe_isa.py <target> (primitive battery, prints per-probe
+PASS/FAIL plus ISA tallies; gfx115x route through ctypes automatically) and python xbox\probe_comgr.py --compile <out.hsaco>
+<src.hip> comgr <target> [opts] to compile a REAL module for a new arch. rtc_compile.exe IS STALE - gfx1150 is in its strings
+but line 33's allowlist hard-throws `target must be gfx1200, gfx1201, or gfx1103`, and the exe is UNREBUILDABLE here (g++
+invocations exit 1 with no artifact; calling cc1plus.exe directly exits -1073741515 = 0xC0000135 STATUS_ACCESS_DENIED), so
+ctypes COMGR is the only working compile path for gfx115x. A .hsaco HASH IS NOT REPRODUCIBLE ACROSS COMPILER PATHS - the
+ELF carries an object symbol _ZN..._CUID<32 hex> that changes per invocation, so ctypes-vs-exe builds of the SAME arch
+differ everywhere; audit arch by the embedded TAG and behaviour by the .s dump. COMGR action ids and DATA KINDS are
+DIFFERENT ENUMS: assembly comes out of DATA KIND 1 even though the ASSEMBLY action is id 5 - reading KIND 5 hands back
+the LOG blob and silently "proves" there are no matrix ops. Assembly instruction lines are TAB-indented, so tokenise
+l.startswith('\t') and count the FIRST TOKEN. WEIGHT FORENSICS TRAP: weights-index.json payload_offset IS ARCHIVE-ABSOLUTE WITH inter-record gaps, NOT payload-
+relative to dlssnr_on_amd_weights.bin - block4 reads 124246655 there vs the container header's own 124239680, drift
+6975 and GROWING with index; slicing the .bin at JSON offsets silently misaligns (that is how a 6.26e-36 "scale" got
+read). Use the container's OWN header, or payload_start = file_size - 147683778 = 5673 plus header offsets. A PROBE
+THAT READS THE WRONG DTYPE LOOKS SUCCESSFUL: this box's Python has NO numpy and array() HAS NO 'e' typecode, but
+struct.unpack_from('<e', payload, k*2) DOES work - use it for halves and never array('e').
+At end of day OVERWRITE xbox\STATE.md (keep ~100 lines) and append one END OF DAY section to xbox\HANDOFF.md.
+Nothing is committed - do not revert or clean hip\c32_alu.hip, hip\gpu_matrix_op.h, the build-scripts edits,
+hip\modules\ (BOTH the gfx1103 AND gfx1151 sets), hip\rtc_compile.exe, or xbox\.

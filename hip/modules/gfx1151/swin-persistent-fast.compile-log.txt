@@ -1,0 +1,1 @@
+C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\swin-persistent-fast.hsaco <- C:\kien\dlss5-on-amd-9070xt-porting\hip\modules\gfx1151\swin-persistent-fast.generated.hip [gfx1151] OK hsaco=4435248 B asm skipped
