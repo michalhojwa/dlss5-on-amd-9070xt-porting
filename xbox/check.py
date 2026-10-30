@@ -16,7 +16,8 @@ and SHA256SUMS lists the FULL filename including .hsaco.
 """
 import os, re, sys
 
-ROOT = r"C:\kien\dlss5-on-amd-9070xt-porting"
+# Repo root, derived from this file's location so the tree stays movable under git.
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MOD = os.path.join(ROOT, "hip", "modules", "gfx1151")
 HSACO_SUFFIX = ".hsaco"
 LOG_SUFFIX = ".compile-log.txt"

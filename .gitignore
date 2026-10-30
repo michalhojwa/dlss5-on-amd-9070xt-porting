@@ -1,5 +1,6 @@
 # Qwen temporary data
 .qwen/tmp/
+.qwen/tmp/weights-arena-from-container-20261030.bin
 
 # Generated HIP binaries / assembly
 hip/modules/gfx1103/*.hsaco.s
@@ -10,25 +11,21 @@ build-*/
 out/
 bin/
 obj/
-
 large-resources/
 __pycache__/
 *.pyc
-/release/
-Development/temp/
-third_party/
-AGENTS.md
-.claude
-bin/
+
 # local COMGR host tool built from rtc_compile.cpp
-hip/rtc_compile.exe# deployment binaries (hashes live in each deployment's payload.json / README)
+hip/rtc_compile.exe
+
+# deployment binaries (hashes live in each deployment's payload.json / README)
 Development/deployments/**/*.addon64
 Development/deployments/**/*.hsaco
 Development/deployments/**/*.dll
 Development/HIP/experiments/**/*.exe
 
-.qwen/tmp/
-hip/modules/gfx1103/*.hsaco.s
-
-.qwen/tmp/weights-arena-from-container-20261030.bin
-hip/modules/gfx1103/*.hsaco.s
+/release/
+Development/temp/
+third_party/
+AGENTS.md
+.claude
