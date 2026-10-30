@@ -322,3 +322,13 @@ there to close a question, not to open a quest.
 **Trap learned:** a script that EXISTS in the repo is not a script that RUNS here - `run_original_split_head.cpp` has been
 sitting in Development the whole time, and its `#include <cuda.h>` is the whole answer to "why has nobody generated this
 file yet". Check the dependency graph of the tool, not just its presence.
+
+## GIT STATE CORRECTION (2026-10-30, AFTER the parts above)
+
+- The "Nothing committed" inside the parts above is the PRE-commit state and is kept verbatim. Measured now: `git status -sb`
+  CLEAN, 0 untracked, HEAD `2fdd3e91` on `xdna2_poc`. Everything is TRACKED - including hip/rtc_compile.exe and
+  hip/modules/** - so the .gitignore rules matching those paths are INERT, and `git check-ignore` needs `--no-index` to
+  show them.
+- Live workflow = `xbox/STATE.md` GIT line + `xbox/PLAN.md` `## Git` section. Superseded prose anywhere else is read with
+  `git log -p --follow -- <file>`, not by trusting an old bullet. Push happens ONLY when the user asks; check
+  `git ls-remote origin xdna2_poc` first.
