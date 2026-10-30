@@ -6,7 +6,7 @@
 ==========================================
 
 GIT  (the repo is version-controlled; the tree is no longer deliberately uncommitted)
-  remote  origin = https://github.com/Kien-DLSS5-ND-DLSS/dlss5-on-amd-9070xt-porting
+  remote  origin = https://github.com/michalhojwa/dlss5-on-amd-9070xt-porting.git  (MEASURED 2026-10-30 by `git remote -v`)
   branch  xdna2_poc  (tracks origin/xdna2_poc)   - run everything from the REPO ROOT.
   commit only what you touched: `git add <paths>` then `git commit`; NEVER `git add .`
   (large binaries are already tracked: hip/modules/**/*.hsaco, hip/rtc_compile.exe, hip/*.hip).

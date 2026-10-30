@@ -147,8 +147,8 @@
 [ ] D2. Config: model_scale, frame-skip, strength, skip-blocks; per-game deploy
 
 ## Git (the tree IS under version control - history is the archive, not appended prose)
-  - Repo root = this directory. remote `origin` = https://github.com/Kien-DLSS5-ND-DLSS/dlss5-on-amd-9070xt-porting ;
-    branch `xdna2_poc` tracks `origin/xdna2_poc`. Run everything from the repo root.
+  - Repo root = this directory. remote `origin` = https://github.com/michalhojwa/dlss5-on-amd-9070xt-porting.git (MEASURED
+    2026-10-30 by `git remote -v`); branch `xdna2_poc` tracks `origin/xdna2_poc`. Run everything from the repo root.
   - Session start: `git status -sb` (expect clean) + `git stash list`. NEVER `git clean -xfd` and NEVER `git checkout --`
     here: the .hsaco / .hsaco.s / logs ARE the deliverable, and re-creating them costs a full rebuild.
   - `git add <the paths you touched>` then `git commit`. NEVER `git add .` / `-A`: build logs, hip/modules/**, rtc_compile.exe

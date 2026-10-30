@@ -8,7 +8,7 @@ DISPATCH: read ONLY xbox/STATE.md + this block + the newest END OF DAY in xbox/H
   Do NOT read the whole HANDOFF.md. Do NOT cat source files to find a path: use `git grep`, read the named lines.
 
 GIT: THE TREE IS UNDER VERSION CONTROL. Repo root = this directory; remote origin =
-  https://github.com/Kien-DLSS5-ND-DLSS/dlss5-on-amd-9070xt-porting ; branch xdna2_poc (tracks origin/xdna2_poc).
+  https://github.com/michalhojwa/dlss5-on-amd-9070xt-porting.git ; branch xdna2_poc (tracks origin/xdna2_poc).
   `git status -sb` CLEAN on 2026-10-30, `git fsck --no-progress` OK, `git ls-remote origin` IN SYNC. The old "NOTHING
   COMMITTED / 322 UNTRACKED" reading is OBSOLETE - EVERYTHING is tracked, including hip/rtc_compile.exe (blob 2,682,656
   B) and hip/modules/gfx1103/*.hsaco.s (blob 10,830,841 B). `git add <paths you touched>`, NEVER `git add .`; push ONLY
@@ -32,7 +32,9 @@ TOP STATUS
   (4) A6 = UNBLOCK PATH IN PROGRESS, NOT CLOSED. MEASURED 2026-10-30: 6 of 7 activation .bin files were ABSENT from
       hip\weights\ at check time; Development/ holds ALL 7 (5,673, 5,673, 278,536, 8,784,896, 10,641,664, 147,689,451,
       153,600,000 B). THE 3 BLOCKERS FORMERLY CITED AS A6'S CAUSE ARE NOT ON THE PATH HERE: NO 6-GB TRANSFER IS NEEDED (the
-      activation set IS 176,965,976 B TOTAL), numpy IS INSTALLED (2.3.1), `python --version` WORKS FROM A PLAIN TOOL CALL.
+      activation set IS 176,965,976 B TOTAL), numpy IS INSTALLED (2.5.4 - re-measured 2026-10-30 with
+      `python -c "import numpy;print(numpy.__version__)"`; the older cards' 2.3.1 is stale), `python --version` WORKS
+      FROM A PLAIN TOOL CALL.
   (5) THE Vi-T BACK CHAIN RAN 2026-10-30 - WITH A LABELLED FILLER INPUT. The weights ARE THE REAL MODDER-EXTRACTED SET:
       the arena was REBUILT AT Development/ and 55/55 tensors matched the ORIGINAL EXTRACT BYTE-EXACT (std 6.0014, mean
       0.0035, 41,062,272 B, 29,912 non-zero). THE INPUT IS NOT THE DEVICE'S: the input provenance is CLOSED (the 7 activation
