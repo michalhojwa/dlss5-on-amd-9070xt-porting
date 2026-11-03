@@ -613,7 +613,8 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
 ```
 
 ## HOW TO CONTINUE (paste this tomorrow, 2026-11-05)
-0. Read xbox/STATE.md, then ONLY this part-13 section, then the named section of xbox/PLAN.md. Ignore hip-era gate IDs.
+0. WORKSPACE MOVED 2026-11-04: the ONNX-route live tree is `C:\onnxRoute` (see item 5). Read `xbox/STATE.md`, then ONLY
+   this part-13 section, then the named section of xbox/PLAN.md. Ignore hip-era gate IDs.
 1. FIRST ACTION, NO INSTALLS AND NO DEVICE CONTACT: close N0 with the smallest self-contained probe - author a tiny ONNX
    graph (MatMul + Add, f32 initializers) and run it against `C:\Windows\System32\onnxruntime.dll` through ctypes or a
    C++ exe; PRINT `GetAllRegisteredEpList()` and the SESSION's provider list. That settles, by measurement, whether the
@@ -627,9 +628,15 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
    keep the f32 ACCUMULATOR rule explicit (448^2 = 2.0e5 > f16 max 65504).
 4. KEEP OPEN, DO NOT ASSERT: VitisAI EP availability in `onnxruntime.dll`; Windows ML THIRD-PARTY-MODEL ATTESTATION (test
    by loading an UNSIGNED model); which EP actually reaches the NPU; N4 parity (CUDA-oracle-bound, `NO_CUBIN`).
-5. REPO SHAPE (user asked, unanswered at time of writing): the recommendation is TAG THIS repo as the RE/archive and seed a
-   NEW SMALL repo for the ONNX route by FILE EXTRACTION + `PROVENANCE.md` (old URL + tag + per-file SHA256), NOT a
-   SUBMODULE (831.25 MiB). Confirm with the user before creating anything; `gh` is NOT installed here.
+5. REPO SHAPE (user asked, DECIDED 2026-11-04): FILE EXTRACTION DONE into `C:\onnxRoute` - 1,126 files / 409,517,260 B
+   (7,509,352 B text + code as tracked candidates, 401,819,092 B extracted-tensor payload copied but GIT-IGNORED). Its
+   `PROVENANCE.md` (188,635 B) records the source URL, the frozen anchor commit `469442deef418b9321fddf78537a3c218c40ab0d`
+   (HEAD at extraction time, already pushed), per-file size + SHA256 + the source repo's git blob SHA, and a NOT-COPIED
+   table (`hip/` 600,166,093 B; `Development/results/**` 503,308,202 B / 24,801 files; `Development/HIP/experiments/**`
+   8,631,296 B; HIP-era `xbox/` scratch ~34.5 MB; `scripts/**` 423,413 B; upstream zh-CN docs; the 147,689,451 B NVIDIA
+   weight container under `G:\Steam\...` which is not in git) plus the `git show <commit>:<path>` retrieval recipe. NOT
+   a SUBMODULE (831.25 MiB pack). STILL THE USER'S CALL: a freeze TAG on THIS repo, and whether/when to add a remote for
+   the new tree (`gh` is NOT installed here).
 6. GIT: add/commit/push REGULARLY per the 2026-11-04 policy - `git status -sb`, `git ls-remote origin xdna2_poc`, then
    `git add <exact paths>` (NEVER `.` / `-A`), `git commit`, `git push`. NEVER `git clean -xfd` / `git checkout --`.
 7. Verification: EXACT COMMAND + VERBATIM OUTPUT for every claim, else NOT RUN / UNVERIFIED. Never write "validated",
