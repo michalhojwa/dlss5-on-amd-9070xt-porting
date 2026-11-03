@@ -637,9 +637,11 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
    B; upstream zh-CN docs; the 147,689,451 B NVIDIA weight container under `G:\Steam\...` which is not in git) plus the
    `git show <commit>:<path>` retrieval recipe. NOT a SUBMODULE (831.25 MiB pack). FREEZE TAG DONE 2026-11-04:
    `freeze-hip-era-20261104` (tag object `4b0467808366c0fc7ad2ec738096b08aa45dad82`) points at this repo's HEAD
-   `0baa4872819e1ad61ba0e29f3ec5368c6cc78748` and is PUSHED. The new tree is now its OWN git repo: branch `main`,
-   commits `745a92e` (918 files) then `29f1838`, payload tensors ignored, NO REMOTE YET - adding one stays the user's
-   call (`gh` is NOT installed here). COPY PARITY verified by matching paths against `ls-tree -r` of the anchor commit:
+   `0baa4872819e1ad61ba0e29f3ec5368c6cc78748` and is PUSHED; the tag is NOT at this branch's tip - the commit that
+   records the tag note comes after it, and every future HANDOFF edit moves the tip again, so read the context docs from
+   the branch tip, never from the tag. The new tree is now its OWN git repo: branch `main`, commits `745a92e` (918 files),
+   `29f1838`, `f764edd`, `e8677d5`; payload tensors ignored; NO REMOTE YET - adding one stays the user's call (`gh` is
+   NOT installed here); it has its own `README.md` start-here doc. COPY PARITY verified by matching paths against `ls-tree -r` of the anchor commit:
    911 of 918 tracked files have the IDENTICAL git blob SHA, 3 differ on purpose (`.gitignore`, root `README.md`,
    `xbox/HANDOFF.md`), 4 are new paths (`PROVENANCE.md`, `upstream-docs/README.md`, `upstream-docs/CHANGELOG.md`,
    `upstream-docs/LICENSE`). Read `C:\onnxRoute\PROVENANCE.md` for the full receipt.
