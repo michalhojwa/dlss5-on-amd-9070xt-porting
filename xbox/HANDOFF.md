@@ -628,15 +628,21 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
    keep the f32 ACCUMULATOR rule explicit (448^2 = 2.0e5 > f16 max 65504).
 4. KEEP OPEN, DO NOT ASSERT: VitisAI EP availability in `onnxruntime.dll`; Windows ML THIRD-PARTY-MODEL ATTESTATION (test
    by loading an UNSIGNED model); which EP actually reaches the NPU; N4 parity (CUDA-oracle-bound, `NO_CUBIN`).
-5. REPO SHAPE (user asked, DECIDED 2026-11-04): FILE EXTRACTION DONE into `C:\onnxRoute` - 1,126 files / 409,517,260 B
-   (7,509,352 B text + code as tracked candidates, 401,819,092 B extracted-tensor payload copied but GIT-IGNORED). Its
-   `PROVENANCE.md` (188,635 B) records the source URL, the frozen anchor commit `469442deef418b9321fddf78537a3c218c40ab0d`
-   (HEAD at extraction time, already pushed), per-file size + SHA256 + the source repo's git blob SHA, and a NOT-COPIED
-   table (`hip/` 600,166,093 B; `Development/results/**` 503,308,202 B / 24,801 files; `Development/HIP/experiments/**`
-   8,631,296 B; HIP-era `xbox/` scratch ~34.5 MB; `scripts/**` 423,413 B; upstream zh-CN docs; the 147,689,451 B NVIDIA
-   weight container under `G:\Steam\...` which is not in git) plus the `git show <commit>:<path>` retrieval recipe. NOT
-   a SUBMODULE (831.25 MiB pack). STILL THE USER'S CALL: a freeze TAG on THIS repo, and whether/when to add a remote for
-   the new tree (`gh` is NOT installed here).
+5. REPO SHAPE (user asked, DECIDED 2026-11-04): FILE EXTRACTION DONE into `C:\onnxRoute` - 1,127 files / 409,521,926 B
+   as measured after the part-13 sync (918 text/code files = 7,702,834 B as tracked candidates, 209 extracted-tensor
+   payload files = 401,819,092 B copied but GIT-IGNORED). Its `PROVENANCE.md` records the source URL, the frozen anchor
+   commit `469442deef418b9321fddf78537a3c218c40ab0d` (HEAD at extraction time, already pushed), per-file size + SHA256
+   + the source repo's git blob SHA, and a NOT-COPIED table (`hip/` 600,166,093 B; `Development/results/**` 503,308,202
+   B / 24,801 files; `Development/HIP/experiments/**` 8,631,296 B; HIP-era `xbox/` scratch ~34.5 MB; `scripts/**` 423,413
+   B; upstream zh-CN docs; the 147,689,451 B NVIDIA weight container under `G:\Steam\...` which is not in git) plus the
+   `git show <commit>:<path>` retrieval recipe. NOT a SUBMODULE (831.25 MiB pack). FREEZE TAG DONE 2026-11-04:
+   `freeze-hip-era-20261104` (tag object `4b0467808366c0fc7ad2ec738096b08aa45dad82`) points at this repo's HEAD
+   `0baa4872819e1ad61ba0e29f3ec5368c6cc78748` and is PUSHED. The new tree is now its OWN git repo: branch `main`,
+   commits `745a92e` (918 files) then `29f1838`, payload tensors ignored, NO REMOTE YET - adding one stays the user's
+   call (`gh` is NOT installed here). COPY PARITY verified by matching paths against `ls-tree -r` of the anchor commit:
+   911 of 918 tracked files have the IDENTICAL git blob SHA, 3 differ on purpose (`.gitignore`, root `README.md`,
+   `xbox/HANDOFF.md`), 4 are new paths (`PROVENANCE.md`, `upstream-docs/README.md`, `upstream-docs/CHANGELOG.md`,
+   `upstream-docs/LICENSE`). Read `C:\onnxRoute\PROVENANCE.md` for the full receipt.
 6. GIT: add/commit/push REGULARLY per the 2026-11-04 policy - `git status -sb`, `git ls-remote origin xdna2_poc`, then
    `git add <exact paths>` (NEVER `.` / `-A`), `git commit`, `git push`. NEVER `git clean -xfd` / `git checkout --`.
 7. Verification: EXACT COMMAND + VERBATIM OUTPUT for every claim, else NOT RUN / UNVERIFIED. Never write "validated",
