@@ -13,6 +13,9 @@ GIT: THE TREE IS UNDER VERSION CONTROL. Repo root = this directory; remote origi
   COMMITTED / 322 UNTRACKED" reading is OBSOLETE - EVERYTHING is tracked, including hip/rtc_compile.exe (blob 2,682,656
   B) and hip/modules/gfx1103/*.hsaco.s (blob 10,830,841 B). `git add <paths you touched>`, NEVER `git add .`; push ONLY
   ON REQUEST. Superseded text lives in history: `git log -p --follow -- xbox/STATE.md`, `git show <commit>:xbox/HANDOFF.md`.
+  MEASURED 2026-11-03: HEAD 5bc57b02, IN SYNC WITH origin/xdna2_poc, and xbox/STATE.md + xbox/RESUME.txt + xbox/HANDOFF.md
+  are MODIFIED UNCOMMITTED ON PURPOSE - that is the day's write-back, not lost work. DO NOT `git checkout .`, `git restore`,
+  or `git clean` them; commit ONLY the paths you touched, and only when asked.
   THE TREE MOVED C:\kien -> C:\kien2 on 2026-10-30, so NOTHING may hardcode a drive root: check.py derives ROOT from
   __file__, build_target.ps1 walks up looking for hip\build-modules.ps1 (RTC_ROOT overrides it), rtc_compile_cmd.cmd uses
   %~dp0. THE MOVE DID BREAK THE GATE AND IT IS NOW FIXED: `python xbox\check.py gates` -> attempted 41 | PASS 41 | FAIL 0.
@@ -27,8 +30,12 @@ TOP STATUS
       floor 24 OK, 3638 B. `git status -sb` CLEAN. NOTHING IS DEVICE-CERTIFIED.
   (3) ARCH SPLIT IS MEASURED ON THE TOOLCHAIN, UNRESOLVED ON DEVICE: gfx1150/1151/1152/1153/115E COMPILE-CAPABILITY-IDENTICAL
       to gfx1103; c32_wmma's ISA differs by EXACTLY 7 tokens all at +-1. gfx1151 SHIPPED BECAUSE THE USER CHOSE IT, NOT
-      because a device reported it. WHICH ISA THE DEVICE REPORTS REMAINS UNESTABLISHED; the loader cannot catch a mismatch
-      (`readArchId` :436 and `validateArch` :457 both return true unconditionally). See PLAN.md "SHIP STATE".
+      because a device reported it. WHICH ISA THE DEVICE REPORTS REMAINS UNESTABLISHED, and the loader DOES NOT catch a
+      mismatch - CORRECTED 2026-11-03: `readArchId` and `validateArch` DO NOT EXIST anywhere in the tree (git grep matches
+      ONLY this file). The real mechanism is that NOTHING reads the ISA tag out of a .hsaco: over src/, `git grep -iE
+      "gfx[0-9]|amdhsa|archid"` returns only has()'s HIP\gfx1200 / HIP\gfx1201 FOLDER-NAME lookup (LmxxfNrRuntime.cpp:456)
+      and the bridge's arch LOG line (native_hip_network.h:65). So a gfx1103-tagged artifact sitting in a gfx1151 folder
+      validates clean. See PLAN.md "SHIP STATE".
   (4) A6 = UNBLOCK PATH IN PROGRESS, NOT CLOSED. MEASURED 2026-10-30: 6 of 7 activation .bin files were ABSENT from
       hip\weights\ at check time; Development/ holds ALL 7 (5,673, 5,673, 278,536, 8,784,896, 10,641,664, 147,689,451,
       153,600,000 B). THE 3 BLOCKERS FORMERLY CITED AS A6'S CAUSE ARE NOT ON THE PATH HERE: NO 6-GB TRANSFER IS NEEDED (the
@@ -42,11 +49,25 @@ TOP STATUS
       because C:\Users\micha\.ssh\config IS ABSENT, so they CANNOT BE PROBED). A LABELLED FILLER ACTIVATION WAS FED
       (c32_a6_f16_4x256.py:595 `build_tensors`: `T = torch.zeros(...)`, `if not ZEROS: T[:, 3] = 1.0`); the chain COMPLETES
       and the metrics match the original's. See STATE.md's OPEN PROBLEM for what is and is not measured.
-  (6) THE GATE + FLOOR ARE CONFIRMED, THE 40-CEILING IS NOT DEVICE-CERTAIN: 40-slot ceiling = the runtime's OWN
-      `modules[]` (src/LmxxfNrRuntime.cpp:516 = 39 pointers + nullptr = 40), NOT hip/build-modules.ps1's floor (24, :143-144)
-      and NOT the manifest capacity (`MAX_MODULES = 1008`, :272, guard at :562-563; the real manifest cap is BYTES -
-      `kFileSizeLimit = 1<<20` at :298). THE LOADABLE SET MUST STAY <= 40 SLOTS; 41 RECIPES SIT ON DISK, so the ceiling is
-      already exceeded by the build set. See PLAN.md HARD GATE.
+  (6) THE GATE + FLOOR ARE CONFIRMED; THE "40-SLOT CEILING" WAS PHANTOM - CORRECTED 2026-11-03. `git grep "MAX_MODULES\|
+      kFileSizeLimit\|readArchId\|validateArch\|40-slot"` over the tree matches ONLY this file: none of those identifiers
+      exist in src/. The ACTUAL hard limits, read from ValidateModuleSet (src/LmxxfNrRuntime.cpp:288-347), are: SHA256SUMS
+      must exist and be >0 and <=1<<20 BYTES (:297, a cap on the MANIFEST TEXT - 41 lines is 3638 B), every .hsaco listed
+      must exist on disk (:340), and `found < 24` fails (:345). THERE IS NO UPPER CAP ON MODULE COUNT, so 41 IS LEGAL and
+      the build set does NOT exceed anything. The constraint that DOES bite is BY-NAME PRESENCE at :471-:479: wave_owned needs
+      c32-wave1 + c64-wave2, c512_m32 needs c512-m32-mh + c512-m32-deep, plus swin-persistent, vit-stream, vit-wide-deep.
+      Measured 2026-11-03 in hip/modules/gfx1151/SHA256SUMS: 41 .hsaco, 41 lines, and ALL 7 of those names PRESENT - so
+      no module-gated family silently disables. See STATE.md GATES A3 and PLAN.md HARD GATE.
+  (7) FRONT-CHAIN .npz = 39 MAPS REFERENCED, 0 ON DISK, 101 CONSUMERS - THE GAP IS CUDA-ORACLE-BOUND, NOT ANALYSIS-BOUND
+      (MEASURED 2026-11-03). 39 distinct map paths are referenced across Development/, xbox/, scripts/, hip/, tools/, src/
+      AFTER folding the `native-c64` and `native-c{C}` spellings together; `if exist release` -> NO_RELEASE_DIR, so 0 of 39
+      EXIST. The consumers are 101 `np.load` call sites in validate_native_*.py / check_native_*.py. Producer grades: CUDA-ORACLE
+      21, ANALYTIC 4, NEEDS-BYTE-BLOBS 1, NO-PRODUCER 14 - and the 14 OVERSTATES: producers whose `a.folder` comes from an
+      argparse POSITIONAL, and build_c32_oracle_artifacts.py:91, are MISSED by my scanner, so treat 14 as an UPPER BOUND. THE
+      REAL PREREQUISITE IS INPUT, NOT REASONING: recover_native_c64_view.py and recover_preblock_ffn_layout.py DRIVE
+      /tmp/native-c32-global-oracle and /tmp/preblock-branch-oracle OVER /tmp/dlssnr-cubins/dlssnr-00.cubin; derive_native_ds_layout.py
+      only EXTENDS the maps it first `np.load`s for c64/c128 - it is NOT a bootstrap. DO NOT HAND-WRITE A MAPPING ("do not
+      invent mappings"): OBTAIN THE CUBINS AND BUILD THE ORACLE ON A CUDA HOST FIRST. See HANDOFF.md END OF DAY 2026-11-03.
 
 BLOCKERS, MEASURED - DO NOT RE-MEASURE UNLESS A FIX IS EXACTED FIRST
   NO DEVICE. NOT EVEN REACHABLE: `C:\Users\micha\.ssh\config` DOES NOT EXIST (`os.path.isfile` -> False;
@@ -57,4 +78,10 @@ BLOCKERS, MEASURED - DO NOT RE-MEASURE UNLESS A FIX IS EXACTED FIRST
   Do NOT cite ssh's ABSENCE AS A BLOCKER AGAIN, and DO NOT ATTEMPT IT AGAIN WITHOUT A HOST ENTRY TO ADD FIRST.
   NO `python3`: "python3:1: command not found" - USE `python`. `git grep` FOR SEARCH, NOT the Grep TOOL: it SILENTLY
   RETURNS 0 MATCHES ON THIS REPO, INCLUDING FOR A STRING THAT IS PRESENT.
+  NO CUBLIN AND NO CUDA HOST HERE (MEASURED 2026-11-03): `dir /b /s *.cubin` -> NO_CUBIN, so 0 closed-source inputs are
+  archived, and the compiled /tmp/*oracle* binaries live on a CUDA host this box does not have. The oracle SOURCES ARE IN
+  THE TREE - Development/dlssnr_cubin_oracle_probe.cpp, Development/run_original_preblock_oracle.cpp,
+  Development/run_original_2h_inpview_oracle.cpp, HIP/experiments/small-model/ngx_oracle.cpp - but A SOURCE THAT EXISTS IS
+  NOT AN ORACLE THAT RUNS: the same trap as `run_original_split_head.cpp`'s `#include <cuda.h>` in HANDOFF part 11. Do NOT
+  RE-RUN THE recover_* / derive_* PRODUCERS expecting progress until the .cubin SET AND THE ORACLE BUILD ARE TRANSFERRED IN.
 

@@ -332,3 +332,169 @@ file yet". Check the dependency graph of the tool, not just its presence.
 - Live workflow = `xbox/STATE.md` GIT line + `xbox/PLAN.md` `## Git` section. Superseded prose anywhere else is read with
   `git log -p --follow -- <file>`, not by trusting an old bullet. Push happens ONLY when the user asks; check
   `git ls-remote origin xdna2_poc` first.
+
+---
+
+# END OF DAY 2026-11-03 — part 12: front-chain `.npz` dependency map MEASURED. The gap is ORACLE-bound, not analysis-bound.
+
+Box: `C:\kien2\dlss5-on-amd-9070xt-porting` (tree moved `C:\kien` → `C:\kien2`, see part 11). Branch `xdna2_poc`.
+This day re-checked the card's headline numbers against today's disk, corrected two phantom claims in the dispatch docs,
+and closed the front-chain `.npz` thread with a hard prerequisite instead of an analysis gap.
+
+## 1. Re-checks, verbatim
+
+- `git status -sb` → `## xdna2_poc...origin/xdna2_poc` (after this day's edits: ` M xbox/RESUME.txt`, ` M xbox/STATE.md`;
+  HANDOFF.md was unmodified until the append above it).
+- `git log --oneline -3` → HEAD `5bc57b02 Docs: use the measured origin URL, not the guessed one`, then
+  `19a5c1d2 HANDOFF.md: correct the 'Nothing committed' reading`, then `2fdd3e91 Derive repo root instead of hardcoded C:\kien…`.
+  **The card I was handed cited HEAD `2fdd3e91`; actual HEAD was `5bc57b02` — two commits after it.** Both are docs-only, measured
+  with `git show --stat --format="@@%h %s" <sha>`: `19a5c1d2` = `xbox/HANDOFF.md | 10 ++++++++++`, 1 file changed, 10 insertions.
+  `5bc57b02` = `xbox/HANDOFF.md | 2 +-`, `xbox/PLAN.md | 4 ++--`, `xbox/RESUME.txt | 6 ++++--`, `xbox/STATE.md | 2 +-`,
+  4 files changed, 8 insertions(+), 6 deletions(-). Nothing functional moved, so the card's TOP STATUS items were still live.
+- Gate re-run: `python xbox\check.py gates` (run twice today; end-of-day copy in `.qwen\tmp\gates_final_20261103.log`) →
+  **`attempted 41 | PASS 41 | FAIL 0 | droppable-and-failing 0 | must-port-or-reconfigure 0`** (identical to part 11's
+  measurement). Also confirmed `xbox/check.py` contains no reference to `STATE.md`/`RESUME.txt`, so the doc edits this day
+  cannot have moved the gate result. Redirect to a log file instead of piping: `tail` is not on this box
+  (`'tail' is not recognized as an internal or external command`, exit 255).
+- `if exist release (echo RELEASE_EXISTS) else (echo NO_RELEASE_DIR)` → **`NO_RELEASE_DIR`**. There is no `release/` on disk.
+
+## 2. Correction to item (6) of the card: the "40-slot ceiling" was PHANTOM
+
+The resume block I received asserted a 40-module ceiling with names `MAX_MODULES`, `kFileSizeLimit`, `readArchId`, `validateArch`.
+Measured against `src/LmxxfNrRuntime.cpp` (2007 lines) today, those identifiers match **only `xbox/RESUME.txt`** — `git grep`
+finds no definition anywhere in the tree. The real gate is `ValidateModuleSet` (`src/LmxxfNrRuntime.cpp` `:288`–`:347`):
+
+- Manifest must exist and be non-empty; size guard `size.QuadPart > 1 << 0x14`… precisely `> 1 << 20` (1 MiB) at **`:297`**.
+- Per-module existence check per name (~`:340`); **floor** `found < 24` → `LMXXF_NR_UNAVAILABLE` at **`:345`**.
+- **No upper bound on module count.** So `hip/modules/gfx1151/` with 41 `.hsaco` (41 lines in `SHA256SUMS`) is LEGAL, and the
+  41/41/0 gate measurement above is consistent with it.
+- Feature gates are BY NAME, not by count: `:471`–`:479` probes `wave_owned`, `c512_m32`, `swin_run`, `vit_stream`,
+  `vit_proj_n64` (+ `has()`'s folder probe at `:456`). All 7 by-name-required modules were confirmed present in
+  `hip/modules/gfx1151/SHA256SUMS` (41 lines, 2026-11-03) → no module-gated family is silently disabled.
+- **Arch tag is never read from a `.hsaco`.** The gfx1150/1151/1152/1153/115E split is resolved by (a) `has()`'s
+  `HIP\gfx1200` / `HIP\gfx1201` FOLDER-NAME lookup (`:456`) and (b) the bridge arch LOG at `src/native_hip_network.h:65`
+  (`logs\native-hip-device.txt`), which only LOGS `architecture`/`device_match` — it does not validate. A mismatch is silent
+  because of missing folder names, not because of a `readArchId` comparison. The manifest is `SHA256SUMS`; `modules.json` is
+  not read by `src/` at all.
+
+Both `xbox/STATE.md` (the `A3 runtime module set` line) and `xbox/RESUME.txt` (items (3) and (6)) were patched for this, per
+the user's "Yes, correct both" instruction — the point is that a future session must not re-derive the ceiling and burn a card
+on it.
+
+## 3. The front-chain `.npz` manifest (the day's real result)
+
+Tooling written this day (scratch, not shipped): `C:\kien2\dlss5-on-amd-9070xt-porting\.qwen\tmp\npz_manifest_20261103.py`
+(log `.qwen\tmp\npz_manifest_20261103.log`). It walks `Development, xbox, scripts, hip, tools, src`; regex-captures
+`np.load(` / `np.savez(` arguments; resolves `folder = Path('release/…')` bases; canonicalizes `{var}` and
+`native-c\d+` → `native-c{C}` so f-string and literal spellings collapse; grades each map's producer
+`CUDA-ORACLE` (contains `/tmp/` or `subprocess.run`) / `NEEDS-BYTE-BLOBS` (`fromfile`) / `ANALYTIC`.
+
+Summary line, verbatim:
+
+```
+{"maps_total": 39, "maps_on_disk": 0, "consumers": 101,
+ "grade_tally": {"NO-PRODUCER": 14, "CUDA-ORACLE": 21, "ANALYTIC": 4, "NEEDS-BYTE-BLOBS": 1}}
+```
+
+So: **39 distinct map paths referenced, 0 present on disk, 101 consumer call sites** (`validate_native_*.py` /
+`check_native_*.py` loading the byte-layout/view maps the `Development/recover_*` + `derive_*` scripts produce). The
+front chain is c32/c64/c128/c256 (+ preblock, split-view at c512).
+
+**The blocker is a prerequisite, not an analysis gap.** The producers drive the closed-source reference, not arithmetic:
+- `Development/recover_native_c64_view.py` → writes `release/native-c{C}/view/mapping.npz` (keys `output_to_input`,
+  `cell_output_to_hwc`, `width`, `height`, `channels`) via `subprocess.run(['/tmp/native-c32-global-oracle',
+  '/tmp/dlssnr-cubins/dlssnr-00.cubin', …, 'cc_tinlayout_fused_swin_256x256x88x2_2h_inpview_fp8', …])`.
+- `Development/recover_preblock_ffn_layout.py` → producer of `release/preblock-ffn-byte-layout/layout.npz`; probes
+  `/tmp/preblock-branch-oracle` + `/tmp/dlssnr-cubins/dlssnr-00.cubin`, modes `ffn1-byte-scan` / `ffn2-byte-scan`, 5+8+7
+  probe rounds, reads `/tmp/block0.weights`, then `np.savez(a.folder/'layout.npz', w1_input=input_index, w1_hidden=row_index,
+  w2_hidden=hidden_index, w2_output=output_index, W1=w1, W2=w2)`; prints
+  `{'method':'binary-coded exact connectivity, no fitted coefficients'}`.
+- `Development/derive_native_ds_layout.py` is an EXTENDER, not a bootstrap: it `np.load`s
+  `release/native-c{C}/ds-layout/layout.npz` for C in (64,128) and hard-asserts before deriving the C=256 bit-permutation.
+
+**NEW, previously undocumented:** `dir /b /s *.cubin` → **`NO_CUBIN`**. Zero `.cubin` archived in the tree, and the compiled
+`/tmp/*oracle*` binaries live on a CUDA host. The oracle SOURCES ARE in-repo (`Development/dlssnr_cubin_oracle_probe.cpp`,
+`Development/run_original_preblock_oracle.cpp`, `Development/run_original_2h_inpview_oracle.cpp`,
+`HIP/experiments/small-model/ngx_oracle.cpp`) — presence of the source is not presence of the input. This is the same trap
+as part 11's "a script that EXISTS is not a script that RUNS": here it is "an oracle source that EXISTS is not an oracle that
+RUNS".
+
+**Parser caveats — do not over-read the 14.** `NO-PRODUCER: 14` overstates. Two known misses: producers taking `a.folder`
+from an argparse positional (unresolvable by the regex) and `Development/build_c32_oracle_artifacts.py:91`
+(`np.savez('release/native-c{C}/view/mapping.npz', input_to_hwc=perm, …)`), which a first pass missed. Two parser bugs were
+caught before reporting rather than shipped as fact: v1 graded all maps `NO-PRODUCER-IN-REPO` (literal-path matching only),
+v2 split keys between `native-c64/…` and `native-c{C}/…` producing bogus UNPRODUCED rows.
+
+## 4. Still blocked / unchanged (do not re-litigate)
+
+- No device reachable: `C:\Users\micha\.ssh\config` absent; ssh times out to `amd9070` 100.83.122.75, connection refused
+  to `rtx5090` 100.102.178.207. No CUDA host on this box.
+- Vi-T baseline chain: CLOSED by user decision — DOCUMENT-ONLY, labelled filler input, not device data.
+- XDNA2-for-agent-speed: closed 2026-10-27. P1–P4 perf and D1–D2 device items need hardware.
+- RDNA3 `w32 f16` fragment slot layout remains the top silent-failure risk; settling it would reverse a standing NO-PROBE
+  decision and needs an explicit go-ahead.
+- Obsolete blockers inside the card I was handed (self-contradicting): "6-GB transfer needed", "numpy missing", "ssh not
+  on PATH". numpy 2.5.4 IS installed (`C:\Users\micha\AppData\Local\Python\pythoncore-3.14-64\python.exe`, Python 3.14.7);
+  ssh IS on PATH (it just has no reachable host).
+
+## 5. Git state at end of day
+
+`git status -sb` at end of day: `## xdna2_poc...origin/xdna2_poc`, ` M xbox/HANDOFF.md`, ` M xbox/RESUME.txt`,
+` M xbox/STATE.md`. `git diff --stat` → `xbox/RESUME.txt | 41 +++++++++++---`, `xbox/STATE.md | 4 +-`, and
+`xbox/HANDOFF.md |` INSERTIONS ONLY (APPEND-ONLY, 0 deletions — its own count is SELF-REFERENTIAL because this section
+raises it, so re-measure it rather than quoting it). **UNCOMMITTED and deliberately so** — treat this work as uncommitted;
+stage ONLY touched paths (`git add xbox/STATE.md xbox/RESUME.txt xbox/HANDOFF.md`), NEVER `git add .`, never revert/`git
+restore`/`git clean` uncommitted or untracked artifacts, and do not commit at all unless the user asks.
+
+## HOST PITFALLS RECONFIRMED (append to the list, do not rediscover)
+
+- No `tail` / `head` / `more` on cmd.exe. Redirect to a log file, then `type` it.
+- `grep_search` returns silent FALSE ZEROS on this repo. Use `git grep`. (`40-slot|readArchId|MAX_MODULES` "found nothing"
+  via grep_search and via a bad pathspec before `git grep` produced real hits.)
+- Old git on this box rejects pathspec magic: `git grep npz -- . ":(x)xbox/HANDOFF.md"` → `fatal: Invalid pathspec magic 'x'`.
+  Use `-- "*.py" "*.ps1" "*.cpp" "*.h" "*.json" "*.txt"` instead.
+- Chained `&&` SWALLOWS: `git grep … && echo === && …` aborts the whole chain on the first no-match (exit 1, empty output).
+  Parenthesize each command with its own `|| echo NO_MATCH`.
+- Multi-line `python -c` under cmd.exe → empty output, exit 0. Write a real script file, use absolute paths.
+- A script/source file that EXISTS is not an input that RUNS (see part 11's `#include <cuda.h>`; see this day's `.cubin`).
+
+## HOW TO CONTINUE (paste this tomorrow)
+
+```
+RESUME / SNAPSHOT — 2026-11-03, part 12
+
+DISPATCH: read ONLY xbox/STATE.md + this block + the newest END OF DAY section of xbox/HANDOFF.md. Do NOT read all of
+HANDOFF.md. Do NOT cat source files hunting for a path — use `git grep` and read the named lines.
+
+GIT: repo root C:\kien2\dlss5-on-amd-9070xt-porting (moved from C:\kien). Branch xdna2_poc, HEAD 5bc57b02, in sync with
+origin. UNCOMMITTED doc edits: xbox/STATE.md, xbox/RESUME.txt, xbox/HANDOFF.md (this append). Commit ONLY touched paths if
+asked; NEVER `git add .`; push ONLY if asked, and `git ls-remote origin xdna2_poc` first.
+
+TOP STATUS
+1) The 40-slot ceiling is PHANTOM — `git grep` it before repeating it. No `MAX_MODULES`, `kFileSizeLimit`, `readArchId`,
+   `validateArch` exist in the tree; they match ONLY xbox/RESUME.txt. Real gate = ValidateModuleSet
+   (src/LmxxfNrRuntime.cpp :288-:347): SHA256SUMS must be present, >0 bytes, and <= 1<<20 bytes (:297); per-name existence
+   (~:340); floor `found < 24` (:345). NO UPPER CAP, so 41 modules is legal. Feature gates are BY NAME (:471-:479)
+   + has()'s HIP\gfx1200 / HIP\gfx1201 folder-name probe (:456). Arch mismatch is silent via FOLDER names and the bridge
+   log (src/native_hip_network.h:65), never by reading a tag out of a .hsaco. Manifest = SHA256SUMS; modules.json is dead.
+2) Gate: re-run `python "C:\kien2\dlss5-on-amd-9070xt-porting\xbox\check.py" gates` → expect `attempted 41 | PASS 41 | FAIL 0`
+   (measured 2026-11-03; redirect to a file, `tail` does not exist here).
+3) Front-chain .npz = 39 maps referenced, 0 on disk, 101 consumers. `if exist release` → NO_RELEASE_DIR. grade_tally
+   {NO-PRODUCER 14, CUDA-ORACLE 21, ANALYTIC 4, NEEDS-BYTE-BLOBS 1} — the 14 OVERSTATES (argparse `a.folder` producers and
+   build_c32_oracle_artifacts.py:91 are parser misses). It is CUDA-ORACLE-bound, not analysis-bound:
+   recover_native_c64_view.py and recover_preblock_ffn_layout.py drive /tmp/*oracle + /tmp/dlssnr-cubins/*.cubin, and
+   derive_native_ds_layout.py only EXTENDS maps it first np.loads for c64/c128. No cubin exists in the tree
+   (`dir /b /s *.cubin` → NO_CUBIN), so FIRST obtain the cubins + build the oracle on a CUDA host. Do NOT hand-write a
+   mapping — "do not invent mappings".
+4) Nothing on device. No ssh config (C:\Users\micha\.ssh\config absent); amd9070 100.83.122.75 times out, rtx5090
+   100.102.178.207 refused. gfx1151 is the chosen ship target; gfx1103 kept as legacy. Arch split stays unresolved until
+   a device answers.
+5) Deferred by user choice: A6 arena rebuild; settling the RDNA3 `w32 f16` fragment slot layout (needs an explicit go-ahead
+   to reverse the standing NO-PROBE decision). Vi-T chain CLOSED — document-only, labelled filler, not device data.
+6) Verification discipline: a passing compile / exit code 0 is NOT proof the design landed. NEVER write "validated",
+   "shipped", or "works on console".
+
+BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin and no /tmp oracle binaries;
+`grep_search` false zeros (use `git grep`); old git rejects `:(x)` pathspec magic; no `tail`/`head`/`more`; multi-line
+`python -c` returns empty output exit 0. numpy 2.5.4 IS installed — the card's "numpy missing" is obsolete.
+```
