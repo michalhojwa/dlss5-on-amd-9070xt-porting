@@ -5,6 +5,12 @@
  section below. Everything older than 2026-10-30 is archived; see INDEX.
 ==========================================
 
+>>> ROUTE PIVOT 2026-11-04: every END OF DAY below part 13 is HIP-ERA (hip + hsaco + COMGR ISA work) and is PARKED.
+    It is HISTORY, NOT A TODO. Do NOT act on gate IDs A0-A6 / H1-H4 / P1-P4 / D1-D2 read from those sections; the
+    current gates are N0..N6 / D1 / D2 in xbox/PLAN.md. The full last-known hip contract is filed verbatim at
+    xbox/archive/HIP-HSACO-PARKED-2026-11-04.md. The hip history is DELIBERATELY NOT DELETED from this file.
+<<<
+
 GIT  (the repo is version-controlled; the tree is no longer deliberately uncommitted)
   remote  origin = https://github.com/michalhojwa/dlss5-on-amd-9070xt-porting.git  (MEASURED 2026-10-30 by `git remote -v`)
   branch  xdna2_poc  (tracks origin/xdna2_poc)   - run everything from the REPO ROOT.
@@ -498,3 +504,118 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
 `grep_search` false zeros (use `git grep`); old git rejects `:(x)` pathspec magic; no `tail`/`head`/`more`; multi-line
 `python -c` returns empty output exit 0. numpy 2.5.4 IS installed — the card's "numpy missing" is obsolete.
 ```
+
+---
+
+## END OF DAY 2026-11-04 (part 13 - THE HIP ROUTE IS PARKED BY DECISION, AND THE ONNX / IP-ENGINE ROUTE IS MEASURED AVAILABLE ON THIS BOX)
+
+- WHAT WAS DONE, IN ORDER: (1) wrote the report the user asked for at `xbox/REPORT-2026-11-04-machines-build-options-xdna2.md`;
+  (2) GENERATED `xbox/archive/HIP-HSACO-PARKED-2026-11-04.md` (19,512 B) from a script that ran
+  `git show HEAD:xbox/PLAN.md` (`OLD_PLAN_BYTES 14999 rc 0`) and wrote the verbatim old hip contract between a PARKED header
+  and a resume protocol - HISTORY PRESERVED, NOT REWRITE; (3) OVERWROTE `xbox/PLAN.md` with the ONNX/Windows ML contract +
+  gate ladder N0..N6/D1/D2; (4) OVERWROTE `xbox/STATE.md` and `xbox/RESUME.txt` for the new route; (5) marked the hip-era
+  sections of THIS file PARKED with a top-of-file pointer instead of deleting them (a DEEPER CUT WAS NOT REQUESTED; if the
+  user wants the hip parts of HANDOFF.md physically split out, that is one more `git show`-driven split and it stays their
+  call).
+- THE USER'S DECISION, RECORDED VERBATIM: "I don't want to pursue the project not utilizing XDNA2 - We go exclusively
+  ONNX/Windows ML route, drop for now hip+hsaco investigation to the point of offloading it to yet another text file and
+  removing it from context files we're working on." Plus the standing commit policy: "I want you to add, commit and push
+  regularly from now on, at least once a day or after bigger finished work - whichever makes more sense to you." That
+  SUPERSEDES the older "push ONLY if asked" line still visible in part 12's GIT block above - read that line as HISTORICAL.
+- WHY THE PIVOT IS NOT A GUESS: COMGR's ISA census (measured earlier, 52 ISAs) contains NO XDNA ISA, so the hip path can
+  never TARGET THE IP engine. Meanwhile this box has one, and AMD's whole IP runtime stack is already in `C:\Windows\System32`.
+- MEASURED 2026-11-04 (the box is NOT accelerator-less - this overturns older "XDNA unreachable" text):
+  `C:\Windows\System32\AMD\xrt-smi.exe examine --batch` -> Processor `AMD Ryzen AI Z2 Extreme`, Model `ROG Xbox Ally X
+  RC73XA_RC73XA`, BIOS `RC73XA.319`, `Device(s) Present | [0065:00:01.1] | NPU Strix`.
+  `xrt-smi.exe validate --batch` -> `Validate Device [0065:00:01.1]`, `Platform NPU Strix`, `Power Mode Performance`,
+  Test 1 gemm `TOPS: 51.3` [PASSED], Test 2 `Average latency: 94.0 us` [PASSED], Test 3 `Average throughput: 51625.0
+  op/s` [PASSED]. `xrt-smi.exe --version` -> `Version 2.21.0`, `NPU Driver Version 32.0.20102.4480`, `NPU Firmware
+  Version 1.1.2.64`. `xrt-smi --help` -> ONLY `configure | examine | validate`: NO SAMPLE-MODEL RUNNER, SO xrt-smi CANNOT
+  CLOSE THE NEW ROOT GATE N0. What was unreachable was ever only ssh: `C:\Users\micha\.ssh\config` ABSENT, amd9070
+  100.83.122.75 TIMES OUT, rtx5090 100.102.178.207 REFUSED.
+- NEW FINDING OF THE DAY, AND THE MOST IMPORTANT ONE: THE IMAGE SHIPS AN ONNX-INTAKE BACKEND WITH AN IP-ENGINE TARGET.
+  Byte-scanned (NO `dumpbin`: `'dumpbin' is not recognized as an internal or external command`, so these are STRING hits,
+  NOT A SYMBOL TABLE - exported-ness stays UNESTABLISHED):
+  * `RadeonML.dll` 633,704 B -> `RML_ERROR_BAD_MODEL`, `RML_ERROR_MODEL_NOT_READY`, `RML_ERROR_UNSUPPORTED_DATA`,
+    `RML_LOG_LEVEL`, `RML_TL_ENABLE`, `### Failed to open amodel file "`, namespace `.?AVrmlAmodel@0amd@@`, and the
+    BACKEND ENUM `TF_CPU  TF_CUDA  IPU  TVM  AKS` with versioned tags `U1 IPU2 IPU3 IPU4 ONNX TENSORFLOW_PB TVM2 TVM3
+    TVM4`.
+  * `RadeonML_aks.dll` 3,729,264 B -> MODEL CALL SURFACE `rmlInfer(model=` / `rmlPrepareModel(model=` / `rmlSetModelInput(model=`
+    / `rmlGetModelInputNames(model=` / `rmlGetModelQOS(model=` / `rmlSetModelDynamicParam(model=` /
+    `rmlGetModelInputScaleFactor(model=` / `rmlResetModelStates(model=`; FILE SUFFIXES `.amodel` `.xmodel` `.onnxtxt`;
+    ONNX PROTOBUF INTAKE (`onnx-ml.proto3`, `.onnx.NodeProto`, `.onnx.TensorProto`, `onnx.IntegerSubset`,
+    `onnx.SequenceFeatureExtractParam`, `W:\src\RadeonML\third_party\onnx\onnx\onnx-ml.pb.cc`,
+    `W:\src\RadeonML\build_out\Release\onnx_onnx.lib.pb`); DEVICE PLANNING MESSAGES `IPU device found` / `IPU not
+    available` / `IPU Platform 1..4` / `IPU Platform Unknown` / `IPU Platform with QoS`.
+  * `RadeonML_ipu.dll` 3,733,864 B -> 38 `IPU` hits incl. `IPU.Context Index=`, `IPU n`, `Unsupported ONNX data type:`.
+  * `vitis-ai-runtime.dll` 7,378,792 B -> strings the KERNEL PATH `S.y.s.t.m.3.2.\.A.M.D` +
+    `AMD_AIE2P_4x4_Overlay_CFG0_3.5.0.0-2229_ipu_2.xclbin` and links `xrt_coreutil.dll` (x2) + `XrtContext::~X`.
+    => THAT DLL IS THE COMPONENT FEEDING THE AIE2P KERNEL BLOBS ALREADY PRESENT IN `C:\Windows\System32\AMD`.
+    IT CONTAINS NO `Vitis` AND NO `onnxruntime` string.
+  * `amd_taau_ops.rml_plugin.dll` 521,576 B -> debug path `W:\src\RadeonML\build_out\x64\Release\Release\amd_taau_ops.rml_plugin.pdb`,
+    namespace `.?AVException@details@taau@rml@@`. => AMD ALREADY RUNS A TAAU (temporal-AA) NEURAL OP PLUGIN THROUGH
+    THIS STACK ON THIS IMAGE. PRIOR ART AND A LAYOUT TEMPLATE FOR D1/N6; IT IS NOT NR AND GIVES NO WEIGHTS.
+- COUNTER-EVIDENCE HELD IN PLACE (do NOT declare a route until it is resolved): the in-box `C:\Windows\System32\onnxruntime.dll`
+  (10,675,424 B, `Current ORT Version is: %s` + `1.17.1`, `EP_COUNT 32`) NAMES `VitisAIExecutionProvider` in its EP LIST
+  BUT HAS 0 HITS FOR `AppendExecutionProvider_VitisAI` (while `AppendExecutionProvider_DML` IS PRESENT, 1 hit) and 0 HITS
+  FOR `config_file_path` / `perf_profile` / `provider_options` / `vitis-ai-runtime`. => A NAME IN AN EP LIST IS NOT
+  AVAILABILITY; whether the VitisAI EP is COMPILED IN IS UNESTABLISHED and only a runtime `GetAllRegisteredEpList()` /
+  `Session::GetProviders()` settles it. Likewise the 2026-10-29 claim that THIRD-PARTY MODELS MUST BE SIGNED/ATTESTED IS
+  STILL UNVERIFIED AFTER 6 DAYS: today's scan of `Windows.AI.MachineLearning.dll` (1,196,848 B) found NO
+  `attestation` / `Attestation` / `signature` / `EnableModelSignatureValidation` / `XVA` / `VitisAI` marker, and its 4
+  `Signature` hits are D3D *root signature* strings (`winml::D3DDeviceCache::GetTensorizeRootSignature`) - UNRELATED.
+  A 0-HIT SCAN IS NOT A VERDICT; TEST BY LOADING AN UNSIGNED MODEL.
+- pyxrt DIRECT XRT PATH: STILL BLOCKED, RE-MEASURED. `python C:\Users\micha\.qwen\tmp\probe_pyxrt_20261104.py` (which
+  inserts `C:\Windows\System32\AMD` on sys.path and imports) -> `pyxrt rc 1`, `STDERR: ... ImportError: DLL load failed
+  while importing pyxrt: Nie kann...` (Czech-locale "module not found"). Same script: `py --list` -> `-V:3.14[-64] *
+  Python 3.14.7`, `gh --version` -> `'gh' is not recognized as an internal or external command`, `pip --version` -> NOT
+  RECOGNIZED. `pyxrt.pyd` links `python310.dll` (found earlier by BYTE SCAN), so it needs CPython 3.10 = AN INSTALL
+  DECISION (ASK). The C-API surfaces (RadeonML, ORT) need NO PYTHON AT ALL, so they rank ABOVE pyxrt now.
+- WHAT THE PIVOT DOES AND DOES NOT REMOVE: it removes the hsaco-COMPILE job (COMGR is CPU-only and ISA-bound) but NOT THE
+  CUDA-ORACLE DEPENDENCY FOR PARITY: `dir /b /s *.cubin` -> `NO_CUBIN`, and the 21 `CUDA-ORACLE` front-chain `.npz` maps
+  (grade_tally {NO-PRODUCER 14, CUDA-ORACLE 21, ANALYTIC 4, NEEDS-BYTE-BLOBS 1}; the 14 OVERSTATES because argparse
+  `a.folder` producers and `Development/build_c32_oracle_artifacts.py:91` are parser misses) still need NVIDIA silicon.
+  Also UNCHANGED: NVIDIA SHIPS NO ONNX FOR NR (`nvngx_dlssnr.dll` = 15 `sm_120` `.cubin` + the weight container, magic
+  `b'DLSSNRW1'`, 153 records, 147,689,451 B at `G:\Steam\steamapps\common\Wuthering Waves\Client\Binaries\Win64\`), so
+  THE ONNX GRAPH MUST BE SELF-AUTHORED from the reverse-engineered architecture with those tensors as INITIALIZERS;
+  and tensor SHAPES come from the ARCHITECTURE MODEL, NEVER from dividing byte counts ("do not invent mappings").
+- GIT: HEAD `3edf7aca` "docs(xbox): 2026-11-04 report; hip+hsaco parked to archive; PLAN.md rewritten for ONNX/Windows
+  ML" was committed EARLIER TODAY but `git status --porcelain=v1` then still showed `?? xbox/REPORT-2026-11-04-machines-
+  build-options-xdna2.md` and `?? xbox/archive/HIP-HSACO-PARKED-2026-11-04.md` - i.e. THAT COMMIT carried the PLAN rewrite
+  only, and the report + archive are added by the NEXT commit along with the four context files. `git ls-remote origin
+  xdna2_poc` -> `5bc57b02`, LOCAL AHEAD 1. `git count-objects -vH` -> `size-pack: 831.25 MiB`, which is the number that makes a NEW SMALL REPO for the
+  ONNX route more sensible than a SUBMODULE of this one (a submodule forces the whole 831 MiB clone). NO `gh` CLI, so
+  creating a new GitHub remote is the USER's action.
+- RECONFIRMED PITFALLS (all hit or re-verified TODAY): multi-line `python -c` under cmd.exe -> EMPTY OUTPUT EXIT 0 (write
+  real .py files under `C:\Users\micha\.qwen\tmp\`); no `tail`/`head`/`more` (`'head' is not recognized` - redirect to a
+  `.log` and `read_file` it); the Grep tool FALSE-ZEROES (use `git grep -n`); `git ls-files --with-time` -> `error:
+  unknown option` exit 129; `import fnmatch`-style one-liners are fine but keep `-c` to ONE line; NEVER assert absence from
+  a SINGLE pattern probe (an earlier `(dir /b DirectML* || echo NO_DIRECTML)` printed `NO_DIRECTML` while `directml.dll`
+  10,239,288 B IS PRESENT); `[Old tool result content cleared]` is a VIEW EVENT, NOT success and NOT failure - re-measure.
+- NOT RUN / UNVERIFIED (do not quote as done): NO model has RUN on the NPU. NO ONNX graph authored. NO parity compared.
+  NO device probe performed (none permitted without a go-ahead). NO software installed.
+```
+
+## HOW TO CONTINUE (paste this tomorrow, 2026-11-05)
+0. Read xbox/STATE.md, then ONLY this part-13 section, then the named section of xbox/PLAN.md. Ignore hip-era gate IDs.
+1. FIRST ACTION, NO INSTALLS AND NO DEVICE CONTACT: close N0 with the smallest self-contained probe - author a tiny ONNX
+   graph (MatMul + Add, f32 initializers) and run it against `C:\Windows\System32\onnxruntime.dll` through ctypes or a
+   C++ exe; PRINT `GetAllRegisteredEpList()` and the SESSION's provider list. That settles, by measurement, whether the
+   VitisAI/OpenVINO IP EP EXISTS IN THIS ORT build. If it does not, probe the RadeonML `rml*` surface next (its headers
+   come from AMD's RadeonML repo = a DOWNLOAD DECISION - ASK BEFORE DOWNLOADING).
+2. ONLY ON AN EXPLICIT GO-AHEAD: run the probe so it actually TOUCHES `[0065:00:01.1]`, and require a DEVICE-SIDE trace
+   (an IP/AIE kernel line, or the provider list naming an IP EP). A silent CPU fallback is a FAILURE, not a result.
+3. THEN, and not before: N1 slice the 153 tensors using the container's OWN header (`[u8 name_len][name][u64
+   offset][u64 size]`, `header_len 0x1629`); N2 author the graph from `Development/results/2026-10-29-preblock-ffn-reverse-
+   engineering/DESIGN-NOTES.md` (254 lines) + `Development/hip-reference-network.md` (429 lines); keep the f32 ACCUMULATOR
+   rule explicit (448^2 = 2.0e5 > f16 max 65504).
+4. KEEP OPEN, DO NOT ASSERT: VitisAI EP availability in `onnxruntime.dll`; Windows ML THIRD-PARTY-MODEL ATTESTATION (test
+   by loading an UNSIGNED model); which EP actually reaches the NPU; N4 parity (CUDA-oracle-bound, `NO_CUBIN`).
+5. REPO SHAPE (user asked, unanswered at time of writing): the recommendation is TAG THIS repo as the RE/archive and seed a
+   NEW SMALL repo for the ONNX route by FILE EXTRACTION + `PROVENANCE.md` (old URL + tag + per-file SHA256), NOT a
+   SUBMODULE (831.25 MiB). Confirm with the user before creating anything; `gh` is NOT installed here.
+6. GIT: add/commit/push REGULARLY per the 2026-11-04 policy - `git status -sb`, `git ls-remote origin xdna2_poc`, then
+   `git add <exact paths>` (NEVER `.` / `-A`), `git commit`, `git push`. NEVER `git clean -xfd` / `git checkout --`.
+7. Verification: EXACT COMMAND + VERBATIM OUTPUT for every claim, else NOT RUN / UNVERIFIED. Never write "validated",
+   "shipped", or "works on console".
+

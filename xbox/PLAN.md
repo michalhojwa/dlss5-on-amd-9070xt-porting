@@ -1,169 +1,158 @@
-# Xbox Ally X (gfx1103 = legacy build, gfx1151 = chosen tag; NEITHER is the measured device arch) - DLSS5 NR enhancement port, ALU-first strategy
-# FOR CURRENT STATE READ xbox/STATE.md (~100 lines, overwritten daily). This file is the DURABLE
-# DESIGN CONTRACT + GATES ONLY; read the named section, not the whole file.
-# Goal: apply Kien's DLSS5-NR network to the FINISHED (post-tonemap) frame of a
-# running game as an enhancement (not upscaling), on the Ally X GPU, at 720p
-# output, network at 1-in-2 frames, keeping the game at >= 30 fps.
+# Xbox Ally X (Ryzen AI Z2 Extreme + NPU Strix [0065:00:01.1]) - DLSS5 NR enhancement port, ONNX / Windows ML route ONLY
+# FOR CURRENT STATE READ xbox/STATE.md (overwritten daily). This file is the DURABLE DESIGN CONTRACT + GATES ONLY.
+# Goal (UNCHANGED): apply Kien's DLSS5-NR network to the FINISHED (post-tonemap) frame of a running game as an
+# enhancement (not upscaling), 720p output, network at 1-in-2 frames, game stays >= 30 fps.
+# ROUTE (SETTLED 2026-11-04 BY USER): ONNX / Windows ML / XDNA2 IP engine. The hip + hsaco route is PARKED:
+# read xbox/archive/HIP-HSACO-PARKED-2026-11-04.md if ever un-parked. Gate IDs A0-A6 / H1-H4 / P1-P4 / D1-D2 from
+# that file are NOT current gates and must not be re-litigated here.
 
-## Which silicon the "ALU" work runs on (settled, not a preference)
-  - hip/* compiles through amd_comgr_3.dll into ISA `amdgcn-amd-amdhsa--gfx1103` (52 ISAs
-    listed, none of them XDNA) and runs on the APU RDNA-class shader cores under D3D12/HIP.
-  - Measured gfx1103 (xbox/p_*.hip -> xbox/out_*.hsaco[.s]):
-      wave32; v_fma_f32; v_pack_b32_f16 + v_pk_fma_f16; v_wmma_f32_16x16x16_f16.
-      ABSENT: mai-insts (no MFMA), fp8-conversion-insts, gfx12-insts (no *_gfx12 WMMA),
-      dot4a/vdot4a/usdot4a in this COMGR clang.
-  - XDNA1/XDNA2 is the Copilot-class "Series 2" AI-engine (NPU) IP line: not addressable
-    from HIP/D3D12 compute, not a rtc_compile target, so no .hip can land on it. If a real
-    XDNA path is ever required it leaves this repo (ONNX/NPU toolchain), not hip/ + hsaco.
-  - So "ALU" here means: **ALU-first kernels** - no matrix instruction at all, only the
-    general-purpose vector ALU (v_fma_f32, optional 2-way v_pk_fma_f16).
-  - 2026-10-29 ARCH CORRECTION (do not read "gfx1103" above or below as the device's arch): the Ally X APU is Ryzen AI
-    Z2 Extreme = RDNA 3.5, which this COMGR spells gfx1150/1151/1152/1153/115E (AMD names gfx1151 for the Ryzen AI Max
-    series); gfx1103 is a gfx110x/RDNA3 id, and RDNA4 (gfx1200/1201) is RULED OUT by that mapping. MEASURED compile-only
-    on this box: all gfx115x are CAPABILITY-IDENTICAL to gfx1103 - fp8 converts rejected, the UNSUFFIXED
-    v_wmma_f32_16x16x16_f16 the only accepted WMMA op, inline asm rejected identically - so the shim and the CW_PACK_MODE_MASK
-    0 flip REMAIN REQUIRED and the w32 f16 slot-layout risk is NOT resolved by the arch swap. hip\modules\ now holds
-    BOTH builds; which gfx115x the silicon reports is STILL UNESTABLISHED and neither set has run on a device. That
-    mapping is DOCUMENT INFERENCE (AMD ROCm's arch->ISA table), not a device measurement - A0 stays open.
+## Which silicon the work runs on (MEASURED 2026-11-04, not a preference)
+  - `C:\Windows\System32\AMD\xrt-smi.exe examine --batch` -> Distribution Windows 11 Home, OS Release 26300.9818,
+    Processor `AMD Ryzen AI Z2 Extreme`, Model `ROG Xbox Ally X RC73XA_RC73XA`, BIOS Version `RC73XA.319`,
+    `Device(s) Present | [0065:00:01.1] | NPU Strix`.
+  - `xrt-smi.exe validate --batch` -> `Validate Device [0065:00:01.1] / Platform NPU Strix / Power Mode Performance`,
+    Test 1 gemm `TOPS: 51.3` [PASSED]; Test 2 latency `Average latency: 94.0 us` [PASSED]; Test 3
+    `Average throughput: 51625.0 op/s` [PASSED]. `xrt-smi.exe --version` -> `Version 2.21.0`,
+    `NPU Driver Version 32.0.20102.4480`, `NPU Firmware Version 1.1.2.64`.
+  => An IP-engine (XDNA-class) target IS PRESENT AND PASSES AMD's own validation ON THIS BOX. Any older doc saying
+    "XDNA is unreachable" is OVERTURNED: what was unreachable was ssh to amd9070 / rtx5090.
+  - `C:\Windows\System32\AMD\` = 34 files: `xrt-smi.exe` (2,292,072 B), `pyxrt.pyd` (533,864 B), AIE2P kernel blobs
+    (`1x4_*`, `4x4_*`, `5x4_*`, `_ipu_2`, `AMD_AIE2P_4x4_Overlay_*`), `amdafd/amdfendr/amdkmpfd`.
+  - The hip/COMGR ISA space has 52 ISAs and NONE of them is XDNA (measured 2026-10-23 in this repo). That is the
+    reason for the route change, not a style choice.
 
 ## Gates
-[!] A0. Confirm the device's real arch string - BLOCKED 2026-10-26, not answerable on this box.
-    native_hip_network.h:65 LogDevice writes adapter_name + architecture to logs/native-hip-device.txt
-    only in the process that creates the HIP bridge (the host running the network); no such log exists
-    in the repo or in the reference install, and amd_comgr_3.dll here can emit gfx1103 but not run it.
-    If the Ally X APU is RDNA4 (gfx1200/gfx1201) the in-tree fast kernels need no port at all - capture
-    that line from the device the next time anything runs there. (RULED OUT 2026-10-29 by AMD's RDNA3.5->gfx115x
-    mapping, which is DOCUMENT INFERENCE - only a device run can settle it.)
-    2026-10-29: what changed is the ASSUMED side only. USER chose the gfx1151 TAG; hip\build-modules.ps1:13's ValidateSet
-    now accepts gfx1150/1151/1152/1153/115E, the gfx115*-scoped shim inline (:117-119) and __has_builtin guard rewrite
-    (:141-143) fire, and hip\modules\gfx1151 holds a 41-module build that xbox\check.py:20 gates BY DEFAULT (3rd arg =
-    gfx1103); both folders print 41 attempted / 41 PASS / 0 FAIL in xbox\gates_run.txt. Gates moved, NOTHING about the
-    device did: WHICH SET TO DEPLOY is an OPEN DECISION (FLAT either way - ValidateModuleSet resolves SHA256SUMS names
-    FLAT at src/LmxxfNrRuntime.cpp:337, floor found<24 at :345), a wrong tag failing at LOAD is UNTESTABLE on this box,
-    and the device's exact gfx115x id is UNMEASURED - ASK BEFORE CREATING OR RUNNING ANY DEVICE PROBE.
-[x] A1. gfx1103 ISA capability map - DONE (see measured list above; HANDOFF 2026-10-23)
-[x] A2. Module survey - 2026-10-27 recount from disk (hip/modules/gfx1103): 41 recipes attempted,
-    8 PASS (c32_prefix_reference, multihead-reference, deep_reference, boundary_reference,
-    wave-pointwise, multi-pass-skin, multi-pass-predict, c32_alu) / 33 FAIL. The earlier
-    "37 / 7 / 30" was a per-file count, not the on-disk truth; count *.compile-log.txt vs *.hsaco.
-    2026-10-29 SUPERSEDED: with -ExtraDefines 'CW_PACK_MODE_MASK 0' the same 41 recipes all COMPILE - 41 attempted /
-    41 PASS / 0 FAIL in hip\modules\gfx1103 AND hip\modules\gfx1151. The 8/33 split is the PRE-flip state, and a PASS
-    is still ONLY a compile - no output has ever been read back.
-[ ] A3. Runtime floor: >= 24 hsaco listed in SHA256SUMS AND on disk (src/LmxxfNrRuntime.cpp:333
-    per-line existence check, :345 found<24). 2026-10-27: the 24 is NOT the real constraint -
-    hip_reference_network.h:762 LoadModules() requests modules BY OPTION, and
-    src/LmxxfProductionOptions.h forces o.wmma=o.wave=o.tiled=o.pooled=true plus the whole
-    fast_*/fused_*/fp8_* set. RuntimeOptions (:471-:479) only turns OFF 5 optional families
-    when their module is absent (wave_owned, c512_m32, swin, vit_stream, vit_proj_n64 = 13 recipes).
-    So c32_wmma + multihead-wmma + deep_wmma are UNCONDITIONAL under opt.wmma and MUST port, and
-    every other forced-true flag needs either its fast twin ported or the option re-profiled to the
-    reference fallback that RunGraph already has (e.g. Run("c32","dlss5_prefix_reference",...)).
-    Also: hip/modules/gfx1103/SHA256SUMS currently lists ONLY c32_alu.hsaco - the last -Only build
-    rewrote it while 8 hsaco remain on disk. Regenerate before any device test.
-    2026-10-29: that drift is GONE and the floor is MET x2 - hip\modules\gfx1103 AND hip\modules\gfx1151 each list
-    41 SHA256SUMS lines = 41 .hsaco on disk, 0 absent / 0 unlisted, floor 24 OK, manifest 3638 bytes
-    (xbox\check.py manifest / xbox\audit_modules.py re-derive it). STILL TRUE: deploy FLAT - an arch SUBFOLDER breaks
-    the flat name resolution, so do NOT add arch folders to the runtime's module list.
-[~] A4. ALU tile primitive + pilot module - 2026-10-26: hip/c32_alu.hip written to this design,
-    registered as a gfx1103-only row, compiles clean to hip/modules/gfx1103/c32_alu.hsaco
-    (sha D50F1CE9...). 2026-10-27: the ISA IS ON-CONTRACT; the 2026-10-26 off-contract reading was
-    a measurement error from wrong opcode names (this COMGR spells LDS as ds_load_*/ds_store_* and
-    FMA as v_fmac_f32_e32; see HANDOFF). Per-kernel MAC census now 262/1027/262/267/526/268 vs the
-    256/1024/256/256/512/256 contract, and ds_store counts 32/128/32/32/64/32 = exactly the staged
-    tile per chunk. What is LEFT of A4: num_vgpr=256 (the cap) + uses_flat_scratch=1 + private_seg
-    48/132/144/160 on expand/qkv/scores/project (contract=129 and av=111 are clean), and 143
-    ds_load_2addr_b32 in expand = per-lane LDS addressing that failed to vectorise into b128.
-    2026-10-29: numbers RE-MEASURED with xbox\isa_report.py and reproduce; the escalated reading is that the vgpr cap is
-    SPILLING TO GLOBAL SCRATCH (flat_scratch=1 plus scratch ops 15/16/44/20 on the SAME four kernels, while contract and
-    av have none). Re-census only if hip\c32_alu.hip changes.
-[ ] A5. Roll the twins out across the required set (prefix_fast, c32_fast, c32_fast_attention,
-    multihead_wmma, multihead-fast*, boundary-fast, deep_fast*, c512-m32-*, vit-*,
-    swin-persistent, c32-wave1*, c64-wave2*), or drop the droppable fast twins.
-    2026-10-29: SATISFIED AT COMPILE LEVEL ONLY - under the shim + CW_PACK_MODE_MASK 0 all 41 recipes build in BOTH
-    folders. No output has been verified. Reaching the reference twins is NOT an env var: none of the 71 DLSS5_HIP_* flags
-    in src\native_hip_env_options.h touches wmma/wave/tiled/pooled/packed_weights/fp8_*, selection is BY NAME at
-    Development\HIP\hip_reference_network.h:424-425 (an `accelerated` set of 20 kernel names; opt.wmma true appends
-    _wmma) and src\LmxxfProductionOptions.h:18 FORCES o.wmma=true, so a twin run needs a SOURCE EDIT there. The USER
-    chose DOCUMENT-ONLY, so the defaults are UNTOUCHED - if that changes, say so explicitly.
-[ ] A6. Weights: the ALU path consumes plain block*-*.f16 / .f32 + noise.f32, NOT the
-    HIP_PREPACKED_WEIGHTS fp8 blobs (gfx12 fast-path asset). Source: HANDOFF G4 / WW install.
-    2026-10-29: SOURCE FOUND on this box - G:\Steam\steamapps\common\Wuthering Waves\Client\Binaries\Win64\dlssnr_on_amd_weights.bin
-    (147,689,451 B, READ ONLY), self-describing: b'DLSSNRW1' + u32le 153 + header_len 5673, per record [u8 name_len][name][u64
-    payload_offset][u64 payload_size]. Same 153 names/sizes as Development\weights-index.json, but that JSON's payload_offset
-    is ARCHIVE-ABSOLUTE with gaps - slice with the container's OWN header, not the JSON. DTYPE IS MIXED (E4M3 matrix bodies
-    + f16 bias/skip/slots + one f4 scale), so NEVER decode a whole payload as halves. Gate stays [ ] because the release/**
-    .npz slot maps are still MISSING (zero .npz in the tree) and c512 / split-head / post70 provenance past block22 is untraced
-    - do NOT invent mappings.
+[ ] N0. **Prove a graph actually executes on [0065:00:01.1].** This is the root gate; everything downstream is
+    worthless until a run leaves a DEVICE-SIDE trace (an IP/AIE kernel report, `xrt-smi`-style log, or an ONNX
+    Runtime profiler line naming an IP kernel). "It returned a tensor" is NOT proof - CPU fallback is silent.
+    Candidate surfaces, each MEASURED as far as this box allows:
+      * `pyxrt.pyd` + `xrt_coreutil.dll` (direct XRT, bypasses ONNX entirely): byte scan shows it links
+        `python310.dll`; `import pyxrt` -> `ImportError: DLL load failed while importing pyxrt: Nie
+        können odnaleźc określonego modułu.` Interpreter inventory: `NO_UV`, `NO_PY310_LAUNCHER`,
+        `py --list` -> `-V:3.14[-64] * Python 3.14.7` only. BLOCKED on a CPython 3.10. INSTALLING ONE IS YOURS TO
+        ASK FOR.
+      * `xrt_coreutil.dll` C API from our own C++ (the repo already builds C++ DLLs): NO PYTHON DEPENDENCY;
+        headers/SDK are NOT in `C:\Windows\System32\AMD` (only the runtime DLLs), so the import lib must be
+        obtained - UNESTABLISHED, needs a download decision.
+      * ONNX Runtime in-box: `C:\Windows\System32\onnxruntime.dll` 10,675,424 B; string scan finds
+        `EP_COUNT 32` and a list with `DmlExecutionProvider`, `VitisAIExecutionProvider`, `OpenVINOExecutionProvider`,
+        `CPUExecutionProvider`, `CUDAExecutionProvider`, `ROCMExecutionProvider`, `MIGraphXExecutionProvider`,
+        `QNNExecutionProvider`; version context `Current ORT Version is: %s` + `1.17.1` and `ORT Build Info:
+        git-branch=HEAD, git-commit-id=0`. Counter-evidence: `VitisAI`/`Vitis` occur only x2 each and the VitisAI
+        config keys `config_file_path` / `perf_profile` occur 0 times, and the same scan shows no
+        `vitis-ai-runtime.dll` import string - SO whether that EP is COMPILED IN IS UNESTABLISHED. A name in an EP
+        list is NOT availability.
+      * **RadeonML C API (`RadeonML*.dll` in System32) - STRONGEST LOCAL CANDIDATE, MEASURED 2026-11-04 by byte-scan
+        (`dumpbin` is NOT installed here, so these are STRING hits, not a symbol table).** `RadeonML.dll` 633,704 B:
+        error surface `RML_ERROR_BAD_MODEL` / `RML_ERROR_MODEL_NOT_READY` / `RML_ERROR_UNSUPPORTED_DATA`, env-ish
+        `RML_LOG_LEVEL` `RML_TL_ENABLE`, `### Failed to open amodel file "`, namespace `.?AVrmlAmodel@0amd@@`, and the
+        BACKEND ENUM `TF_CPU  TF_CUDA  IPU  TVM  AKS` plus versioned tags `U1 IPU2 IPU3 IPU4 ONNX TENSORFLOW_PB TVM2
+        TVM3 TVM4`. `RadeonML_aks.dll` 3,729,264 B: the MODEL CALL SURFACE `rmlInfer(model=` / `rmlPrepareModel` /
+        `rmlSetModelInput` / `rmlGetModelInputNames` / `rmlGetModelQOS` / `rmlSetModelDynamicParam` /
+        `rmlGetModelInputScaleFactor` / `rmlResetModelStates`, the FILE SUFFIXES `.amodel` `.xmodel` `.onnxtxt`, ONNX
+        PROTOBUF INTAKE (`onnx-ml.proto3`, `.onnx.NodeProto`, `.onnx.TensorProto`, ~28 `onnx.*` descriptors, build
+        path `W:\src\RadeonML\third_party\onnx\onnx\onnx-ml.pb.cc`), and the DEVICE-PLANNING MESSAGES `IPU device
+        found` / `IPU not available` / `IPU Platform 1`..`IPU Platform 4` / `IPU Platform Unknown`. `RadeonML_ipu.dll`
+        3,733,864 B: 38 `IPU` hits incl. `IPU.Context Index=` and `Unsupported ONNX data type:`. => AN ONNX-INTAKE
+        backend WITH AN IP-engine target IS SHIPPED IN THIS IMAGE. UNESTABLISHED: whether those `rml*` names are EXPORTED
+        (a string list is not a symbol table) and WHERE THE HEADERS COME FROM - AMD's RadeonML repo is a DOWNLOAD
+        DECISION, ASK.
+      * AMD IP-engine runtime in-box: `vitis-ai-runtime.dll` 7,378,792 B + `vitis-ai-runtime2.dll` 12,029,800 B. A
+        scan of `vitis-ai-runtime.dll` finds the KERNEL PATH `S.y.s.t.m.3.2.\.A.M.D` + `AMD_AIE2P_4x4_Overlay_CFG0_3.5.0.0-2229_ipu_2.xclbin`
+        and links `xrt_coreutil.dll` (x2, plus `XrtContext::~X`). => IT IS THE COMPONENT THAT FEEDS THE AIE2P KERNEL
+        BLOBS ALREADY SITTING IN `C:\Windows\System32\AMD`. It contains NO `Vitis` and NO `onnxruntime` string.
+      * Windows ML: `Windows.AI.MachineLearning.dll` 1,196,848 B + `winml.dll` 65,536 B + `Windows.AI.MachineLearning.Preview.dll`
+        + `directml.dll` 10,239,288 B. The 2026-10-29 "a THIRD-PARTY MODEL MUST BE SIGNED/ATTESTED" claim is STILL
+        UNVERIFIED, and today's scan of `Windows.AI.MachineLearning.dll` found NO `attestation` / `Attestation` /
+        `signature` / `EnableModelSignatureValidation` / `XVA` / `VitisAI` marker (its 4 `Signature` hits are D3D *root
+        signature* strings, `winml::D3DDeviceCache::GetTensorizeRootSignature` - UNRELATED). A 0-hit scan is NOT A
+        VERDICT: TEST IT BY LOADING AN UNSIGNED MODEL.
+    FIRST ACTION FOR N0 (no new installs): `C:\Windows\System32\AMD\xrt-smi.exe` has only `configure|examine|validate`
+    (`xrt-smi --help` captured 2026-11-04 - NO sample-model command), so N0 cannot be closed by xrt-smi alone.
+    The minimum self-contained test is a tiny hand-authored ONNX graph (a MatMul + Add with f32/f16 initializers)
+    run through `C:\Windows\System32\onnxruntime.dll` via its C API (ctypes or a C++ exe), with the provider list read
+    BACK FROM the session (`GetAllRegisteredEpList` / `Session::GetProviders`) - that settles the VitisAI question
+    above definitively, which a string scan cannot. Then repeat against the RadeonML surface if the ORT build has no
+    IP EP. If a pip install (`onnx`, `onnxruntime`) is wanted: PyPI REACHES (`PYPI_STATUS 200 BYTES 645387`) but that is
+    a SYSTEM CHANGE - ASK.
+    PRIOR ART FOUND 2026-11-04: `C:\Windows\System32\amd_taau_ops.rml_plugin.dll` 521,576 B carries the debug path
+    `W:\src\RadeonML\build_out\x64\Release\Release\amd_taau_ops.rml_plugin.pdb` and namespace symbol
+    `.?AVException@details@taau@rml@@`. => AMD SHIPS A TAAU (temporal-AA) OP PLUGIN IN THE RadeonML PLUGIN NAMESPACE ON
+    THIS IMAGE, i.e. a GAME-ENHANCEMENT NEURAL PIPELINE ALREADY RUNS THROUGH THIS STACK. Read it as the TEMPLATE for
+    D1's plugin layout and for N6's hook shape; it is NOT NR and gives no weights.
+[ ] N1. **Weight initializers.** In-box asset (READ ONLY): `G:\Steam\steamapps\common\Wuthering Waves\Client\Binaries\
+    Win64\dlssnr_on_amd_weights.bin` = 147,689,451 B, magic `b'DLSSNRW1'`, u32le `0x99` = 153 records, `header_len
+    0x1629` = 5673, per record `[u8 name_len][name][u64 payload_offset][u64 payload_size]`. Slice with the container's
+    OWN header - `Development/weights-index.json` offsets are ARCHIVE-ABSOLUTE with growing drift. DTYPE MIXED
+    (E4M3 matrix bodies + f16 bias/skip/slots + one f4 scale): NEVER decode a whole payload as halves.
+    What the container does NOT give: tensor SHAPES. Shapes must come from the architecture model (N2) - deriving
+    them by dividing byte counts is INVENTING MAPPINGS. `Development/weights-arena-index.json` (25,809 B) is a dict
+    under key `records`. Container is NOT in the repo (single copy in the game install): keep it out of git;
+    record size + a checksum instead.
+[ ] N2. **Architecture -> ONNX graph.** Source of truth = `Development/results/2026-10-29-preblock-ffn-reverse-engineering/DESIGN-NOTES.md`
+    (254 lines) + `Development/hip-reference-network.md` (429 lines) + the 41-module composition and its 6-kernel
+    contract (expand/qkv/scores/av/project/ffn, MACs 256/1024/256/256/512/256 per tile as the contract, on-disk ALU
+    census 262/1027/262/267/526/268). The graph must be authored FROM THOSE NOTES - NVIDIA ships NO ONNX for NR
+    (`nvngx_dlssnr.dll` = 15 `sm_120` .cubin + the weight container above). In-repo ONNX PRIOR ART is the AGENT's
+    ViT back chain only, NOT NR: `Development/history/amd-port-plan.md:200` and `:242`,
+    `Development/results/character-mask-survey-20261011/skin-and-parsing.md:118/123/135/142` ("2,840,120 params,
+    can be exported to ONNX" - DOCUMENT-ONLY, chain CLOSED by user decision).
+[ ] N3. **Op partition + fallback census.** Which ONNX ops the IP path actually takes, which fall back. Report per-op
+    from the runtime's own profiler output; a silent CPU fallback is a FAILURE, not a result.
+[ ] N4. **Numerical parity.** Reference outputs still come from NVIDIA silicon (the .cubin oracle), so the pivot does
+    NOT remove the CUDA-host dependency: `dir /b /s *.cubin` -> `NO_CUBIN`; the 21 `CUDA-ORACLE` front-chain maps
+    and the 39 referenced release/** .npz (0 on disk, grade_tally {NO-PRODUCER 14, CUDA-ORACLE 21, ANALYTIC 4,
+    NEEDS-BYTE-BLOBS 1}, the 14 OVERSTATES - argparse `a.folder` producers and `Development/build_c32_oracle_artifacts.py:91`
+    are parser misses) remain CUDA-oracle-bound. Do NOT hand-write a mapping - "do not invent mappings".
+[ ] N5. **Perf model on the NPU.** Measured ceiling inputs: gemm `TOPS: 51.3`, `51625.0 op/s`, latency `94.0 us`
+    (Power Mode Performance). Convert the NR MAC count through that and compare against 1-in-2 frames at the 720 tier.
+    Power Mode on battery is a DIFFERENT number - measure both before quoting a budget.
+[ ] N6. **Host hook (was H1-H4).** Swap the hip-loader path in `src/LmxxfNrRuntime.cpp` for an ONNX/Windows-ML session:
+    module selection is BY NAME (`Development/HIP/hip_reference_network.h:424-425`, `src/LmxxfProductionOptions.h:18`
+    forces `o.wmma=true`; none of the 71 `DLSS5_HIP_*` flags in `src/native_hip_env_options.h` touches wmma/wave/tiled/
+    pooled/packed_weights/fp8), so wiring the new backend is a SOURCE EDIT there, not an env var. Then: finished frame ->
+    network (history OFF) -> blend; 1-in-2 skip; reduced model_scale tier.
+[ ] D1. Installable layout (addon64 or injector + the runtime DLL + the .onnx + weight initializers + noise).
+[ ] D2. Config: model_scale, frame-skip, strength, skip-blocks; per-game deploy.
 
-## Numerics rules for the ALU path (fixed, do not relitigate)
-  Inputs stay E4M3-quantized (F()), and every E4M3 value is exact in F16. Products reach
-  448^2 = 2.0e5 > f16 max 65504, so the accumulator MUST be f32 (v_fma_f32).
-  v_pk_fma_f16 is only allowed behind an explicit scale + measurement, never as default.
-  Integer dot products are out (no DP4A in this compiler). Reference kernels remain the
-  bit-exact oracle; ALU kernels are validated ON DEVICE, not on this box.
+## Non-negotiables (fixed, do not relitigate)
+  - Inputs stay E4M3-quantized (F()), and every E4M3 value is exact in F16. Products reach 448^2 = 2.0e5 > f16
+    max 65504, so the ACCUMULATOR MUST BE f32. f16 accumulation is a correctness bug, and an IP-engine kernel type
+    does NOT change this rule - verify the ONNX graph's accumulation dtype explicitly.
+  - A PASSING COMPILE / exit code 0 / "the session was created" is NOT proof the design landed. Verification claims
+    need the EXACT COMMAND LINE + VERBATIM OUTPUT, otherwise write NOT RUN / UNVERIFIED.
+  - No device probe (a process touching the NPU) without an explicit go-ahead - ASK FIRST.
+  - Never `git add .`; never revert / `git restore` / `git clean` uncommitted or untracked artifacts; the tree holds
+    one-of-a-kind build outputs.
 
-## Cost model
-  One 16x16 tile at K=32 = 8192 MACs = 256 v_fma_f32 per lane in a 32-lane wave - the same
-  MAC count the WMMA path performs, moved onto the ALU. Network every other frame at the
-  720 tier (~2 x 16.7 ms per networked frame); DLSS5_SKIP_BLOCKS (lossy) only if
-  measurement says so.
+## Host facts to re-MEASURE, not trust (this file is a contract, not a log)
+  - `xrt-smi.exe` on this box: `--version` `Version 2.21.0`; commands are ONLY `configure | examine | validate`
+    (captured help 2026-11-04). No sample/model runner.
+  - Interpreter: `py --list` -> `-V:3.14[-64] * Python 3.14.7`; `py -3.10` -> `NO_PY310_LAUNCHER`; `NO_UV`;
+    packages `onnxruntime False, onnx False, torch False, numpy True, sklearn False`. numpy 2.5.4 lives at
+    `C:\Users\micha\AppData\Local\Python\pythoncore-3.14-64\python.exe`.
+  - `dumpbin` is NOT installed (`'dumpbin' is not recognized as an internal or external command`) - read DLL deps by
+    byte-scanning for `*.dll` names instead.
+  - Network reaches PyPI (`PYPI_STATUS 200 BYTES 645387`); installs are YOUR decision.
+  - No reachable ssh host: `C:\Users\micha\.ssh\config` absent, amd9070 100.83.122.75 times out, rtx5090
+    100.102.178.207 refused. A CUDA host is required for N4 (previously used: RTX 5090, DGX Spark `spark-3a10`).
 
-## Pilot design (A4) - decided: NEW TWIN MODULE, not an in-file #if
-  hip/c32_wmma.hip is wave-pure (no barriers, no LDS). Adding LDS there means changing a
-  shipping gfx12 recipe, so the ALU path goes in a NEW FILE hip/c32_alu.hip exporting the
-  SAME 6 kernel names and the SAME grid/work-group contract, registered as a gfx1103-only
-  module in hip/build-modules.ps1 ($modules row, sources = ('c32_alu.hip')). gfx1200/gfx1201
-  recipes stay byte-identical.
-    Helper: DEV float8 alu_matrix32(a,b,a0,astr,akstr,rowcap,b0,bstr,bkstr)
-      A(row,k) = a[a0 + row*astr + k*akstr]  (zero when row >= rowcap)
-      B(col,k) = b[b0 + col*bstr + k*bkstr]
-      acc[e] = dot over k=0..31, output slot = (row=group*8+e, col=rc), rc=lane&15, group=lane>>4
-      LDS: __attribute__((shared)) float sa[16*32], sb[32*16]  (4096 B), staged cooperatively
-      (32 lanes x 16 elements each), sync with the file idiom at c32_fast.hip:56
-      (fence(3,"workgroup"); __builtin_amdgcn_s_barrier(); fence(2,"workgroup")) or the
-      LDS-scoped WG_FENCE pair from c32_fused_ffn_attention.hip:90.
-    Site -> argument table (all 6 kernels of c32_wmma.hip):
-      c32_ffn_expand_wmma   alu(input,   weights, first*32,            32,1, tokens-first, 512+col*32,   32,1)
-      c32_ffn_contract_wmma 4x chunk: alu(hidden, weights, first*128+chunk*32, 128,1, tokens-first, 4608+col*128+chunk*32, 128,1); residual seed path unchanged
-      c32_attn_qkv_wmma     alu(input,   weights, first*32,            32,1, -1, part*1024+col*32, 32,1)
-      c32_attn_scores_wmma  alu(normalized, normalized, (w*64+qr)*32,  32,1, -1, (tokens+w*64+kr)*32, 32,1)
-      c32_attn_av_wmma      2x chunk: alu(prob, qkv, (w*64+qr)*64+chunk*32, 64,1, -1, (2*tokens+w*64+chunk*32)*32+col, 32,32); acc[e]=H(acc[e]+sum[e])
-      c32_attn_project_wmma alu(av,      weights, first*32,            32,1, -1, 3072+col*32, 32,1)
-
-## Host / runtime (apply to finished frame)
-[ ] H1. Rebuild LmxxfNrRuntime.dll for gfx1103 (assets dir -> gfx1103 hsaco, arch gate)
-[ ] H2. Host hook: finished post-tonemap frame -> codec -> network (history OFF) -> blend
-[ ] H3. 1-in-2 frame skip (network every other frame, hold/blend on the other)
-[ ] H4. Reduced model_scale (540/720 tier) to fit the 30 fps budget
-
-## Perf + verification
-[ ] P1. Per-frame network GPU ms on gfx1103 at 720 tier; target < ~16 ms avg with skip
-[ ] P2. If short: DLSS5_SKIP_BLOCKS (lossy) / tile shrink, then re-measure
-[ ] P3. In-game A/B: 720p output, 1-in-2, strength control, confirm >= 30 fps
-
-## Deliverable
-[ ] D1. Installable layout: dlss5-amd.addon64 (or injector) + LmxxfNrRuntime.dll
-    + DLSS5-AMD assets (gfx1103 dir: SHA256SUMS, >= 24 hsaco, plain weights, noise.f32)
-[ ] D2. Config: model_scale, frame-skip, strength, skip-blocks; per-game deploy
-
-## Git (the tree IS under version control - history is the archive, not appended prose)
-  - Repo root = this directory. remote `origin` = https://github.com/michalhojwa/dlss5-on-amd-9070xt-porting.git (MEASURED
-    2026-10-30 by `git remote -v`); branch `xdna2_poc` tracks `origin/xdna2_poc`. Run everything from the repo root.
-  - Session start: `git status -sb` (expect clean) + `git stash list`. NEVER `git clean -xfd` and NEVER `git checkout --`
-    here: the .hsaco / .hsaco.s / logs ARE the deliverable, and re-creating them costs a full rebuild.
-  - `git add <the paths you touched>` then `git commit`. NEVER `git add .` / `-A`: build logs, hip/modules/**, rtc_compile.exe
-    are already TRACKED, so a blanket add sweeps unrelated churn into your commit.
-  - Do NOT add new large binaries. Already permanent in history: hip/rtc_compile.exe (blob 2,682,656 B) and
-    hip/modules/gfx1103/*.hsaco.s (blob 10,830,841 B); the pushed pack is ~831 MiB.
-  - Superseded text lives in history, not in these docs: `git log -p --follow -- xbox/PLAN.md`,
-    `git show <commit>:xbox/HANDOFF.md`. Days older than 2026-10-30 are also filed under xbox/archive/.
-    Pre-split HANDOFF citations that read `HANDOFF.md:NNN` point into xbox/archive/HANDOFF-2026-10-23_to_27.md (was
-    lines 2-576) or xbox/archive/HANDOFF-2026-10-28_to_29.md (was lines 577-1047).
-  - SEARCH WITH `git grep -n` - the Grep tool SILENTLY returns 0 matches on this repo. For trackedness use
-    `git ls-files` / `git check-ignore --no-index -v <path>`: plain `check-ignore` reports NOTHING for an already-TRACKED
-    path even when a matching rule exists (hip/rtc_compile.exe is tracked, so the .gitignore rule for it is INERT).
-  - Push ONLY WHEN ASKED; check remote state first with `git ls-remote origin xdna2_poc`. core.autocrlf=input, so the
-    index is LF and the working tree CRLF - that display is normal and status stays clean.
-  - NO HARDCODED DRIVE PATHS ANYWHERE (the tree moved C:\kien -> C:\kien2): check.py derives ROOT from __file__,
-    build_target.ps1 walks up looking for hip\build-modules.ps1 (RTC_ROOT overrides it), rtc_compile_cmd.cmd uses %~dp0.
-    Keep any new script movable the same way.
+## Git (history is the archive, not appended prose)
+  - Repo root = this directory. `origin` = https://github.com/michalhojwa/dlss5-on-amd-9070xt-porting.git ; branch
+    `xdna2_poc` tracks `origin/xdna2_poc`. Run everything from the repo root; NO HARDCODED DRIVE PATHS (the tree
+    moved C:\kien -> C:\kien2; check.py derives ROOT from __file__, build_target.ps1 walks up for hip\build-modules.ps1,
+    rtc_compile_cmd.cmd uses %~dp0).
+  - **2026-11-04 POLICY CHANGE (USER):** commit AND PUSH REGULARLY - at least once a day, or after each bigger unit of
+    finished work, whichever comes first. Check remote state first with `git ls-remote origin xdna2_poc` (measured
+    2026-11-04: remote at `5bc57b02`, local ahead 1). This SUPERSEDES the older "push only when asked".
+  - `git add <the exact paths you touched>` then `git commit`. NEVER `git add .` / `-A`: build logs, hip/modules/**,
+    rtc_compile.exe are already TRACKED, so a blanket add sweeps unrelated churn into the commit. Do NOT add new large
+    binaries (history already carries hip/rtc_compile.exe at 2,682,656 B and hip/modules/gfx1103/*.hsaco.s at
+    10,830,841 B; `git count-objects -vH` -> `size-pack: 831.25 MiB`).
+  - NEVER `git clean -xfd` and NEVER `git checkout --`: the .hsaco / logs ARE deliverables and are not re-creatable
+    cheaply. core.autocrlf=input: index LF, worktree CRLF - that display is normal, status stays clean.
+  - SEARCH WITH `git grep -n` - the Grep tool SILENTLY RETURNS 0 MATCHES on this repo. Trackedness: `git ls-files` /
+    `git check-ignore --no-index -v <path>` (plain check-ignore reports NOTHING for an already-TRACKED path).
+  - Superseded text lives in history + `xbox/archive/`: pre-2026-11-04 hip contract is filed at
+    `xbox/archive/HIP-HSACO-PARKED-2026-11-04.md`; days older than 2026-10-30 are under `xbox/archive/`
+    (HANDOFF-2026-10-28_to_29.md, pre-git/STATE.md). Old `HANDOFF.md:NNN` citations point into those archive files.
