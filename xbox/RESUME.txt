@@ -52,8 +52,9 @@ TOP STATUS
 9) N4 (numerical parity) is STILL CUDA-ORACLE-BOUND: `dir /b /s *.cubin` -> `NO_CUBIN`; the 21 `CUDA-ORACLE` front-chain
    .npz maps stay unreachable from this box. The pivot removed the hsaco-compile job, NOT the oracle. NVIDIA SHIPS NO
    ONNX FOR NR (`nvngx_dlssnr.dll` = 15 `sm_120` .cubin + the 147,689,451 B weight container), so the graph must be
-   SELF-AUTHORED from Development/results/2026-10-29-preblock-ffn-reverse-engineering/DESIGN-NOTES.md +
-   Development/hip-reference-network.md. Never hand-write a shape mapping.
+   SELF-AUTHORED from Development/network-graph.json + Development/HIP/hip_reference_network.h (NOT
+   ".../DESIGN-NOTES.md" and NOT "Development/hip-reference-network.md" - neither path is in git ls-files).
+   Never hand-write a shape mapping.
 10) PRIOR ART FOUND 2026-11-04: `amd_taau_ops.rml_plugin.dll` (521,576 B, debug path `W:\src\RadeonML\build_out\...`,
     namespace `taau::rml`) => AMD ALREADY RUNS A TAAU NEURAL OP PLUGIN THROUGH THIS STACK. TEMPLATE FOR D1/N6; NOT NR.
 

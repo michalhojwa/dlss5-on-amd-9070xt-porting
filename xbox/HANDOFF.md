@@ -574,18 +574,34 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
 - WHAT THE PIVOT DOES AND DOES NOT REMOVE: it removes the hsaco-COMPILE job (COMGR is CPU-only and ISA-bound) but NOT THE
   CUDA-ORACLE DEPENDENCY FOR PARITY: `dir /b /s *.cubin` -> `NO_CUBIN`, and the 21 `CUDA-ORACLE` front-chain `.npz` maps
   (grade_tally {NO-PRODUCER 14, CUDA-ORACLE 21, ANALYTIC 4, NEEDS-BYTE-BLOBS 1}; the 14 OVERSTATES because argparse
-  `a.folder` producers and `Development/build_c32_oracle_artifacts.py:91` are parser misses) still need NVIDIA silicon.
+  `a.folder` producers are parser misses - the extra item part 12 named, `Development/build_c32_oracle_artifacts.py:91`,
+  is NOT a path in this repo: `git log --all --oneline --name-only -- *build_c32_oracle_artifacts.py` returns EMPTY, so it
+  was never committed, and the real `view/mapping.npz` producers are `Development/recover_native_c64_view.py:50` and
+  `Development/recover_native_split_view.py:36`) still need NVIDIA silicon.
   Also UNCHANGED: NVIDIA SHIPS NO ONNX FOR NR (`nvngx_dlssnr.dll` = 15 `sm_120` `.cubin` + the weight container, magic
   `b'DLSSNRW1'`, 153 records, 147,689,451 B at `G:\Steam\steamapps\common\Wuthering Waves\Client\Binaries\Win64\`), so
   THE ONNX GRAPH MUST BE SELF-AUTHORED from the reverse-engineered architecture with those tensors as INITIALIZERS;
   and tensor SHAPES come from the ARCHITECTURE MODEL, NEVER from dividing byte counts ("do not invent mappings").
-- GIT: HEAD `3edf7aca` "docs(xbox): 2026-11-04 report; hip+hsaco parked to archive; PLAN.md rewritten for ONNX/Windows
-  ML" was committed EARLIER TODAY but `git status --porcelain=v1` then still showed `?? xbox/REPORT-2026-11-04-machines-
-  build-options-xdna2.md` and `?? xbox/archive/HIP-HSACO-PARKED-2026-11-04.md` - i.e. THAT COMMIT carried the PLAN rewrite
-  only, and the report + archive are added by the NEXT commit along with the four context files. `git ls-remote origin
-  xdna2_poc` -> `5bc57b02`, LOCAL AHEAD 1. `git count-objects -vH` -> `size-pack: 831.25 MiB`, which is the number that makes a NEW SMALL REPO for the
-  ONNX route more sensible than a SUBMODULE of this one (a submodule forces the whole 831 MiB clone). NO `gh` CLI, so
-  creating a new GitHub remote is the USER's action.
+- GIT: `git add <exact paths>` for the four context files + the report + the archive, then commit `60a610e4`
+  "docs(xbox): pivot STATE/RESUME/HANDOFF to ONNX/Windows ML; track 2026-11-04 report + hip-parked archive (part 13)"
+  = 6 files changed, 773 insertions(+), 338 deletions(-); `git push origin xdna2_poc` -> `5bc57b02..60a610e4`; `git status
+  -sb` then IN SYNC. (Earlier in the day HEAD `3edf7aca` carried the PLAN rewrite ONLY - the report + archive were still
+  `??` until this commit.) `git count-objects -vH` -> `size-pack: 831.25 MiB` (regrew to 851,196 objects count as measured
+  by `count-objects -v`), which is the number that makes a NEW SMALL REPO for the ONNX route more sensible than a
+  SUBMODULE of this one (a submodule forces the whole clone). NO `gh` CLI, so creating a new GitHub remote is the
+  USER's action.
+- CITATION CORRECTIONS MADE TODAY (I wrote bad paths into three docs and fixed them - do not re-propagate):
+  `Development/results/2026-10-29-preblock-ffn-reverse-engineering/DESIGN-NOTES.md` and `Development/hip-reference-network.md`
+  DO NOT EXIST (`git ls-files` has no match; the real sources are `Development/network-graph.json`, `Development/HIP/hip_reference_network.h`,
+  `Development/history/reverse-engineering-notes.md`). The quote "2,840,120 params, can be exported to ONNX" is UNSOURCED:
+  `git grep 840,120` matches only our own drafts, and `skin-and-parsing.md` is 39 lines so the `:118/123/135/142` cites
+  were impossible. `Development/build_c32_oracle_artifacts.py` is likewise absent - not merely untracked: `git log --all
+  --oneline --name-only -- *build_c32_oracle_artifacts.py` returns EMPTY, so it was NEVER committed anywhere in this
+  repo's history, and the `np.savez(… 'view/mapping.npz' …)` call part 12 attributed to it lives instead in
+  `Development/recover_native_c64_view.py:50` and `Development/recover_native_split_view.py:36` (measured today). The
+  part-12 lines 429/430/490 that carried it are left AS-IS (history), annotated here.
+  LESSON: run a citation audit (`os.path.isfile` + line counts over every backticked path in the docs I wrote) BEFORE
+  committing a rewrite of the context files - `C:\Users\micha\.qwen\tmp\audit_citations_20261104.py` is that audit.
 - RECONFIRMED PITFALLS (all hit or re-verified TODAY): multi-line `python -c` under cmd.exe -> EMPTY OUTPUT EXIT 0 (write
   real .py files under `C:\Users\micha\.qwen\tmp\`); no `tail`/`head`/`more` (`'head' is not recognized` - redirect to a
   `.log` and `read_file` it); the Grep tool FALSE-ZEROES (use `git grep -n`); `git ls-files --with-time` -> `error:
@@ -606,9 +622,9 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
 2. ONLY ON AN EXPLICIT GO-AHEAD: run the probe so it actually TOUCHES `[0065:00:01.1]`, and require a DEVICE-SIDE trace
    (an IP/AIE kernel line, or the provider list naming an IP EP). A silent CPU fallback is a FAILURE, not a result.
 3. THEN, and not before: N1 slice the 153 tensors using the container's OWN header (`[u8 name_len][name][u64
-   offset][u64 size]`, `header_len 0x1629`); N2 author the graph from `Development/results/2026-10-29-preblock-ffn-reverse-
-   engineering/DESIGN-NOTES.md` (254 lines) + `Development/hip-reference-network.md` (429 lines); keep the f32 ACCUMULATOR
-   rule explicit (448^2 = 2.0e5 > f16 max 65504).
+   offset][u64 size]`, `header_len 0x1629`); N2 author the graph from `Development/network-graph.json` (1,682 lines) +
+   `Development/HIP/hip_reference_network.h` (1,093 lines) + `Development/history/reverse-engineering-notes.md` (241 lines);
+   keep the f32 ACCUMULATOR rule explicit (448^2 = 2.0e5 > f16 max 65504).
 4. KEEP OPEN, DO NOT ASSERT: VitisAI EP availability in `onnxruntime.dll`; Windows ML THIRD-PARTY-MODEL ATTESTATION (test
    by loading an UNSIGNED model); which EP actually reaches the NPU; N4 parity (CUDA-oracle-bound, `NO_CUBIN`).
 5. REPO SHAPE (user asked, unanswered at time of writing): the recommendation is TAG THIS repo as the RE/archive and seed a

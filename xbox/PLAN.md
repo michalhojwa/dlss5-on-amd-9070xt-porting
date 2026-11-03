@@ -89,21 +89,33 @@
     them by dividing byte counts is INVENTING MAPPINGS. `Development/weights-arena-index.json` (25,809 B) is a dict
     under key `records`. Container is NOT in the repo (single copy in the game install): keep it out of git;
     record size + a checksum instead.
-[ ] N2. **Architecture -> ONNX graph.** Source of truth = `Development/results/2026-10-29-preblock-ffn-reverse-engineering/DESIGN-NOTES.md`
-    (254 lines) + `Development/hip-reference-network.md` (429 lines) + the 41-module composition and its 6-kernel
+[ ] N2. **Architecture -> ONNX graph.** Source of truth = `Development/network-graph.json` (39,952 B, 1,682 lines: `blocks[]`
+    with `block_type`/`layer_type`/`width`/`inputs`/`weight_records` + top-level `sample_sha256`; its own `boundary`
+    key says verbatim "Block types, order, and block-to-block edges are recovered; block 0 external texture bindings
+    remain unresolved") + `Development/HIP/hip_reference_network.h` (177,256 B, 1,093 lines) +
+    `Development/history/reverse-engineering-notes.md` (13,169 B, 241 lines) + the 41-module composition and its 6-kernel
     contract (expand/qkv/scores/av/project/ffn, MACs 256/1024/256/256/512/256 per tile as the contract, on-disk ALU
-    census 262/1027/262/267/526/268). The graph must be authored FROM THOSE NOTES - NVIDIA ships NO ONNX for NR
-    (`nvngx_dlssnr.dll` = 15 `sm_120` .cubin + the weight container above). In-repo ONNX PRIOR ART is the AGENT's
-    ViT back chain only, NOT NR: `Development/history/amd-port-plan.md:200` and `:242`,
-    `Development/results/character-mask-survey-20261011/skin-and-parsing.md:118/123/135/142` ("2,840,120 params,
-    can be exported to ONNX" - DOCUMENT-ONLY, chain CLOSED by user decision).
+    census 262/1027/262/267/526/268 — those numbers are in `xbox/archive/HANDOFF-2026-10-23_to_27.md:404/406/488`
+    and `xbox/archive/HIP-HSACO-PARKED-2026-11-04.md:48/122`). The graph must be authored FROM THOSE NOTES - NVIDIA
+    ships NO ONNX for NR (`nvngx_dlssnr.dll` = 15 `sm_120` .cubin + the weight container above). In-repo ONNX PRIOR
+    ART is the AGENT's ViT back chain + the mask survey, NOT NR: `Development/history/amd-port-plan.md:200` and
+    `:242`, `Development/results/character-mask-survey-20261011/skin-and-parsing.md:13` (BiSeNet-R18: author ships PT
+    AND ONNX, ~11.2M params/43MB, fixed 512x512, dynamic batch, opset20) and `:23` ("do not infer full-GPU coverage
+    from a model loading"), `full-person.md:19/29/31/39` — DOCUMENT-ONLY, chain CLOSED by user decision.
+    CORRECTION (self-inflicted, fixed 2026-11-04): an earlier draft of this file cited
+    `Development/results/2026-10-29-preblock-ffn-reverse-engineering/DESIGN-NOTES.md` and
+    `Development/hip-reference-network.md` and quoted "2,840,120 params". MEASURED: none of those paths is in
+    `git ls-files` (`git grep 840,120` hits only our own drafts) and `skin-and-parsing.md` is 39 lines, so the line
+    cites were impossible. Do not re-propagate those three citations.
 [ ] N3. **Op partition + fallback census.** Which ONNX ops the IP path actually takes, which fall back. Report per-op
     from the runtime's own profiler output; a silent CPU fallback is a FAILURE, not a result.
 [ ] N4. **Numerical parity.** Reference outputs still come from NVIDIA silicon (the .cubin oracle), so the pivot does
     NOT remove the CUDA-host dependency: `dir /b /s *.cubin` -> `NO_CUBIN`; the 21 `CUDA-ORACLE` front-chain maps
     and the 39 referenced release/** .npz (0 on disk, grade_tally {NO-PRODUCER 14, CUDA-ORACLE 21, ANALYTIC 4,
-    NEEDS-BYTE-BLOBS 1}, the 14 OVERSTATES - argparse `a.folder` producers and `Development/build_c32_oracle_artifacts.py:91`
-    are parser misses) remain CUDA-oracle-bound. Do NOT hand-write a mapping - "do not invent mappings".
+    NEEDS-BYTE-BLOBS 1}, the 14 OVERSTATES - argparse `a.folder` producers are parser misses; the third item this file
+    previously named, `Development/build_c32_oracle_artifacts.py:91`, IS NOT A PATH IN THIS REPO (see N2 CORRECTION) and
+    the real `view/mapping.npz` producers are `Development/recover_native_c64_view.py:50` and
+    `Development/recover_native_split_view.py:36`) remain CUDA-oracle-bound. Do NOT hand-write a mapping - "do not invent mappings".
 [ ] N5. **Perf model on the NPU.** Measured ceiling inputs: gemm `TOPS: 51.3`, `51625.0 op/s`, latency `94.0 us`
     (Power Mode Performance). Convert the NR MAC count through that and compare against 1-in-2 frames at the 720 tier.
     Power Mode on battery is a DIFFERENT number - measure both before quoting a budget.

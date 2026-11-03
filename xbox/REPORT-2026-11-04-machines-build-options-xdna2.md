@@ -109,8 +109,14 @@ needs your go-ahead.
   tensors as initializers. No NVIDIA graph to convert.
 - In-repo ONNX prior art is the AGENT's perception nets, not NR: `Development/history/amd-port-plan.md:200`
   ("ONNX Runtime"), `:242` ("ONNX Runtime / DirectML: fastest way to verify the AMD card can produce output"),
-  `Development/results/character-mask-survey-20261011/skin-and-parsing.md:118/123/135/142` (ViT back chain re-implemented
-  in Python, 2,840,120 params, "can be exported to ONNX"), `Development/results/face-detection-probe-20261011/README.md:3`.
+  `Development/results/character-mask-survey-20261011/skin-and-parsing.md:13` (the shipped ViT variant "BiSeNet-R18,
+  11,199,348 params", `model_pth = model_7.zip`, ONNX opset20 with a dynamic batch axis) and `:23` (the AUTHOR ships BOTH
+  a `.pth` AND an `.onnx`); `full-person.md:19/29/31/39` (masker = ViT+FPN+DeepLab, 1×3×512×512 → 1×1×512×512, fixed
+  512×512 + dynamic batch, same opset). CORRECTION: this bullet previously cited `skin-and-parsing.md:118/123/135/142`
+  (that file is 39 lines) and the phrase "2,840,120 params / can be exported to ONNX", and it cited
+  `face-detection-probe-20261011/README.md:3` for that quote (line 3 is about YuNet/FaceDetectorYN). Those three cites
+  were MY OWN FABRICATION (no path in `git ls-files` matched the numbers, and `git grep 840,120` matched only our own
+  drafts); the line-count claims for the real cites above were re-checked today.
 - Index files that the new route will consume: `Development/weights-index.json` (offsets are ARCHIVE-ABSOLUTE with
   growing drift — do not trust them as container-relative) and `Development/weights-arena-index.json` (25,809 B, a dict
   under key `records`).
