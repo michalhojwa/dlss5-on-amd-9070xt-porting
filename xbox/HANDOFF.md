@@ -630,7 +630,9 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
    by loading an UNSIGNED model); which EP actually reaches the NPU; N4 parity (CUDA-oracle-bound, `NO_CUBIN`).
 5. REPO SHAPE (user asked, DECIDED 2026-11-04): FILE EXTRACTION DONE into `C:\onnxRoute` - 1,127 files / 409,521,926 B
    as measured after the part-13 sync (918 text/code files = 7,702,834 B as tracked candidates, 209 extracted-tensor
-   payload files = 401,819,092 B copied but GIT-IGNORED). Its `PROVENANCE.md` records the source URL, the frozen anchor
+   payload files = 401,819,092 B copied but GIT-IGNORED). Only the text/code byte total drifts with later doc edits -
+   re-measured 2026-11-04 after this section's own edits: 1,127 files / 409,528,687 B with text/code 7,709,595 B, while
+   209 payload files = 401,819,092 B stayed invariant to the byte. Its `PROVENANCE.md` records the source URL, the frozen anchor
    commit `469442deef418b9321fddf78537a3c218c40ab0d` (HEAD at extraction time, already pushed), per-file size + SHA256
    + the source repo's git blob SHA, and a NOT-COPIED table (`hip/` 600,166,093 B; `Development/results/**` 503,308,202
    B / 24,801 files; `Development/HIP/experiments/**` 8,631,296 B; HIP-era `xbox/` scratch ~34.5 MB; `scripts/**` 423,413
@@ -639,8 +641,9 @@ BLOCKERS MEASURED (not guessed): no device; no CUDA host on this box; no .cubin 
    `freeze-hip-era-20261104` (tag object `4b0467808366c0fc7ad2ec738096b08aa45dad82`) points at this repo's HEAD
    `0baa4872819e1ad61ba0e29f3ec5368c6cc78748` and is PUSHED; the tag is NOT at this branch's tip - the commit that
    records the tag note comes after it, and every future HANDOFF edit moves the tip again, so read the context docs from
-   the branch tip, never from the tag. The new tree is now its OWN git repo: branch `main`, commits `745a92e` (918 files),
-   `29f1838`, `f764edd`, `e8677d5`; payload tensors ignored; NO REMOTE YET - adding one stays the user's call (`gh` is
+   the branch tip, never from the tag. The new tree is now its OWN git repo: branch `main`, first commit `745a92e` (918 files)
+   plus follow-up doc commits - read them with `git -C C:\onnxRoute log --oneline` rather than trusting any list here,
+   because every sync adds one; payload tensors ignored; NO REMOTE YET - adding one stays the user's call (`gh` is
    NOT installed here); it has its own `README.md` start-here doc. COPY PARITY verified by matching paths against `ls-tree -r` of the anchor commit:
    911 of 918 tracked files have the IDENTICAL git blob SHA, 3 differ on purpose (`.gitignore`, root `README.md`,
    `xbox/HANDOFF.md`), 4 are new paths (`PROVENANCE.md`, `upstream-docs/README.md`, `upstream-docs/CHANGELOG.md`,
